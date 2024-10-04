@@ -124,7 +124,7 @@ SECTIONS
 
 	.dalign    : 
 	{
-		. = ORIGIN(RAM) + SIZEOF(.highcode);
+		. = ORIGIN(RAM) + MAX(0x800 , SIZEOF(.highcode));
 	} >RAM AT>FLASH	
 
 	.dlalign :
