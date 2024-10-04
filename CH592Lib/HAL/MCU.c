@@ -78,6 +78,7 @@ void Lib_Write_Flash_592A(uint32_t addr, uint32_t num, uint32_t *pBuf)
  *
  * @return  None.
  */
+#define DEF_CHIP_ID_CH592A  9               // QFN28
 uint32_t Lib_Write_Flash(uint32_t addr, uint32_t num, uint32_t *pBuf)
 {
     if(((*(uint32_t*)ROM_CFG_VERISON)&0xFF) == DEF_CHIP_ID_CH592A)

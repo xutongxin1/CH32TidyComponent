@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <projectDescription>
-	<name>provisioner_vendor</name>
-	<comment></comment>
+	<name>CentralNode</name>
+	<comment/>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -27,43 +27,43 @@
 		<link>
 			<name>HAL</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/HAL</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/HAL</locationURI>
 		</link>
 		<link>
 			<name>LIB</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/LIB</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/LIB</locationURI>
 		</link>
 		<link>
 			<name>Ld</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/Ld</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/Ld</locationURI>
 		</link>
 		<link>
 			<name>MESH_LIB</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/MESH_LIB</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/MESH_LIB</locationURI>
 		</link>
 		<link>
 			<name>RVMSIS</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/RVMSIS</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/RVMSIS</locationURI>
 		</link>
 		<link>
 			<name>Startup</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/Startup</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/Startup</locationURI>
 		</link>
 		<link>
 			<name>StdPeriphDriver</name>
 			<type>2</type>
-			<locationURI>PROJECT_LOC/StdPeriphDriver</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/CH592Lib/StdPeriphDriver</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1616659439929</id>
-			<name></name>
+			<name/>
 			<type>22</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>

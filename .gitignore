@@ -6,3 +6,5 @@ example/adv_vendor_friend/obj/
 example/adv_vendor_low_power/obj/
 
 example/provisioner_vendor/obj/
+
+CentralNode/cmake-build-debug-mingw/
