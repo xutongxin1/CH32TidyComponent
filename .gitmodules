@@ -1,0 +1,6 @@
+[submodule "CH592_CLion_Tamplate"]
+	path = CH592_CLion_Tamplate
+	url = https://github.com/xutongxin1/CH592_CLion_Tamplate.git
+[submodule "CH585_CLion_Tamplate"]
+	path = CH585_CLion_Tamplate
+	url = https://github.com/xutongxin1/CH585_CLion_Tamplate.git
