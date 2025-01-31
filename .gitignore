@@ -8,3 +8,11 @@ example/adv_vendor_low_power/obj/
 example/provisioner_vendor/obj/
 
 CentralNode/cmake-build-debug-mingw/
+
+CH585_Center/obj/
+
+CH585_Center_CMAKE/
+
+CH592_Node_cmake/
+
+CH592_Node/obj/
