@@ -103,7 +103,6 @@ int main(void) {
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
-
     Main_Circulation();
 }
 
