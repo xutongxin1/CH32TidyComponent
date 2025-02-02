@@ -245,7 +245,7 @@ static void vendor_message_srv_confirm(struct bt_mesh_model   *model,
 
     recv_tid = net_buf_simple_pull_u8(buf);
 
-    APP_DBG("tid 0x%02x ", recv_tid);
+    APP_DBG("回复confirm信息，信息tid为0x%02x", recv_tid);
 
     /* Init indication opcode */
     bt_mesh_model_msg_init(&msg, OP_VENDOR_MESSAGE_TRANSPARENT_CFM);

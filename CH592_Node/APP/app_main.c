@@ -99,12 +99,17 @@ int main(void)
     GPIOA_ModeCfg(bTXD1, GPIO_ModeOut_PP_5mA);
     UART1_DefInit();
 //#endif
-    PRINT("%s\n", VER_LIB);
-    PRINT("%s\n", VER_MESH_LIB);
+    PRINT("%s\r\n", VER_LIB);
+    PRINT("%s\r\n", VER_MESH_LIB);
     CH59x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
+    if (GPIOB_ReadPortPin(GPIO_Pin_4)==0)//≈‰Õ¯÷ÿ÷√∞¥º¸
+    {
+        bt_mesh_reset();
+        PRINT("÷ÿ÷√≈‰Õ¯\r\n");
+    }
     Main_Circulation();
 }
 

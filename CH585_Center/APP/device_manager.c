@@ -70,7 +70,7 @@ int AddDeviceNode(uint16_t meshAddr, const uint8_t mac[MAC_ADDR_SIZE], uint8_t d
 void DeactivateAllDevices(void) {
     for (int i = 0; i < MAX_DEVICES; i++) {
         SET_ACTIVE(g_devices[i].flags, false);
-        WriteDevice(i); // 需要优化可以批量写入
+        // WriteDevice(i); // 需要优化可以批量写入
     }
 }
 
@@ -109,7 +109,7 @@ int UpdateDeviceActivation(uint16_t meshAddr, bool isActive) {
     for (int i = 0; i < MAX_DEVICES; i++) {
         if (g_devices[i].MeshAddr == meshAddr) {
             SET_ACTIVE(g_devices[i].flags, isActive);
-            return WriteDevice(i);
+            return 0;
         }
     }
     return -1;

@@ -538,6 +538,7 @@ static BOOL node_stage(void *p1) {
         case NODE_MOD_SUB_SET:
             err = bt_mesh_cfg_mod_sub_add_vnd(node->net_idx, node->node_addr, node->node_addr, vendor_sub_addr,
                                               BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
+            APP_DBG("向0x%04x地址绑定订阅地址0x%04x", node->node_addr, vendor_sub_addr);
             if (err) {
                 APP_DBG("Unable to Set vendor Model Subscription (err %d)", err);
                 ret = TRUE;
@@ -831,6 +832,7 @@ static int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len) {
         .tid = vendor_cli_tid_get(), // tid，每个独立消息递增循环，cli使用0~127
         .send_ttl = BLE_MESH_TTL_DEFAULT, // ttl，无特定则使用默认值
     };
+    APP_DBG("向地址%x发送数据%s", addr, (char *)pData);
     return vendor_message_cli_write(&param, pData, len); // 调用自定义模型客户端的有应答写函数发送数据，默认超时2s
     // return vendor_message_cli_send_trans(&param, pData, len); // 或者调用自定义模型服务的透传函数发送数据，只发送，无应答机制
 }
@@ -1054,13 +1056,13 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
         if (app_nodes[1].node_addr) {
             uint8_t status;
-            APP_DBG("app_nodes[1] ADDR %x", app_nodes[1].node_addr);
+
             uint8_t data[2] = "AT";
-            status = vendor_model_cli_send(app_nodes[1].node_addr, data, 2); // 调用自定义模型客户端的透传函数发送数据
+            status = vendor_model_cli_send(vendor_sub_addr, data, 2); // 调用自定义模型客户端的透传函数发送数据
             if (status)
                 APP_DBG("trans failed %d", status);
         }
-        tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 6400);
+        tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(3));
         return (events ^ APP_NODE_TEST_EVT);
     }
 
@@ -1089,13 +1091,10 @@ uint16_t HandleProvisioning(const uint8_t mac[MAC_ADDR_SIZE]) {
             node->stage.node = NODE_INIT;
             node->node_addr = BLE_MESH_ADDR_UNASSIGNED;
             node->fixed = FALSE;
-            APP_DBG("删除%d的地址节点数据\n", existingAddr);
-            UpdateDeviceActivation(existingAddr, true);
-            return existingAddr;
-        } else {
-            APP_DBG("无法删除指定addr的数据\n", existingAddr);
-            return INVALID_MESH_ADDR;
+            APP_DBG("删除%d的地址节点数据", existingAddr);
         }
+        UpdateDeviceActivation(existingAddr, true);
+        return existingAddr;
     }
 
     // 分配新地址

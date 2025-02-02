@@ -342,9 +342,12 @@ static void vendor_model_srv_rsp_handler(const vendor_model_srv_status_t *val) {
         }
     } else if (val->vendor_model_srv_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_WRT) {
         // 收到write数据
-        APP_DBG("len %d, data 0x%s from 0x%04x", val->vendor_model_srv_Event.write.len,
-                (char *)val->vendor_model_srv_Event.write.pdata,
-                val->vendor_model_srv_Event.write.addr);
+        // APP_DBG("len %d, data 0x%s from 0x%04x", val->vendor_model_srv_Event.write.len,
+        //         (char *)val->vendor_model_srv_Event.write.pdata,
+        //         val->vendor_model_srv_Event.write.addr);
+        char recv[100]={0};
+        tmos_memcpy(recv,(char *)val->vendor_model_srv_Event.write.pdata,val->vendor_model_srv_Event.write.len);
+        APP_DBG("从0x%04x收到write数据%s,长度为%d",val->vendor_model_srv_Event.write.addr,recv,val->vendor_model_srv_Event.write.len);
     } else if (val->vendor_model_srv_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_IND) {
         // 发送的indicate已收到应答
     } else {

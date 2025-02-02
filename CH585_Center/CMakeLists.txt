@@ -124,3 +124,12 @@ add_custom_target(Erase_Flash
         VERBATIM
         USES_TERMINAL
 )
+
+add_custom_target(Flash
+        COMMAND ../wlink.exe -d 1 flash ../CH585_Center_CMAKE/CH585_Center.elf
+        DEPENDS ${PROJECT_NAME}.elf
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH585_Center"
+        COMMENT "执行擦除和烧录操作"
+        VERBATIM
+        USES_TERMINAL
+)
