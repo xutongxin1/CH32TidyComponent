@@ -16,3 +16,7 @@ CH585_Center_CMAKE/
 CH592_Node_cmake/
 
 CH592_Node/obj/
+
+CH592_Node/cmake-build-debug-mingw/
+
+CH585_Center/cmake-build-debug-mingw/

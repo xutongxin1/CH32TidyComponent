@@ -15,6 +15,9 @@
 #include "MESH_LIB.h"
 #include "app_vendor_model_srv.h"
 #include "app.h"
+
+#include <data_transfer.h>
+
 #include "HAL.h"
 
 /*********************************************************************
@@ -59,7 +62,7 @@ static void link_open(bt_mesh_prov_bearer_t bearer);
 static void link_close(bt_mesh_prov_bearer_t bearer, uint8_t reason);
 static void prov_complete(uint16_t net_idx, uint16_t addr, uint8_t flags, uint32_t iv_index);
 static void vendor_model_srv_rsp_handler(const vendor_model_srv_status_t *val);
-static int vendor_model_srv_send(uint16_t addr, uint8_t *pData, uint16_t len);
+int vendor_model_srv_send(uint16_t addr, uint8_t *pData, uint16_t len);
 static void prov_reset(void);
 
 static struct bt_mesh_cfg_srv cfg_srv = {
@@ -298,48 +301,11 @@ static void vendor_model_srv_rsp_handler(const vendor_model_srv_status_t *val) {
     }
     if (val->vendor_model_srv_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_MSG) {
         // 收到透传数据
-        APP_DBG("len %d, data 0x%s from 0x%04x", val->vendor_model_srv_Event.trans.len,
-                (char *)val->vendor_model_srv_Event.trans.pdata,
-                val->vendor_model_srv_Event.trans.addr);
-        tmos_memcpy(&app_mesh_manage, val->vendor_model_srv_Event.trans.pdata, val->vendor_model_srv_Event.trans.len);
-        switch (app_mesh_manage.data.buf[0]) {
-            // 判断是否为删除命令
-            case CMD_DELETE_NODE: {
-                if (val->vendor_model_srv_Event.trans.len != DELETE_NODE_DATA_LEN) {
-                    APP_DBG("Delete node data err!");
-                    return;
-                }
-                uint8_t status;
-                APP_DBG("receive delete cmd, send ack and start delete node delay");
-                app_mesh_manage.delete_node_ack.cmd = CMD_DELETE_NODE_ACK;
-                status = vendor_model_srv_send(val->vendor_model_srv_Event.trans.addr,
-                                               app_mesh_manage.data.buf, DELETE_NODE_ACK_DATA_LEN);
-                if (status) {
-                    APP_DBG("send ack failed %d", status);
-                }
-                // 即将删除自身，先发送CMD_DELETE_NODE_INFO命令
-                APP_DBG("send to all node to let them delete stored info ");
-                app_mesh_manage.delete_node_info.cmd = CMD_DELETE_NODE_INFO;
-                status = vendor_model_srv_send(BLE_MESH_ADDR_ALL_NODES,
-                                               app_mesh_manage.data.buf, DELETE_NODE_INFO_DATA_LEN);
-                if (status) {
-                    APP_DBG("send ack failed %d", status);
-                }
-                tmos_start_task(App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_DELETE_LOCAL_NODE_DELAY);
-                break;
-            }
+        char recv[100]={0};
+        tmos_memcpy(recv,(char *)val->vendor_model_srv_Event.trans.pdata,val->vendor_model_srv_Event.trans.len);
+        APP_DBG("从0x%04x收到数据%s,长度为%d",val->vendor_model_srv_Event.trans.addr,recv,val->vendor_model_srv_Event.trans.len);
+        HandleReceivedData(val->vendor_model_srv_Event.trans.addr,recv,val->vendor_model_srv_Event.trans.len);
 
-            // 判断是否为有节点被删除，需要删除存储的节点信息
-            case CMD_DELETE_NODE_INFO: {
-                if (val->vendor_model_srv_Event.trans.len != DELETE_NODE_INFO_DATA_LEN) {
-                    APP_DBG("Delete node info data err!");
-                    return;
-                }
-                delete_node_info_address = val->vendor_model_srv_Event.trans.addr;
-                tmos_start_task(App_TaskID, APP_DELETE_NODE_INFO_EVT, APP_DELETE_NODE_INFO_DELAY);
-                break;
-            }
-        }
     } else if (val->vendor_model_srv_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_WRT) {
         // 收到write数据
         // APP_DBG("len %d, data 0x%s from 0x%04x", val->vendor_model_srv_Event.write.len,
@@ -366,7 +332,7 @@ static void vendor_model_srv_rsp_handler(const vendor_model_srv_status_t *val) {
  *
  * @return  参考Global_Error_Code
  */
-static int vendor_model_srv_send(uint16_t addr, uint8_t *pData, uint16_t len) {
+int vendor_model_srv_send(uint16_t addr, uint8_t *pData, uint16_t len) {
     struct send_param param = {
         .app_idx = vnd_models[0].keys[0], // 此消息使用的app key，如无特定则使用第0个key
         .addr = addr, // 此消息发往的目的地地址
@@ -527,7 +493,9 @@ void App_Init() {
     blemesh_on_sync();
     HAL_KeyInit();
     HalKeyConfig(keyPress);
-    tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 1600);
+    // tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 1600);
+
+    InitDataTransfer(RecvHandler,ErrorHandler);
 }
 
 /*********************************************************************
@@ -542,10 +510,17 @@ void App_Init() {
  * @return  events not processed
  */
 static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
-    if (events & APP_NODE_TEST_EVT) {
-        tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 2400);
-        return (events ^ APP_NODE_TEST_EVT);
+    // if (events & APP_NODE_TEST_EVT) {
+    //     tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 2400);
+    //     return (events ^ APP_NODE_TEST_EVT);
+    // }
+
+    if (events & APP_CHECK_PENDING_PACKETS) {
+        CheckPendingPackets();
+        tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
+        return (events ^ APP_CHECK_PENDING_PACKETS);
     }
+
 
     if (events & APP_DELETE_LOCAL_NODE_EVT) {
         // 收到删除命令，删除自身网络信息

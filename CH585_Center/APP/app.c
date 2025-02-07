@@ -17,6 +17,7 @@
 #include "app_vendor_model_cli.h"
 #include "app.h"
 
+#include <data_transfer.h>
 #include <device_manager.h>
 
 #include "HAL.h"
@@ -87,7 +88,7 @@ static void node_added(uint16_t net_idx, uint16_t addr, uint8_t num_elem);
 static node_t *node_get(uint16_t node_addr);
 static void cfg_cli_rsp_handler(const cfg_cli_status_t *val);
 static void vendor_model_cli_rsp_handler(const vendor_model_cli_status_t *val);
-static int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len);
+int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len);
 static void node_init(void);
 
 static struct bt_mesh_cfg_srv cfg_srv = {
@@ -777,28 +778,11 @@ static void vendor_model_cli_rsp_handler(const vendor_model_cli_status_t *val) {
     }
     if (val->vendor_model_cli_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_MSG) {
         // 收到透传数据
-        APP_DBG("trans len %d, data 0x%02x from 0x%04x", val->vendor_model_cli_Event.trans.len,
-                val->vendor_model_cli_Event.trans.pdata[0],
-                val->vendor_model_cli_Event.trans.addr);
-        tmos_memcpy(&app_mesh_manage, val->vendor_model_cli_Event.trans.pdata, val->vendor_model_cli_Event.trans.len);
-        switch (app_mesh_manage.data.buf[0]) {
-            // 判断是否为应用层自定义删除命令应答
-            case CMD_DELETE_NODE_ACK: {
-                if (val->vendor_model_cli_Event.trans.len != DELETE_NODE_ACK_DATA_LEN) {
-                    APP_DBG("Delete node ack data err!");
-                    return;
-                }
-                node_t *node;
-                tmos_stop_task(App_TaskID, APP_DELETE_NODE_TIMEOUT_EVT);
-                bt_mesh_node_del_by_addr(val->vendor_model_cli_Event.trans.addr);
-                node = node_get(val->vendor_model_cli_Event.trans.addr);
-                node->stage.node = NODE_INIT;
-                node->node_addr = BLE_MESH_ADDR_UNASSIGNED;
-                node->fixed = FALSE;
-                APP_DBG("Delete node complete");
-                break;
-            }
-        }
+        char recv[100] = {0};
+        tmos_memcpy(recv, (char *) val->vendor_model_cli_Event.trans.pdata, val->vendor_model_cli_Event.trans.len);
+        APP_DBG("从0x%04x收到数据%s,长度为%d", val->vendor_model_cli_Event.trans.addr, recv,
+                val->vendor_model_cli_Event.trans.len);
+        HandleReceivedData(val->vendor_model_cli_Event.trans.addr, recv, val->vendor_model_cli_Event.trans.len);
     } else if (val->vendor_model_cli_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_IND) {
         // 收到indicate数据
         APP_DBG("ind len %d, data 0x%02x from 0x%04x", val->vendor_model_cli_Event.ind.len,
@@ -822,7 +806,7 @@ static void vendor_model_cli_rsp_handler(const vendor_model_cli_status_t *val) {
  *
  * @return  参考Global_Error_Code
  */
-static int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len) {
+int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len) {
     struct send_param param = {
         .app_idx = self_prov_app_idx, // 此消息使用的app key
         .addr = addr, // 此消息发往的目的地地址，此处为第1个配网的节点
@@ -833,8 +817,8 @@ static int vendor_model_cli_send(uint16_t addr, uint8_t *pData, uint16_t len) {
         .send_ttl = BLE_MESH_TTL_DEFAULT, // ttl，无特定则使用默认值
     };
     APP_DBG("向地址%x发送数据%s", addr, (char *)pData);
-    return vendor_message_cli_write(&param, pData, len); // 调用自定义模型客户端的有应答写函数发送数据，默认超时2s
-    // return vendor_message_cli_send_trans(&param, pData, len); // 或者调用自定义模型服务的透传函数发送数据，只发送，无应答机制
+    // return vendor_message_cli_write(&param, pData, len); // 调用自定义模型客户端的有应答写函数发送数据，默认超时2s
+    return vendor_message_cli_send_trans(&param, pData, len); // 或者调用自定义模型服务的透传函数发送数据，只发送，无应答机制
 }
 
 /*********************************************************************
@@ -1029,7 +1013,10 @@ void App_Init(void) {
     HalKeyConfig(keyPress);
 
     // 添加一个测试任务，定时向第一个配网的设备发送透传数据
-    tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, 4800);
+    tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
+
+    InitDataTransfer(RecvHandler, ErrorHandler);
+    tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
 }
 
 /*********************************************************************
@@ -1052,17 +1039,24 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
             return (events ^ APP_NODE_EVT);
     }
 
+    if (events & APP_CHECK_PENDING_PACKETS) {
+        CheckPendingPackets();
+        tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
+        return (events ^ APP_CHECK_PENDING_PACKETS);
+    }
+
     // 测试任务事件处理
     if (events & APP_NODE_TEST_EVT) {
         if (app_nodes[1].node_addr) {
             uint8_t status;
 
             uint8_t data[2] = "AT";
-            status = vendor_model_cli_send(vendor_sub_addr, data, 2); // 调用自定义模型客户端的透传函数发送数据
-            if (status)
-                APP_DBG("trans failed %d", status);
+            SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+            // status = SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+            // if (status)
+            //     APP_DBG("trans failed %d", status);
         }
-        tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(3));
+        tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
         return (events ^ APP_NODE_TEST_EVT);
     }
 

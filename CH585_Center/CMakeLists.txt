@@ -117,7 +117,7 @@ Building ${BIN_FILE}")
 # 添加自定义目标 "flash"
 add_custom_target(Erase_Flash
         COMMAND ../wlink.exe -d 1 erase
-        COMMAND ../wlink.exe -d 1 flash ../CH585_Center_CMAKE/CH585_Center.elf
+        COMMAND ../wlink.exe -d 1 flash ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.elf
         DEPENDS ${PROJECT_NAME}.elf
         WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH585_Center"
         COMMENT "执行擦除和烧录操作"
@@ -126,7 +126,7 @@ add_custom_target(Erase_Flash
 )
 
 add_custom_target(Flash
-        COMMAND ../wlink.exe -d 1 flash ../CH585_Center_CMAKE/CH585_Center.elf
+        COMMAND ../wlink.exe -d 1 flash ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.elf
         DEPENDS ${PROJECT_NAME}.elf
         WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH585_Center"
         COMMENT "执行擦除和烧录操作"

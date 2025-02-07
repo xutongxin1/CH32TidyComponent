@@ -68,7 +68,9 @@
 				"pre_script_description": "",
 				"post_script": "",
 				"post_script_description": "",
-				"excludeResources": [],
+				"excludeResources": [
+					"${project}/cmake-build-debug-mingw"
+				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
 					"multiply_extension": true,
