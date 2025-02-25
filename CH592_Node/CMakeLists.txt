@@ -45,6 +45,7 @@ add_compile_options(-march=rv32imac -mabi=ilp32
         -fsigned-char -ffunction-sections
         -fdata-sections -fno-common -g -DDEBUG=1
         -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1
+        -DCONFIG_I2C_DEBUG=1
 )
 
 
