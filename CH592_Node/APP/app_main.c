@@ -12,6 +12,10 @@
 
 /******************************************************************************/
 /* 头文件包含 */
+#include <I2C.h>
+#include <TCA9555.h>
+#include <WS2812.h>
+
 #include "CONFIG.h"
 #include "MESH_LIB.h"
 #include "HAL.h"
@@ -36,10 +40,8 @@ const uint8_t MacAddr[6] = {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
  */
 __HIGH_CODE
 __attribute__((noinline))
-void Main_Circulation()
-{
-    while(1)
-    {
+void Main_Circulation() {
+    while (1) {
         TMOS_SystemProcess();
     }
 }
@@ -51,14 +53,12 @@ void Main_Circulation()
  *
  * @return  state
  */
-uint8_t bt_mesh_lib_init(void)
-{
+uint8_t bt_mesh_lib_init(void) {
     uint8_t ret;
 
-    if(tmos_memcmp(VER_MESH_LIB, VER_MESH_FILE, strlen(VER_MESH_FILE)) == FALSE)
-    {
+    if (tmos_memcmp(VER_MESH_LIB, VER_MESH_FILE, strlen(VER_MESH_FILE)) == FALSE) {
         PRINT("mesh head file error...\n");
-        while(1);
+        while (1);
     }
 
     ret = RF_RoleInit();
@@ -90,22 +90,30 @@ uint8_t bt_mesh_lib_init(void)
  *
  * @return  none
  */
-int main(void)
-{
+int main(void) {
     SetSysClock(CLK_SOURCE_PLL_60MHz);
 
-//#ifdef DEBUG
+    //#ifdef DEBUG
     GPIOA_SetBits(bTXD1);
     GPIOA_ModeCfg(bTXD1, GPIO_ModeOut_PP_5mA);
     UART1_DefInit();
-//#endif
+    //#endif
+
+    //初始化I2C
+    CH59X_I2C_Init();
+    TCA_SetAllPinsInput(0x20);
+
+    //初始化WS2812
+    WS2812Init();
+
+    //初始化蓝牙
     PRINT("%s\r\n", VER_LIB);
     PRINT("%s\r\n", VER_MESH_LIB);
     CH59x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
-    if (GPIOB_ReadPortPin(GPIO_Pin_4)==0)//配网重置按键
+    if (GPIOB_ReadPortPin(GPIO_Pin_4) == 0) //配网重置按键
     {
         bt_mesh_reset();
         PRINT("重置配网\r\n");

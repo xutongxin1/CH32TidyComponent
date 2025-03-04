@@ -15,7 +15,7 @@
 3. 打开CLion加载cmake，和stm32一样，CLion中所选择的工具链不重要，你需要在环境位置增加环境变量
 
 ```
-Path=C:\Path\MounRiver\MounRiver_Studio\toolchain\RISC-V Embedded GCC\bin\
+Path=C:\MounRiver\MounRiver_Studio2\resources\app\resources\win32\components\WCH\Toolchain\RISC-V Embedded GCC\bin\
 ```
 
 4. 添加或修改openocd的文件位置
