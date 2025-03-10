@@ -97,10 +97,11 @@ int main(void) {
     GPIOA_SetBits(bTXD1);
     GPIOA_ModeCfg(bTXD1, GPIO_ModeOut_PP_5mA);
     UART1_DefInit();
+    PRINT("Working\r\n");
     //#endif
 
     //初始化I2C
-    CH59X_I2C_Init();
+    CH59X_I2C_Init();//使能这句话后，调试接口不可用
     TCA_SetAllPinsInput(0x20);
 
     //初始化WS2812

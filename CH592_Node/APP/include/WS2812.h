@@ -9,11 +9,12 @@
 #include <MESH_LIB.h>
 
 //∏ﬂµÕ’º±»
-#define CODE_1  7
-#define CODE_0 3
+// #define CODE_1 37 //75PSR *0.7
+// #define CODE_0 18 //75PSR *0.3
+#define CODE_1 53 //75PSR *0.7
+#define CODE_0 22 //75PSR *0.3
 
-
-#define RESET_LEN    (60)
+#define RESET_LEN    (300)
 #define  LED_NUM 8
 #define COLOR_BUFFER_LEN ((LED_NUM*(3*8))+RESET_LEN)
 #define MAX_STEP (200)

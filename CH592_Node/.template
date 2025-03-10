@@ -2,7 +2,7 @@ Vendor=WCH
 Toolchain=RISC-V
 Series=CH59X
 RTOS=NoneOS
-MCU=CH592X
+MCU=CH592F
 Link=WCH-Link
 PeripheralVersion===============1.0
 Description===============

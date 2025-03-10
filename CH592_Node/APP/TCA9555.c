@@ -27,8 +27,9 @@ void TCA_PinMode(const uint8_t device_addr, const uint32_t pin, const TCA_mode m
 }
 void TCA_SetAllPinsInput(const uint8_t device_addr) {
     writeToRegister(device_addr, PIN_MODE_REGISTER_LOW, pin_mode_register_state_low);
-
+    
     writeToRegister(device_addr, PIN_MODE_REGISTER_HIGH, pin_mode_register_state_high);
+    PRINT("已将%x的设备设置为输入\r\n",device_addr);
 }
 void TCA_PinInvert(const uint8_t device_addr, const uint32_t pin, const uint32_t invert) {
     if (pin > 15) return;

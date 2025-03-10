@@ -7,7 +7,7 @@
 			"toolchain": "RISC-V",
 			"series": "CH59X",
 			"rtos": "NoneOS",
-			"mcu": "CH592X",
+			"mcu": "CH592F",
 			"description": "==============",
 			"link": "WCH-Link",
 			"peripheral_version": "==============1.0"
@@ -69,7 +69,8 @@
 				"post_script": "",
 				"post_script_description": "",
 				"excludeResources": [
-					"${project}/cmake-build-debug-mingw"
+					"${project}/cmake-build-debug-mingw",
+					"${project}/cmake-build-debug"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
