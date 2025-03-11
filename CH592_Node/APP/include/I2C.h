@@ -8,6 +8,12 @@
 #include "core_riscv.h"
 #include <MESH_LIB.h>
 
+#ifdef  I2C_DEBUG
+#define I2C_PRINT(X...) printf(X)
+#else
+#define I2C_PRINT(X...)
+#endif
+
 void CH59X_I2C_Init(void);
 
 uint8_t I2C_ReadOneByte(const uint8_t device_addr, const u16 mem_addr);

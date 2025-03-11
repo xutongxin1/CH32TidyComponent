@@ -42,6 +42,7 @@ __HIGH_CODE
 __attribute__((noinline))
 void Main_Circulation() {
     while (1) {
+        // PRINT("111");
         TMOS_SystemProcess();
     }
 }
@@ -119,6 +120,7 @@ int main(void) {
         bt_mesh_reset();
         PRINT("重置配网\r\n");
     }
+    PRINT("进入主循环\r\n");
     Main_Circulation();
 }
 

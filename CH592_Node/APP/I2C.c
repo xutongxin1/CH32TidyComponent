@@ -26,15 +26,15 @@ void CH59X_I2C_Init(void) {
  */
 uint8_t I2C_ReadOneByte(const uint8_t device_addr, const u16 mem_addr) {
     u8 temp = 0;
-
+    I2C_PRINT("1\r\n");
     while (I2C_GetFlagStatus(I2C_FLAG_BUSY) != RESET);
     I2C_GenerateSTART(ENABLE);
-
+    I2C_PRINT("2\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_MODE_SELECT));
     I2C_Send7bitAddress(device_addr, I2C_Direction_Transmitter);
-
+    I2C_PRINT("3\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
-
+    I2C_PRINT("4\r\n");
 #if (Address_Lenth  == Address_8bit)
     I2C_SendData((u8) (mem_addr & 0x00FF));
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_BYTE_TRANSMITTED));
@@ -47,19 +47,19 @@ uint8_t I2C_ReadOneByte(const uint8_t device_addr, const u16 mem_addr) {
 	while( !I2C_CheckEvent(   I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
 
 #endif
-
+    I2C_PRINT ("5\r\n");
     I2C_GenerateSTART(ENABLE);
-
+    I2C_PRINT ("6\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_MODE_SELECT));
     I2C_Send7bitAddress(device_addr, I2C_Direction_Receiver);
-
+    I2C_PRINT ("7\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED));
     while (I2C_GetFlagStatus(I2C_FLAG_RXNE) == RESET)
         I2C_AcknowledgeConfig(DISABLE);
-
+    I2C_PRINT ("8\r\n");
     temp = I2C_ReceiveData();
     I2C_GenerateSTOP(ENABLE);
-
+    I2C_PRINT("9\r\n");
     return temp;
 }
 
@@ -75,14 +75,16 @@ uint8_t I2C_ReadOneByte(const uint8_t device_addr, const u16 mem_addr) {
  * @return  DataToWrite - Write data.
  */
 void I2C_WriteOneByte(const uint8_t device_addr, const u16 mem_addr, const uint8_t data) {
-    while (I2C_GetFlagStatus(I2C_FLAG_BUSY) != RESET) {}
+    while (I2C_GetFlagStatus(I2C_FLAG_BUSY) != RESET) {
+    }
+    I2C_PRINT("1\r\n");
     I2C_GenerateSTART(ENABLE);
-
+    I2C_PRINT("2\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_MODE_SELECT));
     I2C_Send7bitAddress(device_addr, I2C_Direction_Transmitter);
-
+    I2C_PRINT("3\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
-
+    I2C_PRINT("4\r\n");
 #if (Address_Lenth  == Address_8bit)
     I2C_SendData((u8) (mem_addr & 0x00FF));
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_BYTE_TRANSMITTED));
@@ -95,13 +97,14 @@ void I2C_WriteOneByte(const uint8_t device_addr, const u16 mem_addr, const uint8
 	while( !I2C_CheckEvent(   I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
 
 #endif
-
+    I2C_PRINT("5\r\n");
     if (I2C_GetFlagStatus(I2C_FLAG_TXE) != RESET) {
         I2C_SendData(data);
     }
-
+    I2C_PRINT("6\r\n");
     while (!I2C_CheckEvent(I2C_EVENT_MASTER_BYTE_TRANSMITTED));
     I2C_GenerateSTOP(ENABLE);
+    I2C_PRINT("7\r\n");
 }
 
 /*********************************************************************

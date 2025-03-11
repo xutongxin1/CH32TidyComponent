@@ -23,6 +23,7 @@ extern "C" {
 #define APP_DELETE_LOCAL_NODE_EVT       (1 << 1)
 #define APP_DELETE_NODE_INFO_EVT        (1 << 2)
 #define APP_CHECK_PENDING_PACKETS       (1 << 3)
+#define APP_TEST_EVT       (1 << 4)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82
