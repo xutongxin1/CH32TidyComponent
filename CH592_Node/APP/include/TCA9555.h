@@ -47,7 +47,7 @@ void TCA_WritePin(const uint8_t device_addr, const uint32_t pin, const uint32_t 
 
 void TCA_TogglePin(const uint8_t device_addr, const uint32_t pin);
 
-uint32_t TCA_ReadPin(const uint8_t device_addr, const uint32_t pin);
+int8_t TCA_ReadPin(const uint8_t device_addr, const uint32_t pin);
 
 void TCA_SetAllPinsInput(const uint8_t device_addr);
 #endif /* TCA9555_H_ */

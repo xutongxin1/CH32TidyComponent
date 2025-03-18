@@ -13,11 +13,11 @@
 /******************************************************************************/
 #include "CONFIG.h"
 #include "MESH_LIB.h"
-#include "TCA9555.h"
-#include "app_vendor_model_srv.h"
-#include "app.h"
+#include "../include/TCA9555.h"
+#include "../include/app_vendor_model_srv.h"
+#include "../include/app.h"
 
-#include <data_transfer.h>
+#include <../include/data_transfer.h>
 
 #include "HAL.h"
 
@@ -43,9 +43,9 @@ static uint8_t MESH_MEM[1024 * 2] = {0};
 extern const ble_mesh_cfg_t app_mesh_cfg;
 extern const struct device app_dev;
 
-static uint8_t App_TaskID = 0;  // Task ID for internal task/event processing
+uint8_t Main_App_TaskID = 0;  // Task ID for internal task/event processing
 
-static uint16_t App_ProcessEvent (uint8_t task_id, uint16_t events);
+uint16_t App_ProcessEvent (uint8_t task_id, uint16_t events);
 
 static uint8_t dev_uuid[16] = {0};  // 此设备的UUID
 uint8_t MACAddr[6];                 // 此设备的mac
@@ -234,7 +234,7 @@ static void link_close (bt_mesh_prov_bearer_t bearer, uint8_t reason) {
 static void prov_complete (uint16_t net_idx, uint16_t addr, uint8_t flags, uint32_t iv_index) {
     APP_DBG ("net_idx %x, addr %x", net_idx, addr);
     if (settings_load_over || (vnd_models[0].keys[0] == BLE_MESH_KEY_UNUSED)) {
-        tmos_start_task (App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
+        tmos_start_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
     }
 }
 
@@ -271,15 +271,15 @@ static void cfg_srv_rsp_handler (const cfg_srv_status_t *val) {
     if (val->cfgHdr.opcode == OP_APP_KEY_ADD) {
         APP_DBG ("App Key Added");
         // 配置成功，刷新删除任务
-        tmos_start_task (App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
+        tmos_start_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
     } else if (val->cfgHdr.opcode == OP_MOD_APP_BIND) {
         APP_DBG ("Vendor Model Binded");
         // 配置成功，刷新删除任务
-        tmos_start_task (App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
+        tmos_start_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
     } else if (val->cfgHdr.opcode == OP_MOD_SUB_ADD) {
         APP_DBG ("Vendor Model Subscription Set");
         // 配置结束，取消删除任务
-        tmos_stop_task (App_TaskID, APP_DELETE_LOCAL_NODE_EVT);
+        tmos_stop_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT);
     } else {
         APP_DBG ("Unknow opcode 0x%02x", val->cfgHdr.opcode);
     }
@@ -489,78 +489,52 @@ void blemesh_on_sync (void) {
  * @return  none
  */
 void App_Init() {
-    App_TaskID = TMOS_ProcessEventRegister (App_ProcessEvent);
+    Main_App_TaskID = TMOS_ProcessEventRegister (App_ProcessEvent);
 
     vendor_model_srv_init (vnd_models);
     blemesh_on_sync();
     HAL_KeyInit();
     HalKeyConfig (keyPress);
     // tmos_start_task (App_TaskID, APP_NODE_TEST_EVT, K_MSEC (1000));
-    tmos_start_task (App_TaskID, APP_TEST_EVT, K_MSEC (100));
+    tmos_start_task (Main_App_TaskID, APP_TEST_EVT, K_MSEC (100));
     InitDataTransfer (RecvHandler, ErrorHandler);
 }
 
 /*********************************************************************
- * @fn      App_ProcessEvent
+ * @fn      bt_mesh_lib_init
  *
- * @brief   应用层事件处理函数
+ * @brief   mesh 库初始化
  *
- * @param   task_id  - The TMOS assigned task ID.
- * @param   events - events to process.  This is a bit map and can
- *                   contain more than one event.
- *
- * @return  events not processed
+ * @return  state
  */
-static uint16_t App_ProcessEvent (uint8_t task_id, uint16_t events) {
+uint8_t bt_mesh_lib_init(void) {
+    uint8_t ret;
 
-    // if (events & APP_NODE_TEST_EVT) {
-    //     tmos_start_task (App_TaskID, APP_NODE_TEST_EVT, K_MSEC (1000));
-
-    //  if (TCA_ReadPin (0x20, P00) == 1) {
-    //      PRINT ("高电平\r\n");
-    //  } else {
-    //      PRINT ("低电平\r\n");
-    //  }
-
-    //  return (events ^ APP_NODE_TEST_EVT);
-    // }
-
-    if (events & APP_CHECK_PENDING_PACKETS) {
-        CheckPendingPackets();
-        tmos_start_task (App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC (100));
-        return (events ^ APP_CHECK_PENDING_PACKETS);
+    if (tmos_memcmp(VER_MESH_LIB, VER_MESH_FILE, strlen(VER_MESH_FILE)) == FALSE) {
+        PRINT("mesh head file error...\n");
+        while (1);
     }
 
-    if (events & APP_CHECK_PENDING_PACKETS) {
-        CheckPendingPackets();
-        tmos_start_task (App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC (100));
-        return (events ^ APP_CHECK_PENDING_PACKETS);
-    }
+    ret = RF_RoleInit();
 
+#if((CONFIG_BLE_MESH_PROXY) ||   \
+(CONFIG_BLE_MESH_PB_GATT) || \
+(CONFIG_BLE_MESH_OTA))
+    ret = GAPRole_PeripheralInit();
+#endif /* PROXY || PB-GATT || OTA */
 
-    if (events & APP_DELETE_LOCAL_NODE_EVT) {
-        // 收到删除命令，删除自身网络信息
-        APP_DBG ("Delete local node");
-        // 复位自身网络状态
-        bt_mesh_reset();
-        return (events ^ APP_DELETE_LOCAL_NODE_EVT);
-    }
+#if(CONFIG_BLE_MESH_PROXY_CLI)
+    ret = GAPRole_CentralInit();
+#endif /* CONFIG_BLE_MESH_PROXY_CLI */
 
-    if (events & APP_TEST_EVT) {
-        PRINT("尝试读取电平\r\n");
-        tmos_start_task (App_TaskID, APP_TEST_EVT, K_MSEC (100));
+    MeshTimer_Init();
+    MeshDeamon_Init();
+    ble_sm_alg_ecc_init();
 
-        if (TCA_ReadPin (0x20, P00) == 1) {
-            PRINT ("高电平\r\n");
-        } else {
-            PRINT ("低电平\r\n");
-        }
-
-        return (events ^ APP_TEST_EVT);
-    }
-
-    // Discard unknown events
-    return 0;
+#if(CONFIG_BLE_MESH_IV_UPDATE_TEST)
+    bt_mesh_iv_update_test(TRUE);
+#endif
+    return ret;
 }
 
 /******************************** endfile @ main ******************************/

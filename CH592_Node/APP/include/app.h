@@ -41,32 +41,28 @@ extern "C" {
 
 /******************************************************************************/
 
-typedef union
-{
-    struct
-    {
-        uint8_t cmd;                /* 命令码 CMD_DELETE_NODE */
-        uint8_t addr[ADDRESS_LEN];  /* 擦除地址 */
-    } delete_node;                  /* 删除节点命令 */
-    struct
-    {
-        uint8_t cmd;                /* 命令码 CMD_DELETE_NODE_ACK */
-    } delete_node_ack;              /* 删除节点命令应答 */
-    struct
-    {
-        uint8_t cmd;                /* 命令码 CMD_DELETE_NODE_INFO */
-    } delete_node_info;             /* 删除存储的节点信息命令 */
-    struct
-    {
+typedef union {
+    struct {
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE */
+        uint8_t addr[ADDRESS_LEN]; /* 擦除地址 */
+    } delete_node; /* 删除节点命令 */
+    struct {
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE_ACK */
+    } delete_node_ack; /* 删除节点命令应答 */
+    struct {
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE_INFO */
+    } delete_node_info; /* 删除存储的节点信息命令 */
+    struct {
         uint8_t buf[20]; /* 接收数据包*/
     } data;
-}app_mesh_manage_t;
+} app_mesh_manage_t;
 
 /**
  * @brief   应用层初始化
  */
 void App_Init(void);
 
+uint8_t bt_mesh_lib_init(void);
 /******************************************************************************/
 
 /******************************************************************************/
