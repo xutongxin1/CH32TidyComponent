@@ -13,15 +13,15 @@
 /******************************************************************************/
 /* 头文件包含 */
 #include <data_transfer.h>
-#include <../include/I2C.h>
-#include <../include/TCA9555.h>
-#include <../include/WS2812.h>
+#include <I2C.h>
+#include <TCA9555.h>
+#include <WS2812.h>
 
 #include "CONFIG.h"
 #include "MESH_LIB.h"
 #include "HAL.h"
-#include "../include/app_mesh_config.h"
-#include "../include/app.h"
+#include "app_mesh_config.h"
+#include "app_mesh.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS

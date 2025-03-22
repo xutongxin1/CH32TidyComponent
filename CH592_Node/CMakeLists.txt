@@ -97,7 +97,7 @@ target_link_libraries(${PROJECT_NAME}.elf
         MESH
         CH59xBLE
 )
-
+target_include_directories(${PROJECT_NAME}.elf PRIVATE "APP/include")
 
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
 set(BIN_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)

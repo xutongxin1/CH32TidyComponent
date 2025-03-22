@@ -13,11 +13,11 @@
 /******************************************************************************/
 #include "CONFIG.h"
 #include "MESH_LIB.h"
-#include "../include/TCA9555.h"
-#include "../include/app_vendor_model_srv.h"
-#include "../include/app.h"
+#include "TCA9555.h"
+#include "app_vendor_model_srv.h"
+#include "app_mesh.h"
 
-#include <../include/data_transfer.h>
+#include <data_transfer.h>
 
 #include "HAL.h"
 

@@ -1,7 +1,7 @@
 /* data_transfer.c */
-#include "../include/data_transfer.h"
+#include "data_transfer.h"
 
-#include <../include/app_mesh_config.h>
+#include <app_mesh_config.h>
 #include <stdio.h>
 
 static PendingPacket pendingList[MAX_PENDING];
