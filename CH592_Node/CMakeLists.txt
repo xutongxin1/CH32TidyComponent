@@ -84,30 +84,32 @@ add_link_options("-Wl,-Map,${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map" -Wl,--cref
 add_link_options(--specs=nano.specs --specs=nosys.specs -lprintf)
 #add_link_options(-lISP592 -lMESH -lCH59xBLE)
 #生成elf设置
-add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
-target_link_directories(${PROJECT_NAME}.elf PRIVATE
+#B55构型
+add_executable(B55_Node ${SOURCES} ${LINKER_SCRIPT})
+add_compile_definitions(DEVICE_TYPE_B55)
+target_link_directories(B55_Node PRIVATE
         ../
         ${CMAKE_SOURCE_DIR}/../CH592Lib/MESH_LIB
         ${CMAKE_SOURCE_DIR}/../CH592Lib/LIB
         ${CMAKE_SOURCE_DIR}/../CH592Lib/StdPeriphDriver
 )
-target_link_libraries(${PROJECT_NAME}.elf
+target_link_libraries(B55_Node
         ISP592
         MESH
         CH59xBLE
 )
-target_include_directories(${PROJECT_NAME}.elf PRIVATE "APP/include")
+target_include_directories(B55_Node PRIVATE "APP/include")
 
-set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
-set(BIN_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)
-set(LIST_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.list)
+set(HEX_FILE ${PROJECT_BINARY_DIR}/B55_Node.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/B55_Node.bin)
+set(LIST_FILE ${PROJECT_BINARY_DIR}/B55_Node.list)
 
 #生成hex设置
-add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
-        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:${PROJECT_NAME}.elf>
-        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide $<TARGET_FILE:${PROJECT_NAME}.elf> > ${LIST_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${PROJECT_NAME}.elf> ${HEX_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}
+add_custom_command(TARGET B55_Node POST_BUILD
+        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:B55_Node>
+        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide $<TARGET_FILE:B55_Node> > ${LIST_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:B55_Node> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:B55_Node> ${BIN_FILE}
         COMMENT "Building ${HEX_FILE}
 Building ${BIN_FILE}")

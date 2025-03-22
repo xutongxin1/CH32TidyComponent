@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeSharedSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-G Ninja">
+      <configuration PROFILE_NAME="B55构型" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-G Ninja">
         <ADDITIONAL_GENERATION_ENVIRONMENT>
           <envs>
             <env name="Path" value="C:\MounRiver\MounRiver_Studio2\resources\app\resources\win32\components\WCH\Toolchain\RISC-V Embedded GCC\bin\" />

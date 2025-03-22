@@ -22,15 +22,12 @@
 #include "HAL.h"
 #include "app_mesh_config.h"
 #include "app_mesh.h"
-
+#include "device_type_define.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
 __attribute__((aligned(4))) uint32_t MEM_BUF[BLE_MEMHEAP_SIZE / 4];
 
-#if(defined(BLE_MAC)) && (BLE_MAC == TRUE)
-const uint8_t MacAddr[6] = {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
-#endif
 
 /*********************************************************************
  * @fn      Main_Circulation
@@ -73,8 +70,8 @@ int main(void) {
     WS2812Init();
 
     //≥ı ºªØ¿∂—¿
-    PRINT("%s\r\n", VER_LIB);
-    PRINT("%s\r\n", VER_MESH_LIB);
+    PRINT("%p\r\n", VER_LIB);
+    PRINT("%p\r\n", VER_MESH_LIB);
     CH59x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();

@@ -39,6 +39,10 @@ extern "C" {
 // 删除存储的节点信息命令，包含 1字节命令码
 #define DELETE_NODE_INFO_DATA_LEN      (PERIPHERAL_CMD_LEN)
 
+#if(defined(BLE_MAC)) && (BLE_MAC == TRUE)
+    const uint8_t MacAddr[6] = {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
+#endif
+
 /******************************************************************************/
 
 typedef union {

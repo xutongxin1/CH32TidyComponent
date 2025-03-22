@@ -12,8 +12,8 @@
 
 /******************************************************************************/
 #include "CONFIG.h"
-#include "app_mesh_config.h"
-#include "app_vendor_model_srv.h"
+#include "../include/app_mesh_config.h"
+#include "../include/app_vendor_model_srv.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS

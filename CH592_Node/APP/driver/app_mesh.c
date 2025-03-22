@@ -13,11 +13,12 @@
 /******************************************************************************/
 #include "CONFIG.h"
 #include "MESH_LIB.h"
-#include "TCA9555.h"
-#include "app_vendor_model_srv.h"
-#include "app_mesh.h"
+#include "../include/TCA9555.h"
+#include "../include/app_vendor_model_srv.h"
+#include "../include/app_mesh.h"
 
-#include <data_transfer.h>
+#include <device_type_define.h>
+#include <../include/data_transfer.h>
 
 #include "HAL.h"
 
@@ -402,6 +403,10 @@ void blemesh_on_sync (void) {
 
     GetMACAddress (MACAddr);
     tmos_memcpy (dev_uuid, MACAddr, 6);
+
+    //写入设备类型用于识别
+    dev_uuid[6]=CURRENT_DEVICE_TYPE;
+
     err = bt_mesh_cfg_set (&app_mesh_cfg, &app_dev, MACAddr, &info);
     if (err) {
         APP_DBG ("Unable set configuration (err:%d)", err);
