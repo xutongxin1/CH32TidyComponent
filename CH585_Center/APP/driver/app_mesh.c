@@ -15,10 +15,10 @@
 #include "MESH_LIB.h"
 #include "app_vendor_model_srv.h"
 #include "app_vendor_model_cli.h"
-#include "app.h"
+#include "app_mesh.h"
 
 #include <data_transfer.h>
-#include <device_manager.h>
+#include <distribution_addr.h>
 
 #include "HAL.h"
 
@@ -663,13 +663,15 @@ static void unprov_recv(bt_mesh_prov_bearer_t bearer,
                         const uint8_t uuid[16], bt_mesh_prov_oob_info_t oob_info,
                         const unprivison_info_t *info) {
     APP_DBG("");
-    int err;
 
     if (bearer & BLE_MESH_PROV_ADV) {
-        uint16_t assignedAddr = HandleProvisioning(uuid);
-        if (assignedAddr != INVALID_MESH_ADDR) {
+        uint8_t mac[6] = {0};
+        memcpy(mac, uuid, 6);
+        const uint16_t assignedAddr = allocate_address(mac, uuid[6]);
+        if (assignedAddr != 0x0000) //检查是否是无效地址
+        {
             printf("Assigned mesh: 0x%04X\n", assignedAddr);
-            err = bt_mesh_provision_adv(uuid, self_prov_net_idx, assignedAddr, 5);
+            const int err = bt_mesh_provision_adv(uuid, self_prov_net_idx, assignedAddr, 5);
             if (err) {
                 APP_DBG("Unable Open PB-ADV Session (err:%d)", err);
             }
@@ -1069,38 +1071,14 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     // Discard unknown events
     return 0;
 }
-
-/**
- * @brief 处理设备配网请求
- * @param mac 设备MAC地址
- * @return 分配/已有的Mesh地址，失败返回INVALID_MESH_ADDR
- */
-uint16_t HandleProvisioning(const uint8_t mac[MAC_ADDR_SIZE]) {
-    // 检查是否已存在
-    uint16_t existingAddr = GetMeshByMac(mac);
-    if (existingAddr != INVALID_MESH_ADDR) {
-        node_t *node = node_get(existingAddr);
-        if (node != NULL) {
-            bt_mesh_node_del_by_addr(existingAddr);
-            node->stage.node = NODE_INIT;
-            node->node_addr = BLE_MESH_ADDR_UNASSIGNED;
-            node->fixed = FALSE;
-            APP_DBG("删除%d的地址节点数据", existingAddr);
-        }
-        UpdateDeviceActivation(existingAddr, true);
-        return existingAddr;
+void bt_node_del(const uint16_t addr) {
+    node_t *node = node_get(addr);
+    if (node != NULL) {
+        bt_mesh_node_del_by_addr(addr);
+        node->stage.node = NODE_INIT;
+        node->node_addr = BLE_MESH_ADDR_UNASSIGNED;
+        node->fixed = FALSE;
+        APP_DBG("删除旧的0x%04X的地址节点数据", addr);
     }
-
-    // 分配新地址
-    uint16_t newAddr = FindAvailableMeshAddr();
-    if (newAddr == INVALID_MESH_ADDR) return INVALID_MESH_ADDR;
-
-    // 添加新设备
-    if (AddDeviceNode(newAddr, mac, 1) >= 0) {
-        // 默认类型1
-        return newAddr;
-    }
-    return INVALID_MESH_ADDR;
 }
-
 /******************************** endfile @ main ******************************/

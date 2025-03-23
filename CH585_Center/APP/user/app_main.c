@@ -12,11 +12,13 @@
 
 /******************************************************************************/
 /* 头文件包含 */
+#include <distribution_addr.h>
+
 #include "CONFIG.h"
 #include "MESH_LIB.h"
 #include "HAL.h"
 #include "app_mesh_config.h"
-#include "app.h"
+#include "app_mesh.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -102,6 +104,7 @@ int main(void) {
     CH58x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
+    init_persistent_addr();
     App_Init();
     Main_Circulation();
 }

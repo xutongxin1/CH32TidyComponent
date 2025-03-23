@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CH585_Center.elf" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CH585_Center" TARGET_NAME="CH585_Center.elf" CONFIG_NAME="Debug-MinGW" version="1" RUN_TARGET_PROJECT_NAME="CH585_Center" RUN_TARGET_NAME="CH585_Center.elf">
+    <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="C:\GitProject\CH32TidyComponent\CH585_Center\CH585.cfg" reset-type="RUN" download-type="NONE">
+      <debugger kind="GDB" isBundled="true" />
+    </openocd>
+    <method v="2" />
+  </configuration>
+</component>
