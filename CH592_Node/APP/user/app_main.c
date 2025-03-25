@@ -14,6 +14,7 @@
 /* 头文件包含 */
 #include <data_transfer.h>
 #include <I2C.h>
+#include <mesh_uart_test.h>
 #include <TCA9555.h>
 #include <WS2812.h>
 
@@ -76,6 +77,7 @@ int main(void) {
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
+    InitMESHUartTest();
     if (GPIOB_ReadPortPin(GPIO_Pin_4) == 0) //配网重置按键
     {
         bt_mesh_reset();

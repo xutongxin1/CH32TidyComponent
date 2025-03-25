@@ -87,7 +87,9 @@ add_link_options(--specs=nano.specs --specs=nosys.specs -lprintf)
 
 #B55¹¹ÐÍ
 add_executable(B55_Node ${SOURCES} ${LINKER_SCRIPT})
-add_compile_definitions(DEVICE_TYPE_B55)
+target_compile_definitions(B55_Node PUBLIC DEVICE_TYPE_B55 )
+target_compile_definitions(B55_Node PUBLIC ENABLE_MESH_UART_TEST)
+target_compile_definitions(B55_Node PUBLIC ENABLE_MESH_UART_DEBUG)
 target_link_directories(B55_Node PRIVATE
         ../
         ${CMAKE_SOURCE_DIR}/../CH592Lib/MESH_LIB
