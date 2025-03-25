@@ -77,13 +77,18 @@ int main(void) {
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
+
+#ifdef ENABLE_MESH_UART_TEST
     InitMESHUartTest();
+#endif
+
     if (GPIOB_ReadPortPin(GPIO_Pin_4) == 0) //配网重置按键
     {
         bt_mesh_reset();
         PRINT("重置配网\r\n");
     }
     PRINT("进入主循环\r\n");
+
     Main_Circulation();
 }
 
