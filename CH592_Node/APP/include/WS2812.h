@@ -22,7 +22,8 @@
 #define hex2rgb(c) (((c)>>16)&0xff),(((c)>>8)&0xff),((c)&0xff)
 
 void setPixelColor(uint16_t id, uint8_t r, uint8_t g, uint8_t b);
-void w2812_sync();
+// void w2812_sync();
 void WS2812Init();
-
+void setPixelColorHEX(uint16_t n, uint32_t RGBColor);
+void setPixelColorHEX_Half(uint16_t n, uint32_t RGBColor);
 #endif //WS2812_H
