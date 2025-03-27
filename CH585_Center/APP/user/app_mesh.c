@@ -13,12 +13,12 @@
 /******************************************************************************/
 #include "CONFIG.h"
 #include "MESH_LIB.h"
-#include "app_vendor_model_srv.h"
-#include "app_vendor_model_cli.h"
-#include "app_mesh.h"
+#include "../include/app_vendor_model_srv.h"
+#include "../include/app_vendor_model_cli.h"
+#include "../include/app_mesh.h"
 
-#include <data_transfer.h>
-#include <distribution_addr.h>
+#include <../include/data_transfer.h>
+#include <../include/distribution_addr.h>
 
 #include "HAL.h"
 
@@ -1049,15 +1049,15 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
 
     // 测试任务事件处理
     if (events & APP_NODE_TEST_EVT) {
-        if (app_nodes[1].node_addr) {
-            uint8_t status;
-
-            uint8_t data[2] = "AT";
-            SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
-            // status = SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
-            // if (status)
-            //     APP_DBG("trans failed %d", status);
-        }
+        // if (app_nodes[1].node_addr) {
+        //     uint8_t status;
+        //
+        //     uint8_t data[2] = "AT";
+        //     SendData(0x2001,USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+        //     // status = SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+        //     // if (status)
+        //     //     APP_DBG("trans failed %d", status);
+        // }
         tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
         return (events ^ APP_NODE_TEST_EVT);
     }
