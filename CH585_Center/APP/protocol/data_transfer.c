@@ -27,7 +27,7 @@ void InitDataTransfer(RecTrueDataCallback recvCb, SendErrorCallback errCb) {
     userErrorCb = errCb;
 }
 
-void SendData(uint16_t addr, DATATYPE dataType, const char *sendData) {
+void SendData(const uint16_t addr, const DATATYPE dataType, const char *sendData) {
     if (dataType < USER_DATA_TYPE || pendingCount >= MAX_PENDING) return;
 
     /* 构造数据包 */
@@ -54,7 +54,7 @@ void SendData(uint16_t addr, DATATYPE dataType, const char *sendData) {
     memcpy(p->data, sendData, dataLen);
 }
 
-void HandleReceivedData(uint16_t addr, const uint8_t *pdata, uint16_t len) {
+void HandleReceivedData(const uint16_t addr, const uint16_t group_addr, const uint8_t *pdata, uint16_t len) {
     if (len < 3) return;
 
     DATATYPE rxType = pdata[0];
@@ -96,7 +96,7 @@ void HandleReceivedData(uint16_t addr, const uint8_t *pdata, uint16_t len) {
             uint16_t payloadLen = len - 3;
             memcpy(buf, pdata + 1, payloadLen);
             buf[payloadLen] = '\0';
-            userRecvCb(addr, rxType, buf);
+            userRecvCb(addr, group_addr, rxType, buf);
         }
     }
 }
@@ -146,19 +146,17 @@ void CheckPendingPackets(void) {
 }
 
 // 接收成功回调
-void RecvHandler(uint16_t addr, DATATYPE dataType, char* recvData)
-{
+void RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE dataType, char *recvData) {
     // addr：来源地址（16位）
     // dataType：原始用户数据类型（>=10）
     // recvData：保证以'\0'结尾的字符串
-    APP_DBG("Received from 0x%04X: Type=%d, Data=%s\n", addr, dataType, recvData);
+    APP_DBG("Received from 0x%04X, group 0x%04X: Type=%d, Data=%s", addr, group_addr, dataType, recvData);
 }
 
 // 发送失败回调
-void ErrorHandler(uint16_t addr, DATATYPE dataType, char* sendData)
-{
+void ErrorHandler(const uint16_t addr, const DATATYPE dataType, char *sendData) {
     // addr：目标地址
     // dataType：原始用户数据类型
     // sendData：原始发送数据内容
-    APP_DBG("Failed to send to 0x%04X: Type=%d, Data=%s\n", addr, dataType, sendData);
+    APP_DBG("Failed to send to 0x%04X: Type=%d, Data=%s", addr, dataType, sendData);
 }

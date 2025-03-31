@@ -108,6 +108,7 @@ struct bt_mesh_vendor_model_srv_trans
     uint8_t *pdata;
     uint16_t len;
     uint16_t addr;
+    uint16_t group_addr;
 };
 
 /**
@@ -146,6 +147,7 @@ struct vendor_model_srv_tid
 {
     uint8_t trans_tid;
     uint16_t trans_addr;
+    uint16_t trans_group_addr;
     uint8_t write_tid;
     uint16_t write_addr;
 };

@@ -306,7 +306,7 @@ static void vendor_model_srv_rsp_handler (const vendor_model_srv_status_t *val) 
         char recv[100] = {0};
         tmos_memcpy (recv, (char *)val->vendor_model_srv_Event.trans.pdata, val->vendor_model_srv_Event.trans.len);
         APP_DBG ("从0x%04x收到数据%s,长度为%d", val->vendor_model_srv_Event.trans.addr, recv, val->vendor_model_srv_Event.trans.len);
-        HandleReceivedData (val->vendor_model_srv_Event.trans.addr, recv, val->vendor_model_srv_Event.trans.len);
+        HandleReceivedData (val->vendor_model_srv_Event.trans.addr,val->vendor_model_srv_Event.trans.group_addr, recv, val->vendor_model_srv_Event.trans.len);
 
     } else if (val->vendor_model_srv_Hdr.opcode == OP_VENDOR_MESSAGE_TRANSPARENT_WRT) {
         // 收到write数据

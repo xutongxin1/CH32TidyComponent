@@ -52,6 +52,7 @@ struct bt_mesh_vendor_model_cli_trans
     uint8_t *pdata;
     uint16_t len;
     uint16_t addr;
+    uint16_t group_addr;
 };
 
 /**
@@ -92,6 +93,7 @@ struct vendor_model_cli_tid
     uint16_t trans_addr;
     uint8_t ind_tid;
     uint16_t ind_addr;
+    uint16_t trans_group_addr;
 };
 
 /**

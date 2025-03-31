@@ -244,6 +244,7 @@ static void vendor_message_cli_trans(struct bt_mesh_model   *model,
     {
         vendor_model_cli->cli_tid.trans_tid = pData[0];
         vendor_model_cli->cli_tid.trans_addr = ctx->addr;
+        vendor_model_cli->cli_tid.trans_group_addr = ctx->recv_dst;
         // ¿ªÍ·Îªtid
         pData++;
         len--;
@@ -253,6 +254,7 @@ static void vendor_message_cli_trans(struct bt_mesh_model   *model,
         vendor_model_cli_status.vendor_model_cli_Event.trans.pdata = pData;
         vendor_model_cli_status.vendor_model_cli_Event.trans.len = len;
         vendor_model_cli_status.vendor_model_cli_Event.trans.addr = ctx->addr;
+        vendor_model_cli_status.vendor_model_cli_Event.trans.group_addr = ctx->recv_dst;
 
         if(vendor_model_cli->handler)
         {

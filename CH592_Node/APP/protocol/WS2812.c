@@ -147,7 +147,7 @@ void wheelLed() {
     }
 
     // 呼吸效果 - 总时间2秒
-    // 亮度上升（1秒）- 100个亮度等级，每级10ms
+    // 亮度上升（1秒）- 100个亮度等级，每级5ms
     for (int brightness = 0; brightness <= 100; brightness++) {
         // 更新所有LED的亮度
         for (int i = 0; i < LED_NUM; i++) {
@@ -176,7 +176,7 @@ void wheelLed() {
         DelayMs(5);
     }
 
-    // 亮度下降（1秒）- 100个亮度等级，每级10ms
+    // 亮度下降（1秒）- 100个亮度等级，每级5ms
     for (int brightness = 100; brightness >= 0; brightness--) {
         // 更新所有LED的亮度
         for (int i = 0; i < LED_NUM; i++) {
