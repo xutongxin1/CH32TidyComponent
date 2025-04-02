@@ -1,4 +1,4 @@
-#include "TCA9555.h"
+#include "../include/TCA9555.h"
 
 uint8_t output_register_state_low = 0xFF;
 uint8_t output_register_state_high = 0xFF;
@@ -101,6 +101,7 @@ int8_t TCA_ReadPin(const uint8_t device_addr, const uint32_t pin) {
 
     uint8_t result;
     if (I2C_ReadOneByte_TimeOut((device_addr << 1) + 1, memory_address, &result, 1024) != I2C_OK) {
+        printf("¶ÁÈ¡%cµØÖ·µÄTCA9555Ê§°Ü\r\n", device_addr);
         return -1;
     }
     return (result & mask) != 0;

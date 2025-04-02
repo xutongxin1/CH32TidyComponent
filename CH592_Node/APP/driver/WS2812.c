@@ -2,7 +2,7 @@
 // Created by 86180 on 2024/7/21.
 //
 
-#include "WS2812.h"
+#include "../include/WS2812.h"
 
 #include <CH59xBLE_LIB.h>
 #include <stdlib.h>
