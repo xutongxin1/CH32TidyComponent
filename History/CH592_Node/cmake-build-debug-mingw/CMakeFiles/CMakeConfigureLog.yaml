@@ -1,0 +1,418 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      The target system is: Generic -  - riscv
+      The host system is: Windows - 10.0.22631 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/ld.exe: c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\\libg.a(lib_a-exit.o): in function `.L0 ':
+      exit.c:(.text.exit+0x1e): undefined reference to `_exit'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/3.30.5/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/ld.exe: c:/mounriver/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\\libg.a(lib_a-exit.o): in function `.L0 ':
+      exit.c:(.text.exit+0x1e): undefined reference to `_exit'
+      collect2.exe: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/3.30.5/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1192 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      riscv-none-embed-gcc.exe (xPack GNU RISC-V Embedded GCC, 32-bit) 8.2.0
+      Copyright (C) 2018 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-eg2tue"
+      binary: "C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-eg2tue"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-eg2tue'
+        
+        Run Build Command(s): C:/Users/xtx/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_73cdc
+        [1/2] C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI0D76~1.EXE   -std=gnu11 -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj -c C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI0D76~1.EXE
+        Target: riscv-none-embed
+        Configured with: /Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/sources/riscv-gcc-8.2.0-3.1/configure --prefix=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc --infodir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/info --mandir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/man --htmldir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/html --pdfdir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/pdf --build=i686-pc-linux-gnu --host=i686-w64-mingw32 --target=riscv-none-embed --with-pkgversion='xPack GNU RISC-V Embedded GCC\\x2C 32-bit' --with-bugurl=https://github.com/sifive/freedom-tools/issues --enable-languages=c,c++ --enable-mingw-wildcard --enable-plugins --enable-lto --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-threads --disable-tls --enable-checking=yes --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-riscv-none-embed --with-sysroot=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/riscv-none-embed --with-abi=ilp32 --with-arch=rv32imac --disable-rpath --disable-build-format-warnings --with-system-zlib
+        Thread model: single
+        gcc version 8.2.0 (xPack GNU RISC-V Embedded GCC, 32-bit) 
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32'
+         c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/cc1.exe -quiet -v -imultilib rv32imac/ilp32 -iprefix c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/ -isysroot c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -march=rv32imac -mabi=ilp32 -auxbase-strip CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj -std=gnu11 -version -fdiagnostics-color=always -o C:\\Users\\xtx\\AppData\\Local\\Temp\\ccC5x9eu.s
+        GNU C11 (xPack GNU RISC-V Embedded GCC, 32-bit) version 8.2.0 (riscv-none-embed)
+        	compiled by GNU C version 7.4.0, GMP version 6.1.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include"
+        ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/lib/gcc/riscv-none-embed/8.2.0/../../../../include"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include-fixed"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include"
+        ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include-fixed
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include
+        End of search list.
+        GNU C11 (xPack GNU RISC-V Embedded GCC, 32-bit) version 8.2.0 (riscv-none-embed)
+        	compiled by GNU C version 7.4.0, GMP version 6.1.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        Compiler executable checksum: af7b28b7a644189924a5524d860cd6eb
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32'
+         c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/as.exe -v --traditional-format -march=rv32imac -mabi=ilp32 -o CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj C:\\Users\\xtx\\AppData\\Local\\Temp\\ccC5x9eu.s
+        GNU assembler version 2.32 (riscv-none-embed) using BFD version (xPack GNU RISC-V Embedded GCC, 32-bit) 2.32
+        COMPILER_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/
+        LIBRARY_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32'\x0d
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\Users\\xtx\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E rm -f libcmTC_73cdc.a && riscv-none-embed-ar qc libcmTC_73cdc.a  CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj && C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI4B51~1.EXE libcmTC_73cdc.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include]
+        end of search list found
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include-fixed] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include]
+        implicit include dirs: [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include-fixed;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-eg2tue']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/xtx/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_73cdc]
+        ignore line: [[1/2] C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI0D76~1.EXE   -std=gnu11 -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj -c C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI0D76~1.EXE]
+        ignore line: [Target: riscv-none-embed]
+        ignore line: [Configured with: /Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/sources/riscv-gcc-8.2.0-3.1/configure --prefix=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc --infodir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/info --mandir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/man --htmldir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/html --pdfdir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/pdf --build=i686-pc-linux-gnu --host=i686-w64-mingw32 --target=riscv-none-embed --with-pkgversion='xPack GNU RISC-V Embedded GCC\\x2C 32-bit' --with-bugurl=https://github.com/sifive/freedom-tools/issues --enable-languages=c,c++ --enable-mingw-wildcard --enable-plugins --enable-lto --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-threads --disable-tls --enable-checking=yes --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-riscv-none-embed --with-sysroot=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/riscv-none-embed --with-abi=ilp32 --with-arch=rv32imac --disable-rpath --disable-build-format-warnings --with-system-zlib]
+        ignore line: [Thread model: single]
+        ignore line: [gcc version 8.2.0 (xPack GNU RISC-V Embedded GCC  32-bit) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32']
+        ignore line: [ c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/cc1.exe -quiet -v -imultilib rv32imac/ilp32 -iprefix c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/ -isysroot c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -march=rv32imac -mabi=ilp32 -auxbase-strip CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj -std=gnu11 -version -fdiagnostics-color=always -o C:\\Users\\xtx\\AppData\\Local\\Temp\\ccC5x9eu.s]
+        ignore line: [GNU C11 (xPack GNU RISC-V Embedded GCC  32-bit) version 8.2.0 (riscv-none-embed)]
+        ignore line: [	compiled by GNU C version 7.4.0  GMP version 6.1.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include"]
+        ignore line: [ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/lib/gcc/riscv-none-embed/8.2.0/../../../../include"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include"]
+        ignore line: [ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C11 (xPack GNU RISC-V Embedded GCC  32-bit) version 8.2.0 (riscv-none-embed)]
+        ignore line: [	compiled by GNU C version 7.4.0  GMP version 6.1.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096]
+        ignore line: [Compiler executable checksum: af7b28b7a644189924a5524d860cd6eb]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32']
+        ignore line: [ c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/as.exe -v --traditional-format -march=rv32imac -mabi=ilp32 -o CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj C:\\Users\\xtx\\AppData\\Local\\Temp\\ccC5x9eu.s]
+        ignore line: [GNU assembler version 2.32 (riscv-none-embed) using BFD version (xPack GNU RISC-V Embedded GCC  32-bit) 2.32]
+        ignore line: [COMPILER_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/]
+        ignore line: [LIBRARY_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu11' '-v' '-o' 'CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imac' '-mabi=ilp32'\x0d]
+        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\Users\\xtx\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E rm -f libcmTC_73cdc.a && riscv-none-embed-ar qc libcmTC_73cdc.a  CMakeFiles/cmTC_73cdc.dir/CMakeCCompilerABI.c.obj && C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI4B51~1.EXE libcmTC_73cdc.a && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-fkukuj"
+      binary: "C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-fkukuj"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-fkukuj'
+        
+        Run Build Command(s): C:/Users/xtx/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_e8dd0
+        [1/2] C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI99B1~1.EXE   -std=gnu++17 -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI99B1~1.EXE
+        Target: riscv-none-embed
+        Configured with: /Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/sources/riscv-gcc-8.2.0-3.1/configure --prefix=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc --infodir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/info --mandir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/man --htmldir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/html --pdfdir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/pdf --build=i686-pc-linux-gnu --host=i686-w64-mingw32 --target=riscv-none-embed --with-pkgversion='xPack GNU RISC-V Embedded GCC\\x2C 32-bit' --with-bugurl=https://github.com/sifive/freedom-tools/issues --enable-languages=c,c++ --enable-mingw-wildcard --enable-plugins --enable-lto --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-threads --disable-tls --enable-checking=yes --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-riscv-none-embed --with-sysroot=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/riscv-none-embed --with-abi=ilp32 --with-arch=rv32imac --disable-rpath --disable-build-format-warnings --with-system-zlib
+        Thread model: single
+        gcc version 8.2.0 (xPack GNU RISC-V Embedded GCC, 32-bit) 
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32'
+         c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/cc1plus.exe -quiet -v -imultilib rv32imac/ilp32 -iprefix c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/ -isysroot c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -march=rv32imac -mabi=ilp32 -auxbase-strip CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj -std=gnu++17 -version -fdiagnostics-color=always -o C:\\Users\\xtx\\AppData\\Local\\Temp\\ccu9p3u0.s
+        GNU C++17 (xPack GNU RISC-V Embedded GCC, 32-bit) version 8.2.0 (riscv-none-embed)
+        	compiled by GNU C version 7.4.0, GMP version 6.1.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include"
+        ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/lib/gcc/riscv-none-embed/8.2.0/../../../../include"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include-fixed"
+        ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include"
+        ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/usr/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include-fixed
+         c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include
+        End of search list.
+        GNU C++17 (xPack GNU RISC-V Embedded GCC, 32-bit) version 8.2.0 (riscv-none-embed)
+        	compiled by GNU C version 7.4.0, GMP version 6.1.2, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        Compiler executable checksum: 28666688ebe44177e75e89efb31cdbf0
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32'
+         c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/as.exe -v --traditional-format -march=rv32imac -mabi=ilp32 -o CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\xtx\\AppData\\Local\\Temp\\ccu9p3u0.s
+        GNU assembler version 2.32 (riscv-none-embed) using BFD version (xPack GNU RISC-V Embedded GCC, 32-bit) 2.32
+        COMPILER_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/
+        LIBRARY_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/rv32imac/ilp32/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/;c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/\x0d
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32'\x0d
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\Users\\xtx\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E rm -f libcmTC_e8dd0.a && riscv-none-embed-ar qc libcmTC_e8dd0.a  CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj && C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI4B51~1.EXE libcmTC_e8dd0.a && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+          add: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include]
+        end of search list found
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0/backward]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/include-fixed] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+        collapse include dir [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include] ==> [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include]
+        implicit include dirs: [C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include/c++/8.2.0/backward;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/lib/gcc/riscv-none-embed/8.2.0/include-fixed;C:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/riscv-none-embed/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:38 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CMakeScratch/TryCompile-fkukuj']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/xtx/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe -v cmTC_e8dd0]
+        ignore line: [[1/2] C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI99B1~1.EXE   -std=gnu++17 -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI99B1~1.EXE]
+        ignore line: [Target: riscv-none-embed]
+        ignore line: [Configured with: /Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/sources/riscv-gcc-8.2.0-3.1/configure --prefix=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc --infodir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/info --mandir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/man --htmldir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/html --pdfdir=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/doc/pdf --build=i686-pc-linux-gnu --host=i686-w64-mingw32 --target=riscv-none-embed --with-pkgversion='xPack GNU RISC-V Embedded GCC\\x2C 32-bit' --with-bugurl=https://github.com/sifive/freedom-tools/issues --enable-languages=c,c++ --enable-mingw-wildcard --enable-plugins --enable-lto --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-threads --disable-tls --enable-checking=yes --with-gnu-as --with-gnu-ld --with-newlib --with-headers=yes --with-python-dir=share/gcc-riscv-none-embed --with-sysroot=/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/riscv-none-embed --with-abi=ilp32 --with-arch=rv32imac --disable-rpath --disable-build-format-warnings --with-system-zlib]
+        ignore line: [Thread model: single]
+        ignore line: [gcc version 8.2.0 (xPack GNU RISC-V Embedded GCC  32-bit) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32']
+        ignore line: [ c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/cc1plus.exe -quiet -v -imultilib rv32imac/ilp32 -iprefix c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/ -isysroot c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed C:/Users/xtx/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -march=rv32imac -mabi=ilp32 -auxbase-strip CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj -std=gnu++17 -version -fdiagnostics-color=always -o C:\\Users\\xtx\\AppData\\Local\\Temp\\ccu9p3u0.s]
+        ignore line: [GNU C++17 (xPack GNU RISC-V Embedded GCC  32-bit) version 8.2.0 (riscv-none-embed)]
+        ignore line: [	compiled by GNU C version 7.4.0  GMP version 6.1.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include"]
+        ignore line: [ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/Host/home/wch/Work/riscv-none-embed-gcc-8.2.0-3.1/win32-x32/install/riscv-none-embed-gcc/lib/gcc/riscv-none-embed/8.2.0/../../../../include"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/lib/gcc/../../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include"]
+        ignore line: [ignoring nonexistent directory "c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../riscv-none-embed/usr/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/riscv-none-embed/rv32imac/ilp32]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include/c++/8.2.0/backward]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/include-fixed]
+        ignore line: [ c:\\mounri~1\\mounri~1\\resour~1\\app\\resour~1\\win32\\compon~1\\wch\\toolch~1\\risc-v~1\\bin\\../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C++17 (xPack GNU RISC-V Embedded GCC  32-bit) version 8.2.0 (riscv-none-embed)]
+        ignore line: [	compiled by GNU C version 7.4.0  GMP version 6.1.2  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096]
+        ignore line: [Compiler executable checksum: 28666688ebe44177e75e89efb31cdbf0]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32']
+        ignore line: [ c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/as.exe -v --traditional-format -march=rv32imac -mabi=ilp32 -o CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\xtx\\AppData\\Local\\Temp\\ccu9p3u0.s]
+        ignore line: [GNU assembler version 2.32 (riscv-none-embed) using BFD version (xPack GNU RISC-V Embedded GCC  32-bit) 2.32]
+        ignore line: [COMPILER_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/riscv-none-embed/8.2.0/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../libexec/gcc/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/bin/]
+        ignore line: [LIBRARY_PATH=c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/rv32imac/ilp32/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/]
+        ignore line: [c:/mounri~1/mounri~1/resour~1/app/resour~1/win32/compon~1/wch/toolch~1/risc-v~1/bin/../riscv-none-embed/lib/\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-std=gnu++17' '-v' '-o' 'CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-march=rv32imac' '-mabi=ilp32'\x0d]
+        ignore line: [[2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && C:\\Users\\xtx\\AppData\\Local\\Programs\\CLion\\bin\\cmake\\win\\x64\\bin\\cmake.exe -E rm -f libcmTC_e8dd0.a && riscv-none-embed-ar qc libcmTC_e8dd0.a  CMakeFiles/cmTC_e8dd0.dir/CMakeCXXCompilerABI.cpp.obj && C:\\MOUNRI~1\\MOUNRI~1\\RESOUR~1\\app\\RESOUR~1\\win32\\COMPON~1\\WCH\\TOOLCH~1\\RISC-V~1\\bin\\RI4B51~1.EXE libcmTC_e8dd0.a && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+...

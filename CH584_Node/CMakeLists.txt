@@ -30,22 +30,23 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 # set(CMAKE_EXECUTABLE_SUFFIX_C ".elf")
 
-set(CMAKE_C_STANDARD 11)
+#set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
 # 设置项目名称
-project(CH585_Center LANGUAGES C CXX ASM)
+project(CH584_Node LANGUAGES C CXX ASM)
 
 
 # MCU设置与编译设置
 add_compile_options(-march=rv32imc_zba_zbb_zbc_zbs_xw -mabi=ilp32)
 
 add_compile_options(
-        -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -Os
+        -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20
+        -Os
         -fmessage-length=0 -fsigned-char -ffunction-sections
         -fdata-sections -fno-common --param=highcode-gen-section-name=1
-        -g -DDEBUG=1 -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1
-        -std=gnu99 -MMD -MP
+        -g -DDEBUG=1 -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1 -std=gnu99
+        -MMD -MP -DCONFIG_I2C_DEBUG=1
 )
 
 # 处理ASM文件
@@ -76,9 +77,10 @@ set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/../CH585Lib/Ld/LINK.ld)
 add_link_options(-march=rv32imc_zba_zbb_zbc_zbs_xw -mabi=ilp32)
 add_link_options(
         -mcmodel=medany -msmall-data-limit=8 -mno-save-restore
-        -Os -fmessage-length=0 -fsigned-char -ffunction-sections
-        -fdata-sections -fno-common --param=highcode-gen-section-name=1
-        -g
+        -fmax-errors=20 -Os -fmessage-length=0
+        -fsigned-char -ffunction-sections
+        -fdata-sections -fno-common
+        --param=highcode-gen-section-name=1 -g
 )
 add_link_options(-Wl,--print-memory-usage)
 add_link_options(-T ${LINKER_SCRIPT})
@@ -87,30 +89,33 @@ add_link_options("-Wl,-Map,${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map" -Wl,--cref
 add_link_options(--specs=nano.specs --specs=nosys.specs -lprintfloat)
 
 #生成elf设置
-add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
+add_executable(B55_Node ${SOURCES} ${LINKER_SCRIPT})
+target_compile_definitions(B55_Node PUBLIC DEVICE_TYPE_B55)
+target_compile_definitions(B55_Node PUBLIC ENABLE_MESH_UART_TEST)
+target_compile_definitions(B55_Node PUBLIC ENABLE_MESH_UART_DEBUG)
 
-target_link_directories(${PROJECT_NAME}.elf PRIVATE
+target_link_directories(B55_Node PRIVATE
         ../
         ${CMAKE_SOURCE_DIR}/../CH585Lib/MESH_LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/StdPeriphDriver
 )
-target_link_libraries(${PROJECT_NAME}.elf
+target_link_libraries(B55_Node
         ISP585
         MESH
         CH58xBLE
 )
 
-set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
-set(BIN_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)
-set(LIST_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.list)
+set(HEX_FILE ${PROJECT_BINARY_DIR}/B55_Node.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/B55_Node.bin)
+set(LIST_FILE ${PROJECT_BINARY_DIR}/B55_Node.list)
 
 #生成hex设置
-add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
-        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:${PROJECT_NAME}.elf>
-        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:${PROJECT_NAME}.elf> > ${LIST_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${PROJECT_NAME}.elf> ${HEX_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}
+add_custom_command(TARGET B55_Node POST_BUILD
+        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:B55_Node>
+        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:B55_Node> > ${LIST_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:B55_Node> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:B55_Node> ${BIN_FILE}
         COMMENT "Building ${HEX_FILE}
 Building ${BIN_FILE}")
 

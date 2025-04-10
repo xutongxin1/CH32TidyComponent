@@ -1,0 +1,3 @@
+C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/CH592_Node.elf.dir
+C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/edit_cache.dir
+C:/GitProject/CH32TidyComponent/CH592_Node/cmake-build-debug-mingw/CMakeFiles/rebuild_cache.dir
