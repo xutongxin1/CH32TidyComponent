@@ -45,9 +45,10 @@ add_compile_options(
         -Os
         -fmessage-length=0 -fsigned-char -ffunction-sections
         -fdata-sections -fno-common --param=highcode-gen-section-name=1
-        -g -DDEBUG=1 -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1 -std=gnu99
+        -g -DDEBUG=0
+        -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1 -std=gnu99
         -MMD -MP -DCONFIG_I2C_DEBUG=1
-)
+)#DEBUG=0代表使用uart0
 
 # 处理ASM文件
 add_compile_options($<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>)
@@ -120,20 +121,20 @@ add_custom_command(TARGET B55_Node POST_BUILD
 Building ${BIN_FILE}")
 
 # 添加自定义目标 "flash"
-add_custom_target(Erase_Flash
+add_custom_target(Erase_Flash_B55_Node
         COMMAND ../wlink.exe erase
-        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.elf
-        DEPENDS ${PROJECT_NAME}.elf
-        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH585_Center"
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/B55_Node.hex
+        DEPENDS B55_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
         COMMENT "执行擦除和烧录操作"
         VERBATIM
         USES_TERMINAL
 )
 
-add_custom_target(Flash
-        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.elf
-        DEPENDS ${PROJECT_NAME}.elf
-        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH585_Center"
+add_custom_target(Flash_B55_Node
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/B55_Node.hex
+        DEPENDS B55_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
         COMMENT "执行擦除和烧录操作"
         VERBATIM
         USES_TERMINAL

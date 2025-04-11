@@ -81,8 +81,8 @@ int main (void) {
     WS2812Init();  // PA11
 
     // 初始化蓝牙
-    PRINT ("%p\r\n", VER_LIB);
-    PRINT ("%p\r\n", VER_MESH_LIB);
+    PRINT ("%s\r\n", VER_LIB);
+    PRINT ("%s\r\n", VER_MESH_LIB);
     CH58x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
@@ -116,17 +116,17 @@ extern uint8_t Main_App_TaskID;  // Task ID for internal task/event processing
  * @return  events not processed
  */
 uint16_t App_ProcessEvent (uint8_t task_id, uint16_t events) {
-    // if (events & APP_NODE_TEST_EVT) {
-    //     tmos_start_task (App_TaskID, APP_NODE_TEST_EVT, K_MSEC (1000));
+    if (events & APP_NODE_TEST_EVT) {
+        tmos_start_task (Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC (1000));
 
-    //  if (TCA_ReadPin (0x20, P00) == 1) {
-    //      PRINT ("高电平\r\n");
-    //  } else {
-    //      PRINT ("低电平\r\n");
-    //  }
+        // if (TCA_ReadPin (0x20, P00) == 1) {
+        //     PRINT ("高电平\r\n");
+        // } else {
+        //     PRINT ("低电平\r\n");
+        // }
 
-    //  return (events ^ APP_NODE_TEST_EVT);
-    // }
+        return (events ^ APP_NODE_TEST_EVT);
+    }
 
     if (events & APP_CHECK_PENDING_PACKETS) {
         CheckPendingPackets();

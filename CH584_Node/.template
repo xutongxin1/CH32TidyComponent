@@ -8,7 +8,7 @@ PeripheralVersion========1.0
 Description========
 Mcu Type=CH584/5
 Address=0x00000000
-Target Path=obj\CH585_Center.hex
+Target Path=C:\GitProject\CH32TidyComponent\CH584_Node\obj\CH584_Node.hex
 Exe Path=
 Exe Arguments=
 CLKSpeed=1

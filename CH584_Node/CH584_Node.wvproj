@@ -164,7 +164,7 @@
 						"do_not_search_system_directories": false,
 						"preprocess_only": false,
 						"defined_symbols": [
-							"DEBUG=1",
+							"DEBUG=0",
 							"BLE_MEMHEAP_SIZE=4096",
 							"HAL_KEY=1",
 							"DEVICE_TYPE_B55",
@@ -684,7 +684,7 @@
 	"flashConfig": {
 		"mcutype": "CH584/5",
 		"address": "0x00000000",
-		"target_path": "obj\\CH585_Center.hex",
+		"target_path": "C:\\GitProject\\CH32TidyComponent\\CH584_Node\\obj\\CH584_Node.hex",
 		"clkSpeed": "High",
 		"debug_interface_mode": "2-wires serial",
 		"erase": false,

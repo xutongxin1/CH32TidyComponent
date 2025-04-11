@@ -90,7 +90,7 @@ uint8_t bt_mesh_lib_init(void) {
  */
 int main(void) {
     HSECFG_Capacitance(HSECap_18p);
-    SetSysClock(CLK_SOURCE_HSE_PLL_62_4MHz);
+    SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
 
 #ifdef DEBUG
     GPIOA_SetBits(GPIO_Pin_14);
