@@ -7,6 +7,8 @@
 #include <CH58x_common.h>
 #include "core_riscv.h"
 #include <MESH_LIB.h>
+#include <stdbool.h>
+
 // #define I2C_DEBUG
 #ifdef  I2C_DEBUG
 #define I2C_PRINT(X...) printf(X)
@@ -26,6 +28,8 @@ int I2C_WriteOneByte_TimeOut(const uint8_t device_addr, const u16 mem_addr,const
 void I2C_Read(const uint8_t device_addr, u16 memory_addr, u8 *data, u16 len);
 
 void I2C_Write(const uint8_t device_addr, u16 memory_addr, const u8 *data, u16 len);
+
+bool I2C_CheckDeviceExists(const uint8_t addr);
 
 enum {
     I2C_OK = 0,
