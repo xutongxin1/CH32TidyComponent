@@ -106,3 +106,24 @@ int8_t TCA_ReadPin(const uint8_t device_addr, const uint32_t pin) {
     }
     return (result & mask) != 0;
 }
+
+int16_t TCA_ReadAllPins(const uint8_t device_addr) {
+    uint8_t low_byte, high_byte;
+
+    // 读取低8位寄存器 (pins 0-7)
+    if (I2C_ReadOneByte_TimeOut((device_addr << 1) + 1, INPUT_REGISTER_LOW, &low_byte, 1024) != I2C_OK) {
+        printf("读取%c地址的TCA9555失败\r\n", device_addr);
+        return -1;
+    }
+
+    // 读取高8位寄存器 (pins 8-15)
+    if (I2C_ReadOneByte_TimeOut((device_addr << 1) + 1, INPUT_REGISTER_HIGH, &high_byte, 1024) != I2C_OK) {
+        printf("读取%c地址的TCA9555失败\r\n", device_addr);
+        return -1;
+    }
+
+    // 组合低8位和高8位成为16位结果
+    uint16_t result = (high_byte << 8) | low_byte;
+
+    return result;
+}

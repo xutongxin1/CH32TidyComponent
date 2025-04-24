@@ -145,14 +145,6 @@ void CheckPendingPackets(void) {
     }
 }
 
-// 接收成功回调
-void RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE dataType, char *recvData) {
-    // addr：来源地址（16位）
-    // dataType：原始用户数据类型（>=10）
-    // recvData：保证以'\0'结尾的字符串
-    APP_DBG("Received from 0x%04X, group 0x%04X: Type=%d, Data=%s", addr, group_addr, dataType, recvData);
-}
-
 // 发送失败回调
 void ErrorHandler(const uint16_t addr, const DATATYPE dataType, char *sendData) {
     // addr：目标地址
