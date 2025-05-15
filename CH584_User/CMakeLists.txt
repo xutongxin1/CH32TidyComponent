@@ -90,50 +90,50 @@ add_link_options("-Wl,-Map,${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map" -Wl,--cref
 add_link_options(--specs=nano.specs --specs=nosys.specs -lprintfloat)
 
 #生成elf设置
-add_executable(B53_Node ${SOURCES} ${LINKER_SCRIPT})
-target_compile_definitions(B53_Node PUBLIC DEVICE_TYPE_B55)
-target_compile_definitions(B53_Node PUBLIC ENABLE_MESH_UART_TEST)
-target_compile_definitions(B53_Node PUBLIC ENABLE_MESH_UART_DEBUG)
+add_executable(User_Node ${SOURCES} ${LINKER_SCRIPT})
+target_compile_definitions(User_Node PUBLIC DEVICE_TYPE_USER)
+target_compile_definitions(User_Node PUBLIC ENABLE_MESH_UART_TEST)
+target_compile_definitions(User_Node PUBLIC ENABLE_MESH_UART_DEBUG)
 
-target_link_directories(B53_Node PRIVATE
+target_link_directories(User_Node PRIVATE
         ../
         ${CMAKE_SOURCE_DIR}/../CH585Lib/MESH_LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/StdPeriphDriver
 )
-target_link_libraries(B53_Node
+target_link_libraries(User_Node
         ISP585
         MESH
         CH58xBLE
 )
 
-set(HEX_FILE ${PROJECT_BINARY_DIR}/B53_Node.hex)
-set(BIN_FILE ${PROJECT_BINARY_DIR}/B53_Node.bin)
-set(LIST_FILE ${PROJECT_BINARY_DIR}/B53_Node.list)
+set(HEX_FILE ${PROJECT_BINARY_DIR}/User_Node.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/User_Node.bin)
+set(LIST_FILE ${PROJECT_BINARY_DIR}/User_Node.list)
 
 #生成hex设置
-add_custom_command(TARGET B53_Node POST_BUILD
-        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:B53_Node>
-        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:B53_Node> > ${LIST_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:B53_Node> ${HEX_FILE}
-        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:B53_Node> ${BIN_FILE}
+add_custom_command(TARGET User_Node POST_BUILD
+        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:User_Node>
+        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:User_Node> > ${LIST_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:User_Node> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:User_Node> ${BIN_FILE}
         COMMENT "Building ${HEX_FILE}
 Building ${BIN_FILE}")
 
 # 添加自定义目标 "flash"
-add_custom_target(Erase_Flash_B53_Node
+add_custom_target(Erase_Flash_User_Node
         COMMAND ../wlink.exe erase
-        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/B53_Node.hex
-        DEPENDS B53_Node
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/User_Node.hex
+        DEPENDS User_Node
         WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
         COMMENT "执行擦除和烧录操作"
         VERBATIM
         USES_TERMINAL
 )
 
-add_custom_target(Flash_B53_Node
-        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/B53_Node.hex
-        DEPENDS B53_Node
+add_custom_target(Flash_User_Node
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/User_Node.hex
+        DEPENDS User_Node
         WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
         COMMENT "执行擦除和烧录操作"
         VERBATIM

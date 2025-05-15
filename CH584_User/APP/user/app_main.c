@@ -21,6 +21,7 @@
 #include "app_mesh_config.h"
 #include "app_mesh.h"
 #include "device_type_define.h"
+#include "USB_CDC.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -110,12 +111,8 @@ extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
 uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
         tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC(1000));
-
-        // if (TCA_ReadPin (0x20, P00) == 1) {
-        //     PRINT ("高电平\r\n");
-        // } else {
-        //     PRINT ("低电平\r\n");
-        // }
+        printf("Hello");
+        SendUSBData("Hello\r\n",7);
 
         return (events ^ APP_NODE_TEST_EVT);
     }
