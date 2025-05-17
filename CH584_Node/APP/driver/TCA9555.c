@@ -107,7 +107,7 @@ int8_t TCA_ReadPin(const uint8_t device_addr, const uint32_t pin) {
     return (result & mask) != 0;
 }
 
-int16_t TCA_ReadAllPins(const uint8_t device_addr) {
+uint16_t TCA_ReadAllPins(const uint8_t device_addr) {
     uint8_t low_byte, high_byte;
 
     // ¶ÁÈ¡µÍ8Î»¼Ä´æÆ÷ (pins 0-7)

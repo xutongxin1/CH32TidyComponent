@@ -24,6 +24,7 @@
 #include "app_mesh_config.h"
 #include "app_mesh.h"
 #include "device_type_define.h"
+#include "ScanIO.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -61,10 +62,15 @@ int main(void) {
     SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
 
 #ifdef DEBUG
-    GPIOA_SetBits(GPIO_Pin_14);
-    GPIOPinRemap(ENABLE, RB_PIN_UART0);
-    GPIOA_ModeCfg(GPIO_Pin_15, GPIO_ModeIN_PU);
-    GPIOA_ModeCfg(GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
+    // GPIOA_SetBits(GPIO_Pin_14);
+    // GPIOPinRemap(ENABLE, RB_PIN_UART0);
+    // GPIOA_ModeCfg(GPIO_Pin_15, GPIO_ModeIN_PU);
+    // GPIOA_ModeCfg(GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
+
+    GPIOB_SetBits(GPIO_Pin_7);
+    GPIOB_ModeCfg(GPIO_Pin_4, GPIO_ModeIN_PU);
+    GPIOB_ModeCfg(GPIO_Pin_7, GPIO_ModeOut_PP_5mA);
+
     UART0_DefInit();
     PRINT("Working\r\n");
 #endif
@@ -120,13 +126,9 @@ extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
  */
 uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
-        tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC(1000));
+        tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(1));
 
-        // if (TCA_ReadPin (0x20, P00) == 1) {
-        //     PRINT ("高电平\r\n");
-        // } else {
-        //     PRINT ("低电平\r\n");
-        // }
+        Scan(0x20);
 
         return (events ^ APP_NODE_TEST_EVT);
     }

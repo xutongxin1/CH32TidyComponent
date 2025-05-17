@@ -2,6 +2,8 @@
 // Created by xtx on 2025/4/17.
 //
 #include "ScanIO.h"
+
+#include <stdlib.h>
 #include <TCA9555.h>
 
 #include "app_mesh.h"
@@ -32,8 +34,8 @@ void Scan(const uint8_t addr) {
     }
 
     // 获取此设备所有引脚的当前状态
-    const int16_t current_state = TCA_ReadAllPins(addr);
-
+    const  uint16_t current_state = TCA_ReadAllPins(addr);
+    printf("current_state --> %d\r\n", current_state);
     // 如果读取失败，直接返回
     if (current_state < 0) {
         return; // TCA_ReadAllPins已经打印了错误信息
@@ -79,6 +81,7 @@ void handle_up(const uint8 addr, const uint8 pin) {
     const uint8 i = pin / 5;
     const uint8 j = pin % 5;
     char tmp[30] = {0};
+    printf("handle_up addr:%d pin:%d\r\n", addr, pin);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC303, USER_DATA_TYPE, tmp);
 }
@@ -89,6 +92,7 @@ void handle_down(const uint8 addr, const uint8 pin) {
     const uint8 i = pin / 5;
     const uint8 j = pin % 5;
     char tmp[30] = {0};
+    printf("handle_down addr:%d pin:%d\r\n", addr, pin);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC302, USER_DATA_TYPE, tmp);
 }
