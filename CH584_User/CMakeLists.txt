@@ -46,7 +46,7 @@ add_compile_options(
         -fmessage-length=0 -fsigned-char -ffunction-sections
         -fdata-sections -fno-common --param=highcode-gen-section-name=1
         -g -DDEBUG=0
-        -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1 -std=gnu99
+        -DBLE_MEMHEAP_SIZE=4096 -std=gnu99
         -MMD -MP -DCONFIG_I2C_DEBUG=1
 )#DEBUG=0代表使用uart0
 

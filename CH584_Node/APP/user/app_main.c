@@ -25,6 +25,7 @@
 #include "app_mesh.h"
 #include "device_type_define.h"
 #include "ScanIO.h"
+#include "B53_driver.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -79,15 +80,11 @@ int main(void) {
     CH58X_I2C_Init();
 
 #ifdef DEVICE_TYPE_B55
-
+    CheckB53_();
 #endif
     TCA_SetAllPinsInput(0x20);
     // 初始化WS2812
     WS2812Init(); // PB22
-    printf("0x20:%d,0x21:%d,0x22:%d,0x23:%d,0x24:%d,0x25:%d,0x26:%d,0x27:%d\r\n", I2C_CheckDeviceExists(0x20),
-           I2C_CheckDeviceExists(0x21), I2C_CheckDeviceExists(0x22), I2C_CheckDeviceExists(0x23),
-           I2C_CheckDeviceExists(0x24), I2C_CheckDeviceExists(0x25), I2C_CheckDeviceExists(0x26),
-           I2C_CheckDeviceExists(0x27));
 
     // 初始化蓝牙
     PRINT("%s\r\n", (char *) VER_LIB);
@@ -96,6 +93,12 @@ int main(void) {
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
+
+    printf("MAC地址");
+    for(int i = 0; i < 6; i++) {
+        printf("%02X", MACAddr[i]);
+    }
+    printf("\r\n");
 
 #ifdef ENABLE_MESH_UART_TEST
     InitMESHUartTest();
@@ -126,7 +129,7 @@ extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
  */
 uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
-        tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(1));
+        tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
 
         Scan(0x20);
 

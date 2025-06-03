@@ -7,6 +7,7 @@
 #include <TCA9555.h>
 
 #include "app_mesh.h"
+#include "B53_driver.h"
 #include "data_transfer.h"
 
 // 用于处理引脚状态变化的处理函数
@@ -21,6 +22,14 @@ static uint16_t previous_states[MAX_TCA_DEVICES];
 // 跟踪设备是否已经初始化（用于第一次扫描）
 static uint8_t device_initialized[MAX_TCA_DEVICES] = {0};
 
+/// 扫描所有TCA9555设备的引脚状态
+void ScanIO() {
+    for (int i = 0; i < MAX_TCA_DEVICES; i++) {
+        if (DeviceExists[i]) {
+            Scan(0x20 + i);
+        }
+    }
+}
 /**
  * 扫描TCA9555设备的所有引脚并处理状态变化
  * @param addr TCA9555设备地址
@@ -34,7 +43,7 @@ void Scan(const uint8_t addr) {
     }
 
     // 获取此设备所有引脚的当前状态
-    const  uint16_t current_state = TCA_ReadAllPins(addr);
+    const uint16_t current_state = TCA_ReadAllPins(addr);
     printf("current_state --> %d\r\n", current_state);
     // 如果读取失败，直接返回
     if (current_state < 0) {
@@ -61,11 +70,11 @@ void Scan(const uint8_t addr) {
         if (changed_pins & (1 << pin)) {
             // 检查引脚的新状态
             if (current_state & (1 << pin)) {
-                // 引脚从低电平变为高电平
-                handle_up(addr, pin);
-            } else {
                 // 引脚从高电平变为低电平
                 handle_down(addr, pin);
+            } else {
+                // 引脚从低电平变为高电平
+                handle_up(addr, pin);
             }
         }
     }
@@ -77,22 +86,22 @@ void Scan(const uint8_t addr) {
 //放回
 //此处仅处理物理意义上的放回
 void handle_up(const uint8 addr, const uint8 pin) {
-    const uint8 n = addr - 0x80;
-    const uint8 i = pin / 5;
-    const uint8 j = pin % 5;
+    const uint8 n = addr - 0x20;
+    const uint8 i = pin / 5 + 1;
+    const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    printf("handle_up addr:%d pin:%d\r\n", addr, pin);
+    printf("放回了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC303, USER_DATA_TYPE, tmp);
 }
 
 //取出
 void handle_down(const uint8 addr, const uint8 pin) {
-    const uint8 n = addr - 0x80;
-    const uint8 i = pin / 5;
-    const uint8 j = pin % 5;
+    const uint8 n = addr - 0x20;
+    const uint8 i = pin / 5 + 1;
+    const uint8 j = pin % 5 + 1 ;
     char tmp[30] = {0};
-    printf("handle_down addr:%d pin:%d\r\n", addr, pin);
+    printf("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC302, USER_DATA_TYPE, tmp);
 }

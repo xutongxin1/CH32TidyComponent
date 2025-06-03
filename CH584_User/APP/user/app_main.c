@@ -22,9 +22,12 @@
 #include "app_mesh.h"
 #include "device_type_define.h"
 #include "USB_CDC.h"
+#include "WS2812.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
+extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
+
 __attribute__ ((aligned (4))) uint32_t MEM_BUF[BLE_MEMHEAP_SIZE / 4];
 
 #ifdef ENABLE_MESH_UART_TEST
@@ -57,7 +60,7 @@ __attribute__ ((noinline)) void Main_Circulation() {
  */
 int main(void) {
     HSECFG_Capacitance(HSECap_18p);
-    SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
+    SetSysClock(CLK_SOURCE_HSI_PLL_78MHz);
 
 #ifdef DEBUG
     GPIOA_SetBits(GPIO_Pin_14);
@@ -73,13 +76,23 @@ int main(void) {
 
     PFIC_EnableIRQ( USB_IRQn );
 
+    //初始化ws2812
+    WS2812Init(); // PB22
+
     // 初始化蓝牙
     PRINT("%s\r\n", (char *) VER_LIB);
     PRINT("%s\r\n", (char *)VER_MESH_LIB);
+
     CH58x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
     App_Init();
+
+    printf("MAC地址");
+    for(int i = 0; i < 6; i++) {
+        printf("%02X", MACAddr[i]);
+    }
+    printf("\r\n");
 
 #ifdef ENABLE_MESH_UART_TEST
     InitMESHUartTest();
@@ -91,11 +104,9 @@ int main(void) {
         PRINT("重置配网\r\n");
     }
     PRINT("进入主循环\r\n");
-
+    tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
     Main_Circulation();
 }
-
-extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
 
 /*********************************************************************
  * @fn      App_ProcessEvent
@@ -112,9 +123,15 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
         tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC(1000));
         printf("Hello");
-        SendUSBData("Hello\r\n",7);
 
         return (events ^ APP_NODE_TEST_EVT);
+    }
+
+    if (events & APP_WS2812) {
+        ws2812_update();
+        // setPixelColor(0,255,255,0);
+        tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
+        return (events ^ APP_WS2812);
     }
 
     if (events & APP_CHECK_PENDING_PACKETS) {
