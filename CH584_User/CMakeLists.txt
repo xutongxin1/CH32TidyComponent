@@ -72,7 +72,7 @@ file(GLOB_RECURSE SOURCES
 )
 
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/../CH585Lib/Ld/LINK.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/CH584Link.ld)
 
 # 链接设置
 add_link_options(-march=rv32imc_zba_zbb_zbc_zbs_xw -mabi=ilp32)

@@ -30,6 +30,7 @@
  * GLOBAL TYPEDEFS
  */
 __attribute__ ((aligned (4))) uint32_t MEM_BUF[BLE_MEMHEAP_SIZE / 4];
+extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
 
 #ifdef ENABLE_MESH_UART_TEST
 extern uint8_t mesh_uart_isWorking;
@@ -51,6 +52,26 @@ __attribute__ ((noinline)) void Main_Circulation() {
     }
 }
 
+void SelfCheck(void) {
+
+    for (int i = 0; i < 8; i++) {
+        if (DeviceExists[i]) {
+            TCA_WritePin(0x20 + i,P17, 1);
+        }
+    }
+
+    wheelLed();
+    ws2812_effects_init();
+    ws2812_set_all_color(255,255,0);
+    ws2812_set_all_mode(LED_MODE_FLASH_FAST_3);
+
+
+    for (int i = 0; i < 8; i++) {
+        if (DeviceExists[i]) {
+            TCA_WritePin(0x20 + i,P17, 0);
+        }
+    }
+}
 /*********************************************************************
  * @fn      main
  *
@@ -82,10 +103,11 @@ int main(void) {
 #ifdef DEVICE_TYPE_B55
     CheckB53_();
 #endif
-    TCA_SetAllPinsInput(0x20);
+
     // 初始化WS2812
     WS2812Init(); // PB22
 
+    SelfCheck();
     // 初始化蓝牙
     PRINT("%s\r\n", (char *) VER_LIB);
     PRINT("%s\r\n", (char *)VER_MESH_LIB);
@@ -111,10 +133,10 @@ int main(void) {
     }
     PRINT("进入主循环\r\n");
 
+    tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
     Main_Circulation();
 }
 
-extern uint8_t Main_App_TaskID; // Task ID for internal task/event processing
 
 /*********************************************************************
  * @fn      App_ProcessEvent
@@ -134,6 +156,12 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         Scan(0x20);
 
         return (events ^ APP_NODE_TEST_EVT);
+    }
+
+    if (events & APP_WS2812) {
+        ws2812_update();
+        tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
+        return (events ^ APP_WS2812);
     }
 
     if (events & APP_CHECK_PENDING_PACKETS) {

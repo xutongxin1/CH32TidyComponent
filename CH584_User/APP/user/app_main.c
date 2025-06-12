@@ -129,7 +129,6 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
 
     if (events & APP_WS2812) {
         ws2812_update();
-        // setPixelColor(0,255,255,0);
         tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
         return (events ^ APP_WS2812);
     }

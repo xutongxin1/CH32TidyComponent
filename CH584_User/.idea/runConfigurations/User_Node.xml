@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="User_Node" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CH584_User" TARGET_NAME="User_Node" CONFIG_NAME="User_Node" version="1" RUN_TARGET_PROJECT_NAME="CH584_User" RUN_TARGET_NAME="User_Node">
+    <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="C:\GitProject\CH32TidyComponent\CH584_Node\CH585.cfg" reset-type="RUN" download-type="NONE">
+      <debugger kind="GDB" isBundled="true" />
+    </openocd>
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Erase_Flash_User_Node" run_configuration_type="CMakeRunConfiguration" />
+    </method>
+  </configuration>
+</component>

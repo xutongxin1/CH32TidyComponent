@@ -613,7 +613,7 @@ void USB_IRQProcessHandler( void )   /* USB中断服务程序 */
         }
         case UIS_TOKEN_OUT | 2:    // endpoint 2# 批量端点下传完成
         {
-          dg_log("usb_rec\n");
+          dg_log("usb_rec2\n");
           len = usb_irq_len[i];
           {
             //Ep2OUTDataBuf
@@ -638,7 +638,7 @@ void USB_IRQProcessHandler( void )   /* USB中断服务程序 */
         }
         case UIS_TOKEN_OUT | 1:    // endpoint 1# 批量端点下传完成
         {
-          dg_log("usb_rec\n");
+          dg_log("usb_rec1\n");
           len = usb_irq_len[i];
           //Ep1OUTDataBuf
           for(int i = 0;i<len;i++)

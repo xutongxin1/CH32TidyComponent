@@ -24,6 +24,7 @@ extern "C" {
 #define APP_DELETE_NODE_INFO_EVT        (1 << 2)
 #define APP_CHECK_PENDING_PACKETS       (1 << 3)
 #define APP_TEST_EVT       (1 << 4)
+#define APP_WS2812       (1 << 5)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82

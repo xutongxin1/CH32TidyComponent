@@ -29,8 +29,8 @@ void WS2812Init() {
     wheelLed();
     // setPixelColor(0,255,255,255);
     ws2812_effects_init();
-    ws2812_set_all_color(255,255,0);
-    ws2812_set_all_mode(LED_MODE_FLASH_FAST_3);
+    ws2812_set_all_color(255,0,0);
+    ws2812_set_all_mode(LED_MODE_FLASH_SLOW);
 }
 
 /// 设置灯的颜色
@@ -244,7 +244,7 @@ void ws2812_set_all_mode(led_mode_t mode) {
 
 // 处理快闪模式
 static void handle_flash_mode(uint16_t led_id, uint8_t flash_times) {
-    SendUSBData("Hello\r\n",7);
+
     led_state_t *led = &led_states[led_id];
 
     if (led->flash_count < flash_times * 2) {

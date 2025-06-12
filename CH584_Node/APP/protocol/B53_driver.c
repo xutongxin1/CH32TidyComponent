@@ -20,6 +20,8 @@ void CheckB53_() {
            DeviceExists[5], DeviceExists[6], DeviceExists[7]);
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
+            TCA_SetAllPinsInput(0x20 + i);
+            TCA_PinMode(0x20 + i,P17, OUTPUT); // ÉèÖÃPB16ÎªÊä³ö
             B53_Num++;
         }
     }

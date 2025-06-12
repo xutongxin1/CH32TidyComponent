@@ -15,5 +15,5 @@
 #include <stdbool.h>
 #include <stdio.h>
 void InitMESHUartTest();
-
+void ProcessUartData(const uint8_t *data, uint8_t len);
 #endif //MESH_UART_TEST_H
