@@ -29,7 +29,7 @@ void WS2812Init() {
     wheelLed();
     // setPixelColor(0,255,255,255);
     ws2812_effects_init();
-    ws2812_set_all_color(255,0,0);
+    ws2812_set_color_hex(0, 0x888800); // 设置第一个LED为红色
     ws2812_set_all_mode(LED_MODE_FLASH_SLOW);
 }
 

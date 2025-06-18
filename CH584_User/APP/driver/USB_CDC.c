@@ -3,6 +3,8 @@
 //
 
 #include "USB_CDC.h"
+#include "CDC_Recv.h"
+#include "WS2812.h"
 #define dg_log printf
 
 #define THIS_ENDP0_SIZE         64
@@ -642,9 +644,11 @@ void USB_IRQProcessHandler( void )   /* USB中断服务程序 */
           len = usb_irq_len[i];
           //Ep1OUTDataBuf
           for(int i = 0;i<len;i++)
-          dg_log("%02x  ",Ep1OUTDataBuf[i]);
+          {
+            dg_log("%02x  ", Ep1OUTDataBuf[i]);
+          }
           dg_log("\n");
-
+          CDC_RecvAnalyze(Ep1OUTDataBuf,len);
           //CH341的数据下发
           Ep1DataOUTFlag = 1;
           Ep1DataOUTLen = len;
@@ -1275,6 +1279,8 @@ void USB_IRQProcessHandler( void )   /* USB中断服务程序 */
                 {
                   case DEF_SET_LINE_CODING: /* SET_LINE_CODING */
                   {
+                    ws2812_set_color_hex(0, 0x888800);
+                    ws2812_set_all_mode(LED_MODE_BREATHE_SLOW);
                     UINT8 i;
                     dg_log("SET_LINE_CODING\r\n");
                     for(i=0; i<8; i++)

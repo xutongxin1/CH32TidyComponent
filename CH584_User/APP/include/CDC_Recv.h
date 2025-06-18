@@ -4,6 +4,8 @@
 
 #ifndef CDC_RECV_H
 #define CDC_RECV_H
+#include <stdbool.h>
 #include <stdint.h>
+extern bool isFirstRecv;
 void CDC_RecvAnalyze(uint8_t *data, uint8_t len);
 #endif //CDC_RECV_H

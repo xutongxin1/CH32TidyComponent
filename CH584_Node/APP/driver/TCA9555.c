@@ -33,6 +33,8 @@ void TCA_PinMode(const uint8_t device_addr, const uint32_t pin, const TCA_mode m
 }
 
 void TCA_SetAllPinsInput(const uint8_t device_addr) {
+    pin_mode_register_state_low=0XFF;
+    pin_mode_register_state_high=0XFF;
     writeToRegister(device_addr, PIN_MODE_REGISTER_LOW, pin_mode_register_state_low);
 
     writeToRegister(device_addr, PIN_MODE_REGISTER_HIGH, pin_mode_register_state_high);
