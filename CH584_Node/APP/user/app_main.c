@@ -170,12 +170,6 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         return (events ^ APP_CHECK_PENDING_PACKETS);
     }
 
-    if (events & APP_CHECK_PENDING_PACKETS) {
-        CheckPendingPackets();
-        tmos_start_task(Main_App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
-        return (events ^ APP_CHECK_PENDING_PACKETS);
-    }
-
     if (events & APP_DELETE_LOCAL_NODE_EVT) {
         // 收到删除命令，删除自身网络信息
         APP_DBG("Delete local node");

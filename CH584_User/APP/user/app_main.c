@@ -60,7 +60,7 @@ __attribute__ ((noinline)) void Main_Circulation() {
  */
 int main(void) {
     HSECFG_Capacitance(HSECap_18p);
-    SetSysClock(CLK_SOURCE_HSI_PLL_78MHz);
+    SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
 
 #ifdef DEBUG
     GPIOA_SetBits(GPIO_Pin_14);
@@ -122,8 +122,6 @@ int main(void) {
 uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
         tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC(1000));
-        printf("Hello");
-
         return (events ^ APP_NODE_TEST_EVT);
     }
 
@@ -133,11 +131,6 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         return (events ^ APP_WS2812);
     }
 
-    if (events & APP_CHECK_PENDING_PACKETS) {
-        CheckPendingPackets();
-        tmos_start_task(Main_App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
-        return (events ^ APP_CHECK_PENDING_PACKETS);
-    }
 
     if (events & APP_CHECK_PENDING_PACKETS) {
         CheckPendingPackets();
