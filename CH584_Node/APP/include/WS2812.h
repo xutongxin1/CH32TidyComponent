@@ -15,7 +15,7 @@
 
 #define RESET_LEN    (300)
 #ifdef DEVICE_TYPE_B55
-#define  LED_NUM (3*5+1)*8
+#define  LED_NUM (3*5+1+1)*8
 #elifdef  DEVICE_TYPE_A22
 #define  LED_NUM 8
 #elifdef DEVICE_TYPE_A43

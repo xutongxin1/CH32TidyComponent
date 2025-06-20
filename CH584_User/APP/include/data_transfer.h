@@ -2,9 +2,12 @@
 #ifndef DATA_TRANSFER_H
 #define DATA_TRANSFER_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
+extern bool isMeshConnected; // 是否连接到Mesh网络
+extern bool isMeshUart; // 是否开启Mesh串口
 #define MAX_DATA_LEN     128
 #define MAX_PENDING      20
 #define TIMEOUT_MS       2000

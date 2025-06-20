@@ -68,6 +68,7 @@ typedef struct {
 void setPixelColor(uint16_t id, uint8_t r, uint8_t g, uint8_t b);
 // void w2812_sync();
 void WS2812Init();
+void wheelLed();
 void ws2812_update(void);
 void ws2812_effects_init();
 void ws2812_set_led_hex(uint16_t led_id, uint32_t hex_color, led_mode_t mode);

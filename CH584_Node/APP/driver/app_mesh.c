@@ -13,14 +13,15 @@
 /******************************************************************************/
 #include "CONFIG.h"
 #include "MESH_LIB.h"
-#include "../include/TCA9555.h"
-#include "../include/app_vendor_model_srv.h"
-#include "../include/app_mesh.h"
+#include "TCA9555.h"
+#include "app_vendor_model_srv.h"
+#include "app_mesh.h"
 
 #include <device_type_define.h>
-#include <../include/data_transfer.h>
+#include <data_transfer.h>
 
 #include "HAL.h"
+#include "WS2812.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -279,6 +280,8 @@ static void cfg_srv_rsp_handler (const cfg_srv_status_t *val) {
         tmos_start_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
     } else if (val->cfgHdr.opcode == OP_MOD_SUB_ADD) {
         APP_DBG ("Vendor Model Subscription Set");
+        isMeshConnected=true;
+        ws2812_set_led(0,0,0,60,LED_MODE_BREATHE_SLOW);
         // 配置结束，取消删除任务
         tmos_stop_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT);
     } else {
@@ -479,6 +482,8 @@ void blemesh_on_sync (void) {
 
     if (bt_mesh_is_provisioned()) {
         APP_DBG ("Mesh network restored from flash");
+        isMeshConnected=true;
+        ws2812_set_led(0,0,0,60,LED_MODE_BREATHE_SLOW);
     } else {
         prov_enable();
     }

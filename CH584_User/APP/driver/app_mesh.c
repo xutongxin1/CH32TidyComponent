@@ -20,6 +20,8 @@
 #include <data_transfer.h>
 
 #include "HAL.h"
+#include "USB_CDC.h"
+#include "WS2812.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -278,6 +280,12 @@ static void cfg_srv_rsp_handler (const cfg_srv_status_t *val) {
         tmos_start_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT, APP_WAIT_ADD_APPKEY_DELAY);
     } else if (val->cfgHdr.opcode == OP_MOD_SUB_ADD) {
         APP_DBG ("Vendor Model Subscription Set");
+        isMeshConnected=true;
+        if (isMeshUart==true) {
+            SendUSBData("MESH_CONNECT!\r\n", 24);
+            ws2812_set_led(0,0,0,60,LED_MODE_BREATHE_SLOW);
+        }
+
         // 配置结束，取消删除任务
         tmos_stop_task (Main_App_TaskID, APP_DELETE_LOCAL_NODE_EVT);
     } else {
@@ -478,6 +486,7 @@ void blemesh_on_sync (void) {
 
     if (bt_mesh_is_provisioned()) {
         APP_DBG ("Mesh network restored from flash");
+        isMeshConnected=true;
     } else {
         prov_enable();
     }

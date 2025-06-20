@@ -9,6 +9,7 @@
 #include "app_mesh.h"
 #include "B53_driver.h"
 #include "data_transfer.h"
+#include "WS2812.h"
 
 // 用于处理引脚状态变化的处理函数
 void handle_up(uint8 addr, uint8 pin); // 当引脚从低电平变为高电平时调用
@@ -90,9 +91,12 @@ void handle_up(const uint8 addr, const uint8 pin) {
     const uint8 i = pin / 5 + 1;
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    printf("放回了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
+    printf("放回了 addr:%d pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC303, USER_DATA_TYPE, tmp);
+    if (isDebugLED==true) {
+        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j, 0xAAAAAA, LED_MODE_STATIC);
+    }
 }
 
 //取出
@@ -104,4 +108,7 @@ void handle_down(const uint8 addr, const uint8 pin) {
     printf("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC302, USER_DATA_TYPE, tmp);
+    if (isDebugLED==true) {
+        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j, 0x000000, LED_MODE_DISABLE);
+    }
 }

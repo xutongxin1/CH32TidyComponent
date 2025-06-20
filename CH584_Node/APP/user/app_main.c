@@ -38,6 +38,9 @@ extern char mesh_uart_sendBuf[128];
 extern uint16_t mesh_uart_addr;
 extern uint8_t mesh_uart_dataType;
 #endif
+
+bool isMeshConnected= false; // 是否连接到Mesh网络
+bool isDebugLED=false;
 /*********************************************************************
  * @fn      Main_Circulation
  *
@@ -53,6 +56,12 @@ __attribute__ ((noinline)) void Main_Circulation() {
 }
 
 void SelfCheck(void) {
+    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
+    if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 配网重置按键
+    {
+        bt_mesh_reset();
+        PRINT("重置配网\r\n");
+    }
 
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
@@ -61,10 +70,16 @@ void SelfCheck(void) {
     }
 
     wheelLed();
-    ws2812_effects_init();
-    ws2812_set_all_color(255,255,0);
-    ws2812_set_all_mode(LED_MODE_FLASH_FAST_3);
 
+    if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 测试模式按键
+    {
+        ws2812_set_led_hex(0, 0x000066, LED_MODE_FLASH_FAST_3);
+        PRINT("进入检测功能Debug模式\r\n");
+        isDebugLED=true;
+    }
+    else {
+        ws2812_set_led_hex(0, 0x666600, LED_MODE_FLASH_SLOW);
+    }
 
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
@@ -107,7 +122,6 @@ int main(void) {
     // 初始化WS2812
     WS2812Init(); // PB22
 
-    SelfCheck();
     // 初始化蓝牙
     PRINT("%s\r\n", (char *) VER_LIB);
     PRINT("%s\r\n", (char *)VER_MESH_LIB);
@@ -126,11 +140,8 @@ int main(void) {
     InitMESHUartTest();
 #endif
 
-    if (GPIOB_ReadPortPin(GPIO_Pin_4) == 0) // 配网重置按键
-    {
-        bt_mesh_reset();
-        PRINT("重置配网\r\n");
-    }
+    SelfCheck();//自检
+
     PRINT("进入主循环\r\n");
 
     tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));

@@ -36,6 +36,9 @@ extern char mesh_uart_sendBuf[128];
 extern uint16_t mesh_uart_addr;
 extern uint8_t mesh_uart_dataType;
 #endif
+
+bool isMeshConnected= false; // 是否连接到Mesh网络
+bool isTestMode = false;
 /*********************************************************************
  * @fn      Main_Circulation
  *
@@ -51,6 +54,17 @@ __attribute__ ((noinline)) void Main_Circulation() {
     }
 }
 
+void SelfCheck(void) {
+    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
+    if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 配网重置按键
+    {
+        bt_mesh_reset();
+        PRINT("重置配网\r\n");
+    }
+
+    wheelLed();
+    ws2812_set_led_hex(0,0x666600,LED_MODE_FLASH_SLOW);//上电慢闪
+}
 /*********************************************************************
  * @fn      main
  *
@@ -63,10 +77,14 @@ int main(void) {
     SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
 
 #ifdef DEBUG
-    GPIOA_SetBits(GPIO_Pin_14);
-    GPIOPinRemap(ENABLE, RB_PIN_UART0);
-    GPIOA_ModeCfg(GPIO_Pin_15, GPIO_ModeIN_PU);
-    GPIOA_ModeCfg(GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
+    // GPIOA_SetBits(GPIO_Pin_14);
+    // GPIOPinRemap(ENABLE, RB_PIN_UART0);
+    // GPIOA_ModeCfg(GPIO_Pin_15, GPIO_ModeIN_PU);
+    // GPIOA_ModeCfg(GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
+
+    GPIOB_SetBits(GPIO_Pin_7);
+    GPIOB_ModeCfg(GPIO_Pin_4, GPIO_ModeIN_PU);
+    GPIOB_ModeCfg(GPIO_Pin_7, GPIO_ModeOut_PP_5mA);
     UART0_DefInit();
     PRINT("Working\r\n");
 #endif
@@ -98,11 +116,8 @@ int main(void) {
     InitMESHUartTest();
 #endif
 
-    if (GPIOB_ReadPortPin(GPIO_Pin_4) == 0) // 配网重置按键
-    {
-        bt_mesh_reset();
-        PRINT("重置配网\r\n");
-    }
+    SelfCheck();
+
     PRINT("进入主循环\r\n");
     tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
     Main_Circulation();
@@ -130,7 +145,6 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
         return (events ^ APP_WS2812);
     }
-
 
     if (events & APP_CHECK_PENDING_PACKETS) {
         CheckPendingPackets();

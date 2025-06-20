@@ -26,11 +26,7 @@ void WS2812Init() {
     TMR3_PWMEnable();
     TMR3_Enable();
 
-    wheelLed();
-    // setPixelColor(0,255,255,255);
     ws2812_effects_init();
-    ws2812_set_color_hex(0, 0x888800); // 设置第一个LED为红色
-    ws2812_set_all_mode(LED_MODE_FLASH_SLOW);
 }
 
 /// 设置灯的颜色
@@ -145,7 +141,7 @@ void wheelLed() {
         }
 
         // 延时10毫秒
-        DelayMs(5);
+        DelayMs(3);
     }
 
     // 亮度下降（1秒）- 100个亮度等级，每级5ms
@@ -174,7 +170,7 @@ void wheelLed() {
         }
 
         // 延时10毫秒
-        DelayMs(5);
+        DelayMs(3);
     }
 }
 

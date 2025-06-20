@@ -25,6 +25,7 @@ void WS2812Init() {
     TMR3_PWMEnable();
     TMR3_Enable();
 
+    ws2812_effects_init();
 }
 
 /// ÉèÖÃµÆµÄÑÕÉ«
