@@ -5,8 +5,7 @@
 #include "USB_CDC.h"
 #include "CDC_Recv.h"
 #include "WS2812.h"
-// #define dg_log printf
-#define dg_log
+
 #define THIS_ENDP0_SIZE         64
 #define MAX_PACKET_SIZE         64
 

@@ -95,7 +95,7 @@ void handle_up(const uint8 addr, const uint8 pin) {
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC303, USER_DATA_TYPE, tmp);
     if (isDebugLED==true) {
-        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j, 0xAAAAAA, LED_MODE_STATIC);
+        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j-1, 0xAAAAAA, LED_MODE_STATIC);
     }
 }
 
@@ -109,6 +109,6 @@ void handle_down(const uint8 addr, const uint8 pin) {
     sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
     SendData(0xC302, USER_DATA_TYPE, tmp);
     if (isDebugLED==true) {
-        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j, 0x000000, LED_MODE_DISABLE);
+        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j-1, 0x000000, LED_MODE_DISABLE);
     }
 }

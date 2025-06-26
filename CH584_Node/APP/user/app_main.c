@@ -39,8 +39,8 @@ extern uint16_t mesh_uart_addr;
 extern uint8_t mesh_uart_dataType;
 #endif
 
-bool isMeshConnected= false; // 是否连接到Mesh网络
-bool isDebugLED=false;
+bool isMeshConnected = false; // 是否连接到Mesh网络
+bool isDebugLED = false;
 /*********************************************************************
  * @fn      Main_Circulation
  *
@@ -57,15 +57,15 @@ __attribute__ ((noinline)) void Main_Circulation() {
 
 void SelfCheck(void) {
     GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
-    if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 配网重置按键
-    {
-        bt_mesh_reset();
-        PRINT("重置配网\r\n");
-    }
+    // if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 配网重置按键
+    // {
+    //     bt_mesh_reset();
+    //     PRINT("重置配网\r\n");
+    // }
 
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i,P17, 1);
+            TCA_WritePin(0x20 + i, P17, 1);
         }
     }
 
@@ -75,15 +75,16 @@ void SelfCheck(void) {
     {
         ws2812_set_led_hex(0, 0x000066, LED_MODE_FLASH_FAST_3);
         PRINT("进入检测功能Debug模式\r\n");
-        isDebugLED=true;
-    }
-    else {
+        isDebugLED = true;
+        tmos_start_task(Main_App_TaskID, APP_SCANIO, K_MSEC(100));
+    } else {
         ws2812_set_led_hex(0, 0x666600, LED_MODE_FLASH_SLOW);
+        tmos_start_task(Main_App_TaskID, APP_SCANIO, K_MSEC(1000));
     }
 
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i,P17, 0);
+            TCA_WritePin(0x20 + i, P17, 0);
         }
     }
 }
@@ -131,7 +132,7 @@ int main(void) {
     App_Init();
 
     printf("MAC地址");
-    for(int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++) {
         printf("%02X", MACAddr[i]);
     }
     printf("\r\n");
@@ -140,14 +141,13 @@ int main(void) {
     InitMESHUartTest();
 #endif
 
-    SelfCheck();//自检
+    SelfCheck(); //自检
 
     PRINT("进入主循环\r\n");
 
     tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
     Main_Circulation();
 }
-
 
 /*********************************************************************
  * @fn      App_ProcessEvent
@@ -162,7 +162,25 @@ int main(void) {
  */
 uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
-        tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
+        if (isDebugLED) {
+            tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(100));
+            if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) {
+                for (int i = 0; i < 8; i++) {
+                    if (DeviceExists[i]) {
+                        TCA_WritePin(0x20 + i, P17, 1);
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 8; i++) {
+                    if (DeviceExists[i]) {
+                        TCA_WritePin(0x20 + i, P17, 0);
+                    }
+                }
+            }
+        } else {
+            tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
+        }
 
         Scan(0x20);
 
@@ -189,8 +207,8 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         return (events ^ APP_DELETE_LOCAL_NODE_EVT);
     }
 
-    if (events & APP_TEST_EVT) {
-        tmos_start_task(Main_App_TaskID, APP_TEST_EVT, K_MSEC(500));
+    if (events & APP_SCANIO) {
+        tmos_start_task(Main_App_TaskID, APP_SCANIO, K_MSEC(500));
 #ifdef ENABLE_MESH_UART_TEST
         if (mesh_uart_isWorking) {
             mesh_uart_isWorking = 0;
@@ -202,7 +220,7 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         }
 #endif
 
-        return (events ^ APP_TEST_EVT);
+        return (events ^ APP_SCANIO);
     }
 
     // Discard unknown events
