@@ -27,14 +27,14 @@ typedef struct {
     uint8_t retries;
 } PendingPacket;
 
-typedef void (*RecTrueDataCallback)(uint16_t addr, uint16_t group_addr, DATATYPE dataType, char *recvData);
+typedef bool (*RecTrueDataCallback)(uint16_t addr, uint16_t group_addr, DATATYPE dataType, char *recvData);
 typedef void (*SendErrorCallback)(uint16_t addr, DATATYPE dataType, char *sendData);
 
 void SendData(uint16_t addr, DATATYPE dataType, const char *sendData);
 void InitDataTransfer(RecTrueDataCallback recvCb, SendErrorCallback errCb);
 void CheckPendingPackets(void);
 void HandleReceivedData(uint16_t addr, uint16_t group_addr, const uint8_t *pdata, uint16_t len);
-void RecvMessage(uint16_t addr, uint16_t group_addr, DATATYPE dataType, char *recvData);
+bool RecvMessage(uint16_t addr, uint16_t group_addr, DATATYPE dataType, char *recvData);
 void ErrorHandler(uint16_t addr, DATATYPE dataType, char *sendData);
 
 extern int vendor_model_srv_send(uint16_t addr, uint8_t *pData, uint16_t len);

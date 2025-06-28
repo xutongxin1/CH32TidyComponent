@@ -4,6 +4,8 @@
 #include <app_mesh_config.h>
 #include <stdio.h>
 
+#include "CH585SFR.h"
+
 static PendingPacket pendingList[MAX_PENDING];
 static uint8_t pendingCount = 0;
 static RecTrueDataCallback userRecvCb = NULL;
@@ -28,6 +30,7 @@ void InitDataTransfer(RecTrueDataCallback recvCb, SendErrorCallback errCb) {
 }
 
 void SendData(const uint16_t addr, const DATATYPE dataType, const char *sendData) {
+    PRINT("构建数据包发往 0x%04X, Type=%d, Data=%s\r\n", addr, dataType, sendData);
     if (dataType < USER_DATA_TYPE || pendingCount >= MAX_PENDING) return;
 
     /* 构造数据包 */
@@ -86,17 +89,22 @@ void HandleReceivedData(const uint16_t addr, const uint16_t group_addr, const ui
         uint16_t recvCrc = (pdata[len - 2] << 8) | pdata[len - 1];
 
         /* 发送ACK */
-        uint8_t ackType = (calcCrc == recvCrc) ? ACK_SUCCESS : ACK_CRC_FAIL;
-        uint8_t ackPacket[3] = {ackType, pdata[len - 2], pdata[len - 1]};
-        vendor_model_srv_send(addr, ackPacket, sizeof(ackPacket));
-
-        /* 传递有效数据 */
-        if (ackType == ACK_SUCCESS && userRecvCb) {
+        const uint8_t ackType = (calcCrc == recvCrc) ? ACK_SUCCESS : ACK_CRC_FAIL;
+        bool isAnswer = false;
+        /* 传递有效数据,并根据bool返回值确定是否需要应答 */
+        if (ackType == ACK_SUCCESS) {
             char buf[MAX_DATA_LEN + 1];
             uint16_t payloadLen = len - 3;
             memcpy(buf, pdata + 1, payloadLen);
             buf[payloadLen] = '\0';
-            userRecvCb(addr, group_addr, rxType, buf);
+            isAnswer=userRecvCb(addr, group_addr, rxType, buf);
+        } else {
+            isAnswer=false;//认为CRC错误都不需要应答
+        }
+        //只应答属于自己的包
+        if (isAnswer) {
+            uint8_t ackPacket[3] = {ackType, pdata[len - 2], pdata[len - 1]};
+            vendor_model_srv_send(addr, ackPacket, sizeof(ackPacket));
         }
     }
 }

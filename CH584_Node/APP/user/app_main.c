@@ -26,6 +26,7 @@
 #include "device_type_define.h"
 #include "ScanIO.h"
 #include "B53_driver.h"
+#include "led_manager.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -122,6 +123,7 @@ int main(void) {
 
     // 初始化WS2812
     WS2812Init(); // PB22
+    led_manager_init();
 
     // 初始化蓝牙
     PRINT("%s\r\n", (char *) VER_LIB);
@@ -182,7 +184,8 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
             tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
         }
 
-        Scan(0x20);
+        ScanIO();
+        led_manager_update();
 
         return (events ^ APP_NODE_TEST_EVT);
     }

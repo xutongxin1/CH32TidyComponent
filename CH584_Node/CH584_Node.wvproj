@@ -70,7 +70,8 @@
 				"post_script_description": "",
 				"excludeResources": [
 					"${project}/cmake-build-debug-mingw",
-					"${project}/cmake-build-b55"
+					"${project}/cmake-build-b55",
+					"${project}/cmake-build-b53"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
@@ -687,7 +688,7 @@
 		"target_path": "C:\\GitProject\\CH32TidyComponent\\CH584_Node\\obj\\CH584_Node.hex",
 		"clkSpeed": "High",
 		"debug_interface_mode": "2-wires serial",
-		"erase": false,
+		"erase": true,
 		"program": true,
 		"verify": true,
 		"reset": true,

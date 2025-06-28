@@ -537,9 +537,8 @@ static BOOL node_stage(void *p1) {
 
         // 设置模型订阅
         case NODE_MOD_SUB_SET:
-            err = bt_mesh_cfg_mod_sub_add_vnd(node->net_idx, node->node_addr, node->node_addr, vendor_sub_addr,
-                                              BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
-            APP_DBG("向0x%04x地址绑定订阅地址0x%04x", node->node_addr, vendor_sub_addr);
+            err = BingSubAddr(node->net_idx, node->node_addr);
+
             if (err) {
                 APP_DBG("Unable to Set vendor Model Subscription (err %d)", err);
                 ret = TRUE;
@@ -1050,15 +1049,15 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
 
     // 测试任务事件处理
     if (events & APP_NODE_TEST_EVT) {
-        if (app_nodes[1].node_addr) {
-            uint8_t status;
-
-            uint8_t data[2] = "AT";
-            SendData(0xC000,USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
-            // status = SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
-            // if (status)
-            //     APP_DBG("trans failed %d", status);
-        }
+        // if (app_nodes[1].node_addr) {
+        //     uint8_t status;
+        //
+        //     uint8_t data[2] = "AT";
+        //     SendData(0xC000, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+        //     // status = SendData(vendor_sub_addr, USER_DATA_TYPE, data); // 调用自定义模型客户端的透传函数发送数据
+        //     // if (status)
+        //     //     APP_DBG("trans failed %d", status);
+        // }
         tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
         return (events ^ APP_NODE_TEST_EVT);
     }

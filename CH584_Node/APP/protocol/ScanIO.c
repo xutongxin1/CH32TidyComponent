@@ -9,6 +9,7 @@
 #include "app_mesh.h"
 #include "B53_driver.h"
 #include "data_transfer.h"
+#include "led_manager.h"
 #include "WS2812.h"
 
 // 用于处理引脚状态变化的处理函数
@@ -45,7 +46,7 @@ void Scan(const uint8_t addr) {
 
     // 获取此设备所有引脚的当前状态
     const uint16_t current_state = TCA_ReadAllPins(addr);
-    printf("current_state --> %d\r\n", current_state);
+    // printf("current_state --> %d\r\n", current_state);
     // 如果读取失败，直接返回
     if (current_state < 0) {
         return; // TCA_ReadAllPins已经打印了错误信息
@@ -87,28 +88,38 @@ void Scan(const uint8_t addr) {
 //放回
 //此处仅处理物理意义上的放回
 void handle_up(const uint8 addr, const uint8 pin) {
-    const uint8 n = addr - 0x20;
+    const uint8 n = addr - 0x20 + 1;
     const uint8 i = pin / 5 + 1;
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    printf("放回了 addr:%d pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
-    sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
+    const int led_index = n * 17 + i * 5 + j - 4;
+    PRINT("放回了 addr:%d pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
+
+    sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d%d%d",
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], n, i, j);
     SendData(0xC303, USER_DATA_TYPE, tmp);
-    if (isDebugLED==true) {
-        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j-1, 0xAAAAAA, LED_MODE_STATIC);
+    if (isDebugLED == true) {
+        ws2812_set_led_hex(led_index, 0xAAAAAA, LED_MODE_STATIC);
     }
 }
 
 //取出
 void handle_down(const uint8 addr, const uint8 pin) {
-    const uint8 n = addr - 0x20;
+    const uint8 n = addr - 0x20 + 1;
     const uint8 i = pin / 5 + 1;
-    const uint8 j = pin % 5 + 1 ;
+    const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    printf("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
-    sprintf(tmp, "%s%d%d%d", (char *) MACAddr, n, i, j);
-    SendData(0xC302, USER_DATA_TYPE, tmp);
-    if (isDebugLED==true) {
-        ws2812_set_led_hex(n*(3*5+1+1)+2+(i-1)*5+j-1, 0x000000, LED_MODE_DISABLE);
+    PRINT("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
+    const int led_index = n * 17 + i * 5 + j - 4;
+    if (isDebugLED == true) {
+        ws2812_set_led_hex(led_index, 0x000000, LED_MODE_DISABLE);
     }
+
+    //取出，提前关灯
+    led_manager_turn_off(led_index);
+    sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d%d%d",
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], n, i, j);
+    SendData(0xC302, USER_DATA_TYPE, tmp);
 }

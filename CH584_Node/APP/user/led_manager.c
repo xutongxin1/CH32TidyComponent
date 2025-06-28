@@ -1,0 +1,146 @@
+//
+// Created by xtx on 25-6-27.
+//
+
+#include "led_manager.h"
+#include <string.h>
+
+
+
+// LED管理数组，直接用LED ID作为数组索引
+static led_info_t led_array[LED_NUM];
+static bool manager_initialized = false;
+
+// 内部函数声明
+static void turn_off_led_internal(uint16_t led_id);
+
+/**
+ * @brief 初始化LED管理器
+ */
+void led_manager_init(void)
+{
+    // 清空所有LED信息
+    memset(led_array, 0, sizeof(led_array));
+
+    // 将所有LED设置为关闭状态
+    for (int i = 0; i < LED_NUM; i++) {
+        led_array[i].is_on = false;
+        led_array[i].remaining_time = 0;
+        led_array[i].color = 0;
+        led_array[i].mode = LED_MODE_STATIC;
+    }
+
+    manager_initialized = true;
+}
+
+/**
+ * @brief 定时更新函数，每秒调用一次
+ */
+void led_manager_update(void)
+{
+    if (!manager_initialized) {
+        return;
+    }
+
+    for (int i = 0; i < LED_NUM; i++) {
+        if (led_array[i].is_on && led_array[i].remaining_time > 0) {
+            led_array[i].remaining_time--;
+
+            // 如果时间到了，关闭LED
+            if (led_array[i].remaining_time == 0) {
+                turn_off_led_internal(i);
+            }
+        }
+    }
+}
+
+/**
+ * @brief 开启LED灯
+ */
+bool led_manager_turn_on(uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode)
+{
+    if (!manager_initialized) {
+        return false;
+    }
+
+    if (led_id >= LED_NUM || duration == 0) {
+        return false;
+    }
+
+    // 直接用LED ID作为数组索引
+    led_array[led_id].is_on = true;
+    led_array[led_id].remaining_time = duration;
+    led_array[led_id].color = color;
+    led_array[led_id].mode = mode;
+
+    // 调用底层函数开启LED
+    ws2812_set_led_hex(led_id, color, mode);
+
+    return true;
+}
+
+/**
+ * @brief 关闭LED灯
+ */
+bool led_manager_turn_off(uint16_t led_id)
+{
+    if (!manager_initialized) {
+        return false;
+    }
+
+    if (led_id >= LED_NUM || !led_array[led_id].is_on) {
+        return false;
+    }
+
+    turn_off_led_internal(led_id);
+    return true;
+}
+
+/**
+ * @brief 获取LED状态
+ */
+const led_info_t* led_manager_get_status(uint16_t led_id)
+{
+    if (!manager_initialized || led_id >= LED_NUM) {
+        return NULL;
+    }
+
+    return &led_array[led_id];
+}
+
+/**
+ * @brief 获取当前开启的LED数量
+ */
+uint32_t led_manager_get_active_count(void)
+{
+    if (!manager_initialized) {
+        return 0;
+    }
+
+    uint32_t count = 0;
+    for (int i = 0; i < LED_NUM; i++) {
+        if (led_array[i].is_on) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// ========== 内部函数实现 ==========
+
+/**
+ * @brief 内部关闭LED函数
+ * @param led_id LED的ID
+ */
+static void turn_off_led_internal(uint16_t led_id)
+{
+    if (led_id < LED_NUM && led_array[led_id].is_on) {
+        // 调用底层函数关闭LED（颜色设为0）
+        ws2812_set_led_hex(led_id, 0, led_array[led_id].mode);
+
+        // 更新状态
+        led_array[led_id].is_on = false;
+        led_array[led_id].remaining_time = 0;
+        // 保留color和mode信息，以便后续可能的查询
+    }
+}

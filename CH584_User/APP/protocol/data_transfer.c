@@ -4,6 +4,8 @@
 #include <app_mesh_config.h>
 #include <stdio.h>
 
+#include "USB_CDC.h"
+
 static PendingPacket pendingList[MAX_PENDING];
 static uint8_t pendingCount = 0;
 static RecTrueDataCallback userRecvCb = NULL;
@@ -86,17 +88,22 @@ void HandleReceivedData(const uint16_t addr, const uint16_t group_addr, const ui
         uint16_t recvCrc = (pdata[len - 2] << 8) | pdata[len - 1];
 
         /* 发送ACK */
-        uint8_t ackType = (calcCrc == recvCrc) ? ACK_SUCCESS : ACK_CRC_FAIL;
-        uint8_t ackPacket[3] = {ackType, pdata[len - 2], pdata[len - 1]};
-        vendor_model_srv_send(addr, ackPacket, sizeof(ackPacket));
-
-        /* 传递有效数据 */
-        if (ackType == ACK_SUCCESS && userRecvCb) {
+        const uint8_t ackType = (calcCrc == recvCrc) ? ACK_SUCCESS : ACK_CRC_FAIL;
+        bool isAnswer = false;
+        /* 传递有效数据,并根据bool返回值确定是否需要应答 */
+        if (ackType == ACK_SUCCESS) {
             char buf[MAX_DATA_LEN + 1];
             uint16_t payloadLen = len - 3;
             memcpy(buf, pdata + 1, payloadLen);
             buf[payloadLen] = '\0';
-            userRecvCb(addr, group_addr, rxType, buf);
+            isAnswer = userRecvCb(addr, group_addr, rxType, buf);
+        } else {
+            isAnswer = false; //认为CRC错误都不需要应答
+        }
+        //只应答属于自己的包
+        if (isAnswer) {
+            uint8_t ackPacket[3] = {ackType, pdata[len - 2], pdata[len - 1]};
+            vendor_model_srv_send(addr, ackPacket, sizeof(ackPacket));
         }
     }
 }
@@ -146,11 +153,23 @@ void CheckPendingPackets(void) {
 }
 
 // 接收成功回调
-void RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE dataType, char *recvData) {
+bool RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE dataType, char *recvData) {
     // addr：来源地址（16位）
     // dataType：原始用户数据类型（>=10）
     // recvData：保证以'\0'结尾的字符串
     APP_DBG("Received from 0x%04X, group 0x%04X: Type=%d, Data=%s", addr, group_addr, dataType, recvData);
+    //用户侧就地处理
+    char tmp[100] = {0};
+    switch (group_addr) {
+        case 0xC000:
+            return true;
+        case 0xC302:
+            sprintf(tmp, "0xC302 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        default:
+            return false;
+    }
 }
 
 // 发送失败回调

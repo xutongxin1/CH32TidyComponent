@@ -288,7 +288,7 @@
             </toolChain>
           </folderInfo>
           <sourceEntries>
-            <entry excluding="cmake-build-debug-mingw|cmake-build-b55" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+            <entry excluding="cmake-build-debug-mingw|cmake-build-b55|cmake-build-b53" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
           </sourceEntries>
         </configuration>
       </storageModule>

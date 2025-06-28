@@ -2,6 +2,9 @@
 #include "data_transfer.h"
 
 #include <app_mesh_config.h>
+#include <app_vendor_model_srv.h>
+#include <CH58xBLE_LIB.h>
+#include <MESH_LIB.h>
 #include <stdio.h>
 
 static PendingPacket pendingList[MAX_PENDING];
@@ -123,7 +126,7 @@ void CheckPendingPackets(void) {
                 packet[1 + p->dataLen + 1] = p->crc & 0xFF;
 
                 vendor_model_cli_send(p->addr, packet, 1 + p->dataLen + 2);
-                p->sendTimeCounter  = timeCounter;
+                p->sendTimeCounter = timeCounter;
                 p->retries++;
                 i++;
             } else {
@@ -159,4 +162,36 @@ void ErrorHandler(const uint16_t addr, const DATATYPE dataType, char *sendData) 
     // dataType：原始用户数据类型
     // sendData：原始发送数据内容
     APP_DBG("Failed to send to 0x%04X: Type=%d, Data=%s", addr, dataType, sendData);
+}
+
+//提供订阅地址绑定
+// uint16_t USER_SUB_ADDR[] = {0xC000, 0xC001, 0xC302, 0xC303};
+// uint16_t B53_SUB_ADDR[] = {0xC000, 0xC001, 0xC301};
+uint16_t USER_SUB_ADDR[] = {0xC302};
+uint16_t B53_SUB_ADDR[] = {0xC301};
+uint16_t A42_SUB_ADDR[] = {0xC000};
+uint16_t BingSubAddr(uint16_t net_idx, uint16_t node_addr) {
+    uint16_t err = 0;
+    if (node_addr >= 0x2000 && node_addr <= 0x2FFF) {
+        for (int i = 0; i < sizeof(B53_SUB_ADDR) / sizeof(B53_SUB_ADDR[0]); i++) {
+            err = bt_mesh_cfg_mod_sub_add_vnd(net_idx, node_addr, node_addr, B53_SUB_ADDR[i],
+                                              BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
+            APP_DBG("向0x%04x地址的B53设备绑定订阅地址0x%04x", node_addr, B53_SUB_ADDR[i]);
+
+            if (err) {
+                return err;
+            }
+        }
+    } else if (node_addr >= 0x0100 && node_addr <= 0x0FFF) {
+        for (int i = 0; i < sizeof(USER_SUB_ADDR) / sizeof(USER_SUB_ADDR[0]); i++) {
+            err = bt_mesh_cfg_mod_sub_add_vnd(net_idx, node_addr, node_addr, USER_SUB_ADDR[i],
+                                              BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
+            APP_DBG("向0x%04x地址的用户侧设备绑定订阅地址0x%04x", node_addr, USER_SUB_ADDR[i]);
+            if (err) {
+                return err;
+            }
+        }
+    }
+
+    return 0;
 }
