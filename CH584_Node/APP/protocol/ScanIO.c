@@ -92,7 +92,7 @@ void handle_up(const uint8 addr, const uint8 pin) {
     const uint8 i = pin / 5 + 1;
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    const int led_index = n * 17 + i * 5 + j - 4;
+    const int led_index = (n - 1) * 17 + i * 5 + j - 4;
     PRINT("放回了 addr:%d pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
 
     sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d%d%d",
@@ -111,7 +111,7 @@ void handle_down(const uint8 addr, const uint8 pin) {
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
     PRINT("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
-    const int led_index = n * 17 + i * 5 + j - 4;
+    const int led_index = (n - 1) * 17 + i * 5 + j - 4;
     if (isDebugLED == true) {
         ws2812_set_led_hex(led_index, 0x000000, LED_MODE_DISABLE);
     }
