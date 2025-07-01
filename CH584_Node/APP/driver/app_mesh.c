@@ -484,7 +484,6 @@ void blemesh_on_sync(void) {
     if (bt_mesh_is_provisioned()) {
         APP_DBG("Mesh network restored from flash");
         isMeshConnected = true;
-        ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW);
     } else {
         prov_enable();
     }

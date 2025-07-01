@@ -83,6 +83,10 @@ void SelfCheck(void) {
         tmos_start_task(Main_App_TaskID, APP_SCANIO, K_MSEC(1000));
     }
 
+    if (isMeshConnected) {
+        ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
+    }
+
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
             TCA_WritePin(0x20 + i, P17, 0);
