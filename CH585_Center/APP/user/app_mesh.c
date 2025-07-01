@@ -537,7 +537,10 @@ static BOOL node_stage(void *p1) {
 
         // 设置模型订阅
         case NODE_MOD_SUB_SET:
-            err = BingSubAddr(node->net_idx, node->node_addr);
+            err = bt_mesh_cfg_mod_sub_add_vnd(node->net_idx, node->node_addr, node->node_addr, vendor_sub_addr,
+                                  BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
+            APP_DBG("向0x%04x地址绑定订阅地址0x%04x", node->node_addr, vendor_sub_addr);
+            // err = BingSubAddr(node->net_idx, node->node_addr);
 
             if (err) {
                 APP_DBG("Unable to Set vendor Model Subscription (err %d)", err);
