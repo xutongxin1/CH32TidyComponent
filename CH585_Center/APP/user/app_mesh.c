@@ -21,6 +21,7 @@
 #include <../include/distribution_addr.h>
 
 #include "HAL.h"
+#include "NFC_Work.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -1022,6 +1023,7 @@ void App_Init(void) {
 
     InitDataTransfer(RecvHandler, ErrorHandler);
     tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
+    tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
 }
 
 /*********************************************************************
@@ -1048,6 +1050,19 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         CheckPendingPackets();
         tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
         return (events ^ APP_CHECK_PENDING_PACKETS);
+    }
+
+    if (events & APP_NFC_Start) {
+        tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
+        if (NFC_Start()) {
+            tmos_start_task(App_TaskID, APP_NFC_Work, MS1_TO_SYSTEM_TIME(5));
+        }
+        return (events ^ APP_NFC_Start);
+    }
+
+    if (events & APP_NFC_Work) {
+        NFC_Work();
+        return (events ^ APP_NFC_Work);
     }
 
     // 测试任务事件处理

@@ -60,10 +60,14 @@ include_directories(
         "../CH585Lib/MESH_LIB"
         "../CH585Lib/RVMSIS"
         "APP/include"
+        "Lib/MIFARECLASSIC_COMMON"
+        "Lib/NFCA_COMMON"
+        "Lib/NFCA_PCD_LIB"
 )
 
 file(GLOB_RECURSE SOURCES
         "APP/*.c"
+        "Lib/*.c"
         "../CH585Lib/Startup/startup_CH585.S"
         "../CH585Lib/LIB/ble_task_scheduler.S"
         "../CH585Lib/*.c"
@@ -94,11 +98,15 @@ target_link_directories(${PROJECT_NAME}.elf PRIVATE
         ${CMAKE_SOURCE_DIR}/../CH585Lib/MESH_LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/LIB
         ${CMAKE_SOURCE_DIR}/../CH585Lib/StdPeriphDriver
+        ${CMAKE_SOURCE_DIR}/Lib/NFCA_COMMON
+        ${CMAKE_SOURCE_DIR}/Lib/NFCA_PCD_LIB
 )
 target_link_libraries(${PROJECT_NAME}.elf
         ISP585
         MESH
         CH58xBLE
+        libwch_nfca_pcd.a
+        libwch_nfca_crypto1.a
 )
 
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)

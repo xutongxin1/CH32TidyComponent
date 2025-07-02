@@ -19,7 +19,8 @@
 #include "HAL.h"
 #include "app_mesh_config.h"
 #include "app_mesh.h"
-
+#include "wch_nfca_pcd_bsp.h"
+#include "NFC_Work.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -100,12 +101,17 @@ int main(void) {
     UART0_DefInit();
 #endif
 
-    PRINT("%s\n", VER_MESH_LIB);
+    PRINT("%s\r\n", VER_MESH_LIB);
     CH58x_BLEInit();
     HAL_Init();
     bt_mesh_lib_init();
     init_persistent_addr();
     App_Init();
+
+    NFC_Init();
+
+
+
     Main_Circulation();
 }
 

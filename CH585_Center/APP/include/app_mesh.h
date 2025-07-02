@@ -23,6 +23,8 @@ extern "C" {
 #define APP_NODE_TEST_EVT               (1 << 1)
 #define APP_DELETE_NODE_TIMEOUT_EVT     (1 << 2)
 #define APP_CHECK_PENDING_PACKETS       (1 << 3)
+#define APP_NFC_Start       (1 << 4)
+#define APP_NFC_Work       (1 << 5)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82
