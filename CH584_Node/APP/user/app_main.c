@@ -63,14 +63,22 @@ void SelfCheck(void) {
     //     bt_mesh_reset();
     //     PRINT("重置配网\r\n");
     // }
-
     for (int i = 0; i < 8; i++) {
         if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i, P17, 1);
+            TCA_WritePin(0x20 + i, P17, 0);
         }
     }
 
     wheelLed();
+
+    for (int i = 0; i < 8; i++) {
+        if (DeviceExists[i]) {
+            TCA_WritePin(0x20 + i, P17, 1);
+            mDelaymS(100);
+            TCA_WritePin(0x20 + i, P17, 0);
+            mDelaymS(50);
+        }
+    }
 
     if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 测试模式按键
     {
@@ -85,12 +93,6 @@ void SelfCheck(void) {
 
     if (isMeshConnected) {
         ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
-    }
-
-    for (int i = 0; i < 8; i++) {
-        if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i, P17, 0);
-        }
     }
 }
 /*********************************************************************
