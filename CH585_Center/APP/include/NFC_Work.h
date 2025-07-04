@@ -7,5 +7,5 @@
 #include <stdbool.h>
 void NFC_Init();
 bool NFC_Start();
-void NFC_Work();
+bool NFC_Work(char *data);
 #endif //NFC_WORK_H

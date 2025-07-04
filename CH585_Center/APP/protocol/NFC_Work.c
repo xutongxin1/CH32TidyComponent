@@ -130,7 +130,8 @@ uint8_t ReadNFC_CID(char *data) {
     data[text_pos] = '\0';
     return 0;
 }
-void NFC_Work() {
+bool NFC_Work(char *data) {
+    bool Work_Result = false;
     uint16_t res;
     res = PcdRequest(PICC_REQALL);
     if (res == 0x0004) {
@@ -146,12 +147,10 @@ void NFC_Work() {
             if (res == PCD_NO_ERROR) {
                 PRINT("\nselect OK, SAK:%02x\r\n", g_nfca_pcd_recv_buf[0]);
 
-                char cid_string[64]; // 11个字符 + 1个结束符
-
-                uint8_t result = ReadNFC_CID(cid_string);
+                uint8_t result = ReadNFC_CID(data);
                 if (result == 0) {
-                    PRINT("Successfully read CID: %s\r\n", cid_string);
-                    // 这里会输出: "22334445555"
+                    PRINT("Successfully read CID: %s\r\n", data);
+                    Work_Result=true;
                 } else {
                     PRINT("Failed to read CID, error: 0x%x\r\n", result);
                 }
@@ -159,4 +158,5 @@ void NFC_Work() {
         }
     }
     nfca_pcd_stop();
+    return Work_Result;
 }

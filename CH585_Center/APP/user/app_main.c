@@ -110,8 +110,6 @@ int main(void) {
 
     NFC_Init();
 
-
-
     Main_Circulation();
 }
 

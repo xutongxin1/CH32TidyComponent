@@ -93,7 +93,7 @@ bool Message_C301(const uint16_t group_addr, const DATATYPE dataType, char *recv
     printf("led_index: %d\n", led_index);
 
     //测试用10s
-    led_manager_turn_on(led_index,10,color, (led_mode_t)lightMode);
+    led_manager_turn_on(nij,led_index,10,color, (led_mode_t)lightMode);
     return true;
 }
 
@@ -110,6 +110,7 @@ bool RecvMessage(const uint16_t addr, const uint16_t group_addr, const DATATYPE 
             //测试地址，直接返回
             return true;
         case 0xC301:
+            //查找，包含了取出和放回的查找，完全依赖磁传感决定目前到底是取出还是放回
             return Message_C301(group_addr, dataType, recvData);
         default:
             return false; // 未处理的组地址

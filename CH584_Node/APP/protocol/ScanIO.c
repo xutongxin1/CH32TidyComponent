@@ -67,7 +67,8 @@ void Scan(const uint8_t addr) {
     const uint16_t changed_pins = prev_state ^ current_state;
 
     // 对于每个发生变化的引脚
-    for (uint8_t pin = 0; pin < 16; pin++) {
+    //这里仅检查到15，因为最后一个引脚是蜂鸣器
+    for (uint8_t pin = 0; pin < 15; pin++) {
         // 检查此引脚是否发生变化
         if (changed_pins & (1 << pin)) {
             // 检查引脚的新状态
@@ -93,8 +94,10 @@ void handle_up(const uint8 addr, const uint8 pin) {
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
     const int led_index = (n - 1) * 17 + i * 5 + j - 4;
-    PRINT("放回了 addr:%d pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
+    PRINT("放回了 addr:%02X pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
 
+    //放回，提前关灯
+    led_manager_turn_off(led_index);
     sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d%d%d",
             MACAddr[0], MACAddr[1], MACAddr[2],
             MACAddr[3], MACAddr[4], MACAddr[5], n, i, j);
@@ -110,11 +113,8 @@ void handle_down(const uint8 addr, const uint8 pin) {
     const uint8 i = pin / 5 + 1;
     const uint8 j = pin % 5 + 1;
     char tmp[30] = {0};
-    PRINT("取出了 addr:%d pin:%d，对应%d个B55的%i行%d个\r\n", addr, pin, n, i, j);
+    PRINT("取出了 addr:%02X pin:%d，对应%d个B53的%i行%d个\r\n", addr, pin, n, i, j);
     const int led_index = (n - 1) * 17 + i * 5 + j - 4;
-    if (isDebugLED == true) {
-        ws2812_set_led_hex(led_index, 0x000000, LED_MODE_DISABLE);
-    }
 
     //取出，提前关灯
     led_manager_turn_off(led_index);
@@ -122,4 +122,7 @@ void handle_down(const uint8 addr, const uint8 pin) {
             MACAddr[0], MACAddr[1], MACAddr[2],
             MACAddr[3], MACAddr[4], MACAddr[5], n, i, j);
     SendData(0xC302, USER_DATA_TYPE, tmp);
+    if (isDebugLED == true) {
+        ws2812_set_led_hex(led_index, 0x000000, LED_MODE_DISABLE);
+    }
 }

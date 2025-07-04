@@ -163,8 +163,20 @@ bool RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE 
     switch (group_addr) {
         case 0xC000:
             return true;
+        case 0xC001:
+            sprintf(tmp, "0xC001 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
         case 0xC302:
             sprintf(tmp, "0xC302 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC303:
+            sprintf(tmp, "0xC303 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC304:
+            sprintf(tmp, "0xC304 %d %s\r\n", dataType, recvData);
             SendUSBData(tmp, strlen(tmp));
             return true;
         default:
