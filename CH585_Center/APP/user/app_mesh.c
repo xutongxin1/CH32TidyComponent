@@ -1067,7 +1067,7 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         if (NFC_Work(data)) {
             if (isWritting) {
                 SendData(0xC001, 20, data);
-                isWritting = true;
+                isWritting = false;
             } else {
                 SendData(0xC001, 10, data);
             }
