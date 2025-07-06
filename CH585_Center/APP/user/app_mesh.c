@@ -495,6 +495,8 @@ static void local_rsp(void *p1, const void *p2) {
         case OP_MOD_APP_BIND:
             APP_DBG("local vendor Model Binded");
             local_stage_set(node, LOCAL_CONFIGURATIONED);
+            vnd_models[0].groups[0] = (uint16_t) 0xC002;
+            bt_mesh_store_mod_sub(&vnd_models[0]);
             break;
         default:
             APP_DBG("Unknown Opcode (0x%04x)", val->cfgHdr.opcode);
@@ -539,9 +541,9 @@ static BOOL node_stage(void *p1) {
         // 设置模型订阅
         case NODE_MOD_SUB_SET:
             err = bt_mesh_cfg_mod_sub_add_vnd(node->net_idx, node->node_addr, node->node_addr, vendor_sub_addr,
-                                  BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
+                                              BLE_MESH_MODEL_ID_WCH_SRV, CID_WCH);
             APP_DBG("向0x%04x地址绑定订阅地址0x%04x", node->node_addr, vendor_sub_addr);
-            // err = BingSubAddr(node->net_idx, node->node_addr);
+        // err = BingSubAddr(node->net_idx, node->node_addr);
 
             if (err) {
                 APP_DBG("Unable to Set vendor Model Subscription (err %d)", err);
@@ -1061,9 +1063,9 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     }
 
     if (events & APP_NFC_Work) {
-        char data[64]={0};
+        char data[64] = {0};
         if (NFC_Work(data)) {
-            SendData(0xC001,10,data);
+            SendData(0xC001, 10, data);
             tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(1000)); //推迟下一次的执行
         }
         return (events ^ APP_NFC_Work);

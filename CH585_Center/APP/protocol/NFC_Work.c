@@ -14,6 +14,9 @@
 //
 // Created by xtx on 25-7-1.
 //
+
+bool isWritting = false;
+char WriteData[20] = {0};
 /*********************************************************************
  * @fn      sys_get_vdd
  *
@@ -76,7 +79,7 @@ void NFC_Init() {
 bool NFC_Start() {
     nfca_pcd_start();
     if (nfca_pcd_lpcd_check() == 0) {
-        PRINT("NO CARD\r\n");
+        // PRINT("NO CARD\r\n");
         nfca_pcd_stop();
         return false;
     }
@@ -130,6 +133,101 @@ uint8_t ReadNFC_CID(char *data) {
     data[text_pos] = '\0';
     return 0;
 }
+/**
+ * @brief 将文本数据按NDEF格式写入NFC第1扇区的前三个块
+ * @param text_data: 要写入的文本数据指针
+ * @return int: 0=成功, 其他值=错误码
+ */
+int nfc_write_ndef_text(const char *text_data) {
+    int res = 0;
+    uint8_t ndef_buffer[48] = {0}; // 3个块，每块16字节
+    uint8_t ndef_len = 0;
+
+    // 参数检查
+    if (!text_data) {
+        PRINT("ERR: Invalid text data\r\n");
+        return -1;
+    }
+
+    int text_len = strlen(text_data);
+    if (text_len > 36) {
+        // 考虑NDEF头部开销，限制文本长度
+        PRINT("ERR: Text too long (max 40 chars)\r\n");
+        return -2;
+    }
+
+    // 构建NDEF格式数据
+    // NDEF Text Record 格式:
+    // [Header][Type Length][Payload Length][Type][Lang Code Length + Lang][Text]
+
+    uint8_t lang_code[] = "en"; // 语言代码
+    uint8_t lang_len = strlen((char *) lang_code);
+    uint8_t payload_len = 1 + lang_len + text_len; // 语言长度字节 + 语言代码 + 文本
+
+    uint8_t offset = 0;
+    // 添加前缀 0000030C
+    ndef_buffer[offset++] = 0x00;
+    ndef_buffer[offset++] = 0x00;
+    ndef_buffer[offset++] = 0x03;
+    ndef_buffer[offset++] = 0x00;// 预留位置，稍后填充NDEF消息长度
+
+    // NDEF消息头 (MB=1, ME=1, CF=0, SR=1, IL=0, TNF=001)
+    ndef_buffer[offset++] = 0xD1; // 11010001b
+
+    // Type Length (T=Text)
+    ndef_buffer[offset++] = 0x01;
+
+    // Payload Length
+    ndef_buffer[offset++] = payload_len;
+
+    // Type ("T" for Text)
+    ndef_buffer[offset++] = 'T';
+
+    // Language Code Length (bit7=0表示UTF-8编码, bit0-5=语言代码长度)
+    ndef_buffer[offset++] = lang_len;
+
+    // Language Code
+    memcpy(&ndef_buffer[offset], lang_code, lang_len);
+    offset += lang_len;
+
+    // Text Data
+    memcpy(&ndef_buffer[offset], text_data, text_len);
+    offset += text_len;
+
+    ndef_buffer[offset++]=0xFE; // 结束标记
+    ndef_len = offset;
+    ndef_buffer[3]=ndef_len-5;
+    PRINT("NDEF message length: %d bytes\r\n", ndef_len);
+
+    // 第1扇区鉴权 (使用KeyB方式)
+    res = PcdAuthState(PICC_AUTHENT1B, 4, default_key, picc_uid);
+    if (res != PCD_NO_ERROR) {
+        PRINT("ERR: Sector 0 authentication failed: 0x%x\r\n", res);
+        return res;
+    }
+
+    uint8_t block_addresses[3] = {4, 5, 6};
+
+    // 依次写入三个块
+    for (int i = 0; i < 3; i++) {
+        // 准备16字节的块数据
+        uint8_t block_buffer[16];
+        memcpy(block_buffer, &ndef_buffer[i * 16], 16);
+
+        // 写入当前块
+        res = PcdWrite(block_addresses[i], block_buffer);
+        if (res != PCD_NO_ERROR) {
+            PRINT("ERR: Block %d write failed: 0x%x\r\n", block_addresses[i], res);
+            return res;
+        }
+
+        PRINT("Block %d written successfully\r\n", block_addresses[i]);
+    }
+
+    PRINT("NDEF text written to NFC successfully\r\n");
+    return 0; // 成功
+}
+
 bool NFC_Work(char *data) {
     bool Work_Result = false;
     uint16_t res;
@@ -146,13 +244,24 @@ bool NFC_Work(char *data) {
             res = PcdSelect(PICC_ANTICOLL1, picc_uid);
             if (res == PCD_NO_ERROR) {
                 PRINT("\nselect OK, SAK:%02x\r\n", g_nfca_pcd_recv_buf[0]);
-
-                uint8_t result = ReadNFC_CID(data);
-                if (result == 0) {
-                    PRINT("Successfully read CID: %s\r\n", data);
-                    Work_Result=true;
+                uint8_t result = 0;
+                if (isWritting) {
+                    result = nfc_write_ndef_text(WriteData);
+                    if (result == 0) {
+                        isWritting = false;
+                        PRINT("写入成功: %s\r\n", WriteData);
+                        memset(WriteData, 0, sizeof(WriteData));
+                    }else {
+                        PRINT("写入失败, 错误码: 0x%x\r\n", result);
+                    }
                 } else {
-                    PRINT("Failed to read CID, error: 0x%x\r\n", result);
+                    result = ReadNFC_CID(data);
+                    if (result == 0) {
+                        PRINT("Successfully read CID: %s\r\n", data);
+                        Work_Result = true;
+                    } else {
+                        PRINT("Failed to read CID, error: 0x%x\r\n", result);
+                    }
                 }
             }
         }

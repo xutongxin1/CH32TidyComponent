@@ -365,7 +365,7 @@ uint8_t nfca_pcd_lpcd_check(void)
     uint8_t res = 0;
 
     adc_value = nfca_adc_get_ant_signal();
-    PRINTF("adc_value:%d\n", adc_value);
+    // PRINTF("adc_value:%d\n", adc_value);
     if(adc_value > gs_lpcd_adc_base_value)
     {
         adc_value_diff = adc_value - gs_lpcd_adc_base_value;

@@ -8,4 +8,6 @@
 void NFC_Init();
 bool NFC_Start();
 bool NFC_Work(char *data);
+extern char WriteData[20];
+extern bool isWritting;
 #endif //NFC_WORK_H
