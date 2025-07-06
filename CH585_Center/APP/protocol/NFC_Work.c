@@ -169,7 +169,7 @@ int nfc_write_ndef_text(const char *text_data) {
     ndef_buffer[offset++] = 0x00;
     ndef_buffer[offset++] = 0x00;
     ndef_buffer[offset++] = 0x03;
-    ndef_buffer[offset++] = 0x00;// 预留位置，稍后填充NDEF消息长度
+    ndef_buffer[offset++] = 0x00; // 预留位置，稍后填充NDEF消息长度
 
     // NDEF消息头 (MB=1, ME=1, CF=0, SR=1, IL=0, TNF=001)
     ndef_buffer[offset++] = 0xD1; // 11010001b
@@ -194,9 +194,9 @@ int nfc_write_ndef_text(const char *text_data) {
     memcpy(&ndef_buffer[offset], text_data, text_len);
     offset += text_len;
 
-    ndef_buffer[offset++]=0xFE; // 结束标记
+    ndef_buffer[offset++] = 0xFE; // 结束标记
     ndef_len = offset;
-    ndef_buffer[3]=ndef_len-5;
+    ndef_buffer[3] = ndef_len - 5;
     PRINT("NDEF message length: %d bytes\r\n", ndef_len);
 
     // 第1扇区鉴权 (使用KeyB方式)
@@ -248,10 +248,11 @@ bool NFC_Work(char *data) {
                 if (isWritting) {
                     result = nfc_write_ndef_text(WriteData);
                     if (result == 0) {
-                        isWritting = false;
+                        ReadNFC_CID(data);
+                        Work_Result = true;
                         PRINT("写入成功: %s\r\n", WriteData);
                         memset(WriteData, 0, sizeof(WriteData));
-                    }else {
+                    } else {
                         PRINT("写入失败, 错误码: 0x%x\r\n", result);
                     }
                 } else {
