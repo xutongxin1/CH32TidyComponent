@@ -119,6 +119,7 @@ int main(void) {
     SelfCheck();
 
     PRINT("进入主循环\r\n");
+    tmos_start_task(Main_App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
     tmos_start_task(Main_App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
     Main_Circulation();
 }

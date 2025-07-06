@@ -190,4 +190,7 @@ void ErrorHandler(const uint16_t addr, const DATATYPE dataType, char *sendData) 
     // dataType：原始用户数据类型
     // sendData：原始发送数据内容
     APP_DBG("Failed to send to 0x%04X: Type=%d, Data=%s", addr, dataType, sendData);
+    char tmp[100] = {0};
+    sprintf(tmp, "%04XSendError %s\r\n", addr, sendData);
+    SendUSBData(tmp, strlen(tmp));
 }
