@@ -11,17 +11,17 @@
 #define DEVICE_TYPE_USER_NODE  0x02  // 用户节点
 #define DEVICE_TYPE_A43        0x10  // A43设备
 #define DEVICE_TYPE_A22        0x11  // A22设备
-#define DEVICE_TYPE_B55        0x20  // B55设备
+#define DEVICE_TYPE_B55        0x20  // B53设备
 
 /* 各设备类型的地址范围 */
 #define ADDR_RANGE_USER_NODE_START  0x0100  // 用户节点地址起始
 #define ADDR_RANGE_USER_NODE_END    0x0FFF  // 用户节点地址结束
-#define ADDR_RANGE_A43_START        0x1000  // A43设备地址起始
-#define ADDR_RANGE_A43_END          0x17FF  // A43设备地址结束
-#define ADDR_RANGE_A22_START        0x1800  // A22设备地址起始
-#define ADDR_RANGE_A22_END          0x1FFF  // A22设备地址结束
-#define ADDR_RANGE_B55_START        0x2000  // B55设备地址起始
-#define ADDR_RANGE_B55_END          0x2FFF  // B55设备地址结束
+#define ADDR_RANGE_A42_START        0x1000  // A42设备地址起始
+#define ADDR_RANGE_A42_END          0x17FF  // A41设备地址结束
+#define ADDR_RANGE_A21_START        0x1800  // A21设备地址起始
+#define ADDR_RANGE_A21_END          0x1FFF  // A21设备地址结束
+#define ADDR_RANGE_B53_START        0x2000  // B53设备地址起始
+#define ADDR_RANGE_B53_END          0x2FFF  // B53设备地址结束
 
 /* EEPROM相关常量 */
 #define EEPROM_START_ADDR      0x0000  // EEPROM起始地址

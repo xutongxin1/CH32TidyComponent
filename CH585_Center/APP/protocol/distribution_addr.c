@@ -17,9 +17,9 @@
 
 /* 全局变量，存储每种设备类型的下一个可分配地址 */
 static uint16_t next_addr_user_node = ADDR_RANGE_USER_NODE_START;
-static uint16_t next_addr_a43 = ADDR_RANGE_A43_START;
-static uint16_t next_addr_a22 = ADDR_RANGE_A22_START;
-static uint16_t next_addr_b55 = ADDR_RANGE_B55_START;
+static uint16_t next_addr_a43 = ADDR_RANGE_A42_START;
+static uint16_t next_addr_a22 = ADDR_RANGE_A21_START;
+static uint16_t next_addr_b55 = ADDR_RANGE_B53_START;
 
 /* 下一个可用的EEPROM存储位置 */
 static uint16_t next_eeprom_addr = EEPROM_START_ADDR;
@@ -36,11 +36,11 @@ static int is_addr_in_device_range(uint16_t addr, uint8_t device_type) {
         case DEVICE_TYPE_USER_NODE:
             return (addr >= ADDR_RANGE_USER_NODE_START && addr <= ADDR_RANGE_USER_NODE_END);
         case DEVICE_TYPE_A43:
-            return (addr >= ADDR_RANGE_A43_START && addr <= ADDR_RANGE_A43_END);
+            return (addr >= ADDR_RANGE_A42_START && addr <= ADDR_RANGE_A42_END);
         case DEVICE_TYPE_A22:
-            return (addr >= ADDR_RANGE_A22_START && addr <= ADDR_RANGE_A22_END);
+            return (addr >= ADDR_RANGE_A21_START && addr <= ADDR_RANGE_A21_END);
         case DEVICE_TYPE_B55:
-            return (addr >= ADDR_RANGE_B55_START && addr <= ADDR_RANGE_B55_END);
+            return (addr >= ADDR_RANGE_B53_START && addr <= ADDR_RANGE_B53_END);
         default:
             return 0;
     }
@@ -56,9 +56,9 @@ void init_persistent_addr(void) {
 
     /* 重置为默认起始地址 */
     next_addr_user_node = ADDR_RANGE_USER_NODE_START;
-    next_addr_a43 = ADDR_RANGE_A43_START;
-    next_addr_a22 = ADDR_RANGE_A22_START;
-    next_addr_b55 = ADDR_RANGE_B55_START;
+    next_addr_a43 = ADDR_RANGE_A42_START;
+    next_addr_a22 = ADDR_RANGE_A21_START;
+    next_addr_b55 = ADDR_RANGE_B53_START;
     next_eeprom_addr = EEPROM_START_ADDR; // 确保EEPROM地址也被重置
 
     /* 扫描EEPROM中的记录，查找每种设备类型的最大已分配地址 */
@@ -77,15 +77,15 @@ void init_persistent_addr(void) {
             if (addr + 1 > next_addr_user_node) {
                 next_addr_user_node = addr + 1; // 更新用户节点下一个地址
             }
-        } else if (addr >= ADDR_RANGE_A43_START && addr <= ADDR_RANGE_A43_END) {
+        } else if (addr >= ADDR_RANGE_A42_START && addr <= ADDR_RANGE_A42_END) {
             if (addr + 1 > next_addr_a43) {
                 next_addr_a43 = addr + 1; // 更新A43设备下一个地址
             }
-        } else if (addr >= ADDR_RANGE_A22_START && addr <= ADDR_RANGE_A22_END) {
+        } else if (addr >= ADDR_RANGE_A21_START && addr <= ADDR_RANGE_A21_END) {
             if (addr + 1 > next_addr_a22) {
                 next_addr_a22 = addr + 1; // 更新A22设备下一个地址
             }
-        } else if (addr >= ADDR_RANGE_B55_START && addr <= ADDR_RANGE_B55_END) {
+        } else if (addr >= ADDR_RANGE_B53_START && addr <= ADDR_RANGE_B53_END) {
             if (addr + 1 > next_addr_b55) {
                 next_addr_b55 = addr + 1; // 更新B55设备下一个地址
             }
@@ -174,17 +174,17 @@ static uint16_t get_next_addr_for_device_type(uint8_t device_type) {
             }
             return next_addr_user_node++;
         case DEVICE_TYPE_A43:
-            if (next_addr_a43 > ADDR_RANGE_A43_END) {
+            if (next_addr_a43 > ADDR_RANGE_A42_END) {
                 return 0; // A43设备地址范围已用尽
             }
             return next_addr_a43++;
         case DEVICE_TYPE_A22:
-            if (next_addr_a22 > ADDR_RANGE_A22_END) {
+            if (next_addr_a22 > ADDR_RANGE_A21_END) {
                 return 0; // A22设备地址范围已用尽
             }
             return next_addr_a22++;
         case DEVICE_TYPE_B55:
-            if (next_addr_b55 > ADDR_RANGE_B55_END) {
+            if (next_addr_b55 > ADDR_RANGE_B53_END) {
                 return 0; // B55设备地址范围已用尽
             }
             return next_addr_b55++;
