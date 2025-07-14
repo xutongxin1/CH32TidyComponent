@@ -13,7 +13,7 @@ __attribute__ ((aligned (4))) uint32_t color_buf[COLOR_BUFFER_LEN] = {0};
 void wheelLed(void);
 /// 初始化WS2812控制器
 void WS2812Init() {
-    GPIOB_ModeCfg(GPIO_Pin_22, GPIO_ModeOut_PP_5mA);
+    GPIOB_ModeCfg(GPIO_Pin_22, GPIO_ModeOut_PP_20mA);
 
     PRINT("TMR3 DMA PWM\r\n");
     TMR3_PWMCycleCfg(97); // 目标是800KHz 主频78MHz 因此PLL频率为78MHz/800KHz=97.5

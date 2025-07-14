@@ -18,6 +18,7 @@
 #include <TCA9555.h>
 #include <WS2812.h>
 
+#include "A_driver.h"
 #include "CONFIG.h"
 #include "MESH_LIB.h"
 #include "HAL.h"
@@ -57,28 +58,23 @@ __attribute__ ((noinline)) void Main_Circulation() {
 }
 
 void SelfCheck(void) {
-    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
-    // if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 配网重置按键
-    // {
-    //     bt_mesh_reset();
-    //     PRINT("重置配网\r\n");
-    // }
-    for (int i = 0; i < 8; i++) {
-        if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i, P17, 0);
-        }
+    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);//MODE按键
+    GPIOB_ModeCfg(GPIO_Pin_9, GPIO_ModeIN_PU);//MESH按键
+    if (GPIOB_ReadPortPin(GPIO_Pin_9) == 0) // 配网重置按键
+    {
+        bt_mesh_reset();
+        PRINT("重置配网\r\n");
     }
 
     wheelLed();
 
-    for (int i = 0; i < 8; i++) {
-        if (DeviceExists[i]) {
-            TCA_WritePin(0x20 + i, P17, 1);
-            mDelaymS(100);
-            TCA_WritePin(0x20 + i, P17, 0);
-            mDelaymS(50);
-        }
-    }
+#ifdef DEVICE_TYPE_A42
+    CheckA42Beep();
+#elifdef DEVICE_TYPE_B53
+    CheckB53Beep();
+#elifdef DEVICE_TYPE_A21
+
+#endif
 
     if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 测试模式按键
     {
@@ -120,11 +116,12 @@ int main(void) {
     PRINT("Working\r\n");
 #endif
 
+#ifdef DEVICE_TYPE_B53
     // 初始化I2C
     CH58X_I2C_Init();
-
-#ifdef DEVICE_TYPE_B55
     CheckB53_();
+#elifdef DEVICE_TYPE_A42
+    A42_Init();
 #endif
 
     // 初始化WS2812

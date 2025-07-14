@@ -7,6 +7,7 @@
 
 #include "app_mesh.h"
 #include "data_transfer.h"
+#include "TCA9555.h"
 
 // LED管理数组，直接用LED ID作为数组索引
 static led_info_t led_array[LED_NUM];
@@ -28,7 +29,7 @@ void led_manager_init(void) {
         led_array[i].remaining_time = 0;
         led_array[i].color = 0;
         led_array[i].mode = LED_MODE_STATIC;
-        led_array[i].nij=0;
+        led_array[i].nij = 0;
     }
 
     manager_initialized = true;
@@ -49,10 +50,10 @@ void led_manager_update(void) {
             // 如果时间到了，关闭LED
             if (led_array[i].remaining_time == 0) {
                 turn_off_led_internal(i);
-                char tmp[64]={0};
+                char tmp[64] = {0};
                 sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
-                MACAddr[0], MACAddr[1], MACAddr[2],
-                MACAddr[3], MACAddr[4], MACAddr[5], led_array[i].nij);
+                        MACAddr[0], MACAddr[1], MACAddr[2],
+                        MACAddr[3], MACAddr[4], MACAddr[5], led_array[i].nij);
                 SendData(0xC304, USER_DATA_TYPE, tmp);
             }
         }
@@ -62,7 +63,8 @@ void led_manager_update(void) {
 /**
  * @brief 开启LED灯
  */
-bool led_manager_turn_on(uint8_t nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode) {
+bool led_manager_turn_on(uint8_t nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode,
+                         bool isUseDeep, bool isUseBigLED) {
     if (!manager_initialized) {
         return false;
     }
@@ -77,6 +79,27 @@ bool led_manager_turn_on(uint8_t nij, uint16_t led_id, uint32_t duration, uint32
     led_array[led_id].color = color;
     led_array[led_id].mode = mode;
     led_array[led_id].nij = nij;
+    led_array[led_id].isUseBigLED = isUseBigLED;
+    led_array[led_id].isUseDeep = isUseDeep;
+
+#ifdef DEVICE_TYPE_B53
+
+    if (isUseBigLED) {
+        const uint16_t tmp = (led_id / 17) * 17 + 1;
+        ws2812_set_led_hex(tmp, color, mode);
+    }
+    if (isUseDeep) {
+        const uint8_t tmp = led_id / 17;
+        TCA_WritePin(0x20 + tmp, P17, 1);
+    }
+#elifdef DEVICE_TYPE_A42
+    if (isUseBigLED) {
+        ws2812_set_led_hex(1, color, mode);
+    }
+    if (isUseDeep) {
+        GPIOA_SetBits(GPIO_Pin_4);
+    }
+#endif
 
     // 调用底层函数开启LED
     ws2812_set_led_hex(led_id, color, mode);
@@ -143,5 +166,23 @@ static void turn_off_led_internal(uint16_t led_id) {
         led_array[led_id].is_on = false;
         led_array[led_id].remaining_time = 0;
         // 保留color和mode信息，以便后续可能的查询
+
+#ifdef DEVICE_TYPE_B53
+        if (led_array[led_id].isUseBigLED) {
+            const uint16_t tmp = (led_id / 17) * 17 + 1;
+            ws2812_set_led_hex(tmp, 0, led_array[led_id].mode);
+        }
+        if (led_array[led_id].isUseDeep) {
+            const uint8_t tmp = led_id / 17;
+            TCA_WritePin(0x20 + tmp, P17, 0);
+        }
+#elifdef DEVICE_TYPE_A42
+        if (led_array[led_id].isUseBigLED) {
+            ws2812_set_led_hex(1, 0, led_array[led_id].mode);
+        }
+        if (led_array[led_id].isUseDeep) {
+            GPIOA_ResetBits(GPIO_Pin_4);
+        }
+#endif
     }
 }

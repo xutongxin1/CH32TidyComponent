@@ -82,7 +82,7 @@ extern "C" {
 
 // 可存储的订阅地址数量
 #define CONFIG_MESH_MOD_GROUP_COUNT_MIN        (1)
-#define CONFIG_MESH_MOD_GROUP_COUNT_DEF        (6)
+#define CONFIG_MESH_MOD_GROUP_COUNT_DEF        (16)
 #define CONFIG_MESH_MOD_GROUP_COUNT_MAX        (64)
 
 // 是否允许一个网络中存在同地址的节点（使能后分包功能不可用）

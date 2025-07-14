@@ -283,9 +283,16 @@ static void cfg_srv_rsp_handler (const cfg_srv_status_t *val) {
 
         vnd_models[0].groups[0]=(uint16_t)0xC000;
         vnd_models[0].groups[1]=(uint16_t)0xC001;
-        vnd_models[0].groups[2]=(uint16_t)0xC302;
-        vnd_models[0].groups[3]=(uint16_t)0xC303;
-        vnd_models[0].groups[4]=(uint16_t)0xC304;
+        vnd_models[0].groups[2]=(uint16_t)0xC102;
+        vnd_models[0].groups[3]=(uint16_t)0xC103;
+        vnd_models[0].groups[4]=(uint16_t)0xC104;
+        vnd_models[0].groups[5]=(uint16_t)0xC202;
+        vnd_models[0].groups[6]=(uint16_t)0xC203;
+        vnd_models[0].groups[7]=(uint16_t)0xC204;
+        vnd_models[0].groups[8]=(uint16_t)0xC302;
+        vnd_models[0].groups[9]=(uint16_t)0xC303;
+        vnd_models[0].groups[10]=(uint16_t)0xC304;
+
         bt_mesh_store_mod_sub(&vnd_models[0]);
         APP_DBG("已自行设置完整的订阅地址");
 

@@ -89,9 +89,9 @@ add_link_options(-nostartfiles -Xlinker --gc-sections)
 add_link_options("-Wl,-Map,${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map" -Wl,--cref)
 add_link_options(--specs=nano.specs --specs=nosys.specs -lprintfloat)
 
-#生成elf设置
+#B53生成elf设置
 add_executable(B53_Node ${SOURCES} ${LINKER_SCRIPT})
-target_compile_definitions(B53_Node PUBLIC DEVICE_TYPE_B55)
+target_compile_definitions(B53_Node PUBLIC DEVICE_TYPE_B53)
 target_compile_definitions(B53_Node PUBLIC ENABLE_MESH_UART_TEST)
 target_compile_definitions(B53_Node PUBLIC ENABLE_MESH_UART_DEBUG)
 
@@ -139,6 +139,57 @@ add_custom_target(Flash_B53_Node
         VERBATIM
         USES_TERMINAL
 )
+
+add_executable(A42_Node ${SOURCES} ${LINKER_SCRIPT})
+target_compile_definitions(A42_Node PUBLIC DEVICE_TYPE_A42)
+target_compile_definitions(A42_Node PUBLIC ENABLE_MESH_UART_TEST)
+target_compile_definitions(A42_Node PUBLIC ENABLE_MESH_UART_DEBUG)
+
+target_link_directories(A42_Node PRIVATE
+        ../
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/MESH_LIB
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/LIB
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/StdPeriphDriver
+)
+target_link_libraries(A42_Node
+        ISP585
+        MESH
+        CH58xBLE
+)
+
+set(HEX_FILE ${PROJECT_BINARY_DIR}/A42_Node.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/A42_Node.bin)
+set(LIST_FILE ${PROJECT_BINARY_DIR}/A42_Node.list)
+
+#生成hex设置
+add_custom_command(TARGET A42_Node POST_BUILD
+        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:A42_Node>
+        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:A42_Node> > ${LIST_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:A42_Node> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:A42_Node> ${BIN_FILE}
+        COMMENT "Building ${HEX_FILE}
+Building ${BIN_FILE}")
+
+# 添加自定义目标 "flash"
+add_custom_target(Erase_Flash_A42_Node
+        COMMAND ../wlink.exe erase
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/A42_Node.hex
+        DEPENDS A42_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
+        COMMENT "执行擦除和烧录操作"
+        VERBATIM
+        USES_TERMINAL
+)
+
+add_custom_target(Flash_A42_Node
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/A42_Node.hex
+        DEPENDS A42_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
+        COMMENT "执行擦除和烧录操作"
+        VERBATIM
+        USES_TERMINAL
+)
+
 
 add_custom_target(Reset
         COMMAND ../wlink.exe reset

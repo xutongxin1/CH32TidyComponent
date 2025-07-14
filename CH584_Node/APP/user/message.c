@@ -18,7 +18,7 @@ bool Message_C301(const uint16_t group_addr, const DATATYPE dataType, char *recv
     char rgbStr[8]; // RGB字符串
     uint8_t parsedMAC[6]; // 解析后的MAC地址
     int nij = 0;
-    int lightMode=0;
+    int lightMode = 0;
     uint32_t color = 0;
     // 使用sscanf解析数据
     int result = sscanf(recvData, "%17s %d %7s %d",
@@ -89,11 +89,16 @@ bool Message_C301(const uint16_t group_addr, const DATATYPE dataType, char *recv
            color & 0xFF); // B
     printf("亮灯形式: %d\n", lightMode);
 
-    int led_index = (nij/100-1)*17 + ((nij%100)/10)*5 + (nij%10) - 4;
+    int led_index = (nij / 100 - 1) * 17 + ((nij % 100) / 10) * 5 + (nij % 10) - 4;
     printf("led_index: %d\n", led_index);
 
-    //测试用10s
-    led_manager_turn_on(nij,led_index,10,color, (led_mode_t)lightMode);
+    if (dataType == 10) {
+        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,false);
+    } else if (dataType == 11) {
+        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,true);
+    } else if (dataType == 12) {
+        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,true,true);
+    }
     return true;
 }
 

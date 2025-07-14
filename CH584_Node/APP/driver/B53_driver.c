@@ -25,4 +25,22 @@ void CheckB53_() {
             B53_Num++;
         }
     }
+
+    //¹Ø±Õ·äÃùÆ÷
+    for (int i = 0; i < 8; i++) {
+        if (DeviceExists[i]) {
+            TCA_WritePin(0x20 + i, P17, 0);
+        }
+    }
+}
+
+void CheckB53Beep() {
+    for (int i = 0; i < 8; i++) {
+        if (DeviceExists[i]) {
+            TCA_WritePin(0x20 + i, P17, 1);
+            mDelaymS(100);
+            TCA_WritePin(0x20 + i, P17, 0);
+            mDelaymS(50);
+        }
+    }
 }
