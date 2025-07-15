@@ -79,27 +79,35 @@ bool Message_C301(const uint16_t group_addr, const DATATYPE dataType, char *recv
         return false;
     }
 
-    printf("解析成功！\n");
-    printf("MAC匹配: 是\n");
-    printf("nij: %d\n", nij);
-    printf("颜色值: 0x%06X (R:%d, G:%d, B:%d)\n",
+    printf("解析成功！\r\n");
+    printf("MAC匹配: 是\r\n");
+    printf("nij: %d\r\n", nij);
+    printf("颜色值: 0x%06X (R:%d, G:%d, B:%d)\r\n",
            color,
            (color >> 16) & 0xFF, // R
            (color >> 8) & 0xFF, // G
            color & 0xFF); // B
-    printf("亮灯形式: %d\n", lightMode);
+    printf("亮灯形式: %d\r\n", lightMode);
 
-    int led_index = (nij / 100 - 1) * 17 + ((nij % 100) / 10) * 5 + (nij % 10) - 4;
-    printf("led_index: %d\n", led_index);
-
-    if (dataType == 10) {
-        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,false);
-    } else if (dataType == 11) {
-        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,true);
-    } else if (dataType == 12) {
-        led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,true,true);
+    const int led_index = (nij / 100 - 1) * 17 + ((nij % 100) / 10) * 5 + (nij % 10) - 4;
+    printf("led_index: %d\r\n", led_index);
+    printf("dataType: %d\r\n", dataType);
+    switch (dataType) {
+        case 10:
+            return led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,false);
+        case 11:
+            return led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,false,true);
+        case 12:
+            return led_manager_turn_on(nij, led_index, 60, color, (led_mode_t) lightMode,true,true);
+        case 20:
+            return led_manager_turn_on(nij, led_index, 10, color, (led_mode_t) lightMode,false,false);
+        case 21:
+            return led_manager_turn_on(nij, led_index, 10, color, (led_mode_t) lightMode,false,true);
+        case 22:
+            return led_manager_turn_on(nij, led_index, 10, color, (led_mode_t) lightMode,true,true);
+        default:
+            return false;
     }
-    return true;
 }
 
 /// 接收成功回调

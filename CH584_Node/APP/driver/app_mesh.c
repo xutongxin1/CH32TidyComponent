@@ -283,16 +283,13 @@ static void cfg_srv_rsp_handler(const cfg_srv_status_t *val) {
 
 #ifdef DEVICE_TYPE_B53
         vnd_models[0].groups[0]=(uint16_t)0xC000;
-        vnd_models[0].groups[1]=(uint16_t)0xC001;
-        vnd_models[0].groups[2]=(uint16_t)0xC301;
+        vnd_models[0].groups[1]=(uint16_t)0xC301;
 #elifdef DEVICE_TYPE_A42
         vnd_models[0].groups[0]=(uint16_t)0xC000;
-        vnd_models[0].groups[1]=(uint16_t)0xC001;
-        vnd_models[0].groups[2]=(uint16_t)0xC101;
+        vnd_models[0].groups[1]=(uint16_t)0xC101;
 #elifdef DEVICE_TYPE_A21
         vnd_models[0].groups[0]=(uint16_t)0xC000;
-        vnd_models[0].groups[1]=(uint16_t)0xC001;
-        vnd_models[0].groups[2]=(uint16_t)0xC201;
+        vnd_models[0].groups[1]=(uint16_t)0xC201;
 #endif
 
         bt_mesh_store_mod_sub(&vnd_models[0]);
