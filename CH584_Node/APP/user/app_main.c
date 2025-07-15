@@ -169,6 +169,7 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     if (events & APP_NODE_TEST_EVT) {
         if (isDebugLED) {
             tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(100));
+#ifdef DEVICE_TYPE_B53
             if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) {
                 for (int i = 0; i < 8; i++) {
                     if (DeviceExists[i]) {
@@ -183,6 +184,15 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
                     }
                 }
             }
+#elifdef DEVICE_TYPE_A42
+            if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) {
+                GPIOA_SetBits(GPIO_Pin_4);
+            }
+            else {
+                GPIOA_ResetBits(GPIO_Pin_4);
+            }
+#endif
+
         } else {
             tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
         }
