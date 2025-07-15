@@ -17,9 +17,9 @@
 #ifdef DEVICE_TYPE_B53
 #define  LED_NUM (3*5+1+1)*8
 #elifdef  DEVICE_TYPE_A21
-#define  LED_NUM 2
+#define  LED_NUM 2+1
 #elifdef DEVICE_TYPE_A42
-#define  LED_NUM 8
+#define  LED_NUM 8+1
 #elifdef DEVICE_TYPE_USER
 #define  LED_NUM 1
 #endif

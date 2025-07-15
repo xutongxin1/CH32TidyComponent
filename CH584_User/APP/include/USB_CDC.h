@@ -6,8 +6,8 @@
 #define USB_CDC_H
 #include "CH58x_common.h"
 
-#define dg_log printf
-// #define dg_log
+// #define dg_log printf
+#define dg_log
 
 void USB_IRQProcessHandler( void );
 void InitUSBDevPara(void);

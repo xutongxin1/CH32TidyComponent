@@ -85,8 +85,8 @@ void SelfCheck(void) {
     } else {
         ws2812_set_led_hex(0, 0x666600, LED_MODE_FLASH_SLOW);
         tmos_start_task(Main_App_TaskID, APP_SCANIO, K_MSEC(1000));
+        PRINT("正常运行模式\r\n");
     }
-
     if (isMeshConnected) {
         ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
     }
