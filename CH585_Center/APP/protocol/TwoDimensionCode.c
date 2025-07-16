@@ -69,7 +69,10 @@ void UART3_IRQHandler(void) {
                 RxBuff[recCNT + i] = UART3_RecvByte();
             }
             recCNT += trigB;
-            break;
+            if (RxBuff[recCNT-2]!='}')
+            {
+                break;
+            }
         case UART_II_RECV_TOUT: // 接收超时，暂时一帧数据接收完成
 
             len = UART3_RecvString(tmp);
