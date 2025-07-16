@@ -21,6 +21,7 @@
 #include "app_mesh.h"
 #include "wch_nfca_pcd_bsp.h"
 #include "NFC_Work.h"
+#include "TwoDimensionCode.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -109,7 +110,7 @@ int main(void) {
     App_Init();
 
     NFC_Init();
-
+    InitTwoDimensionCode();
     Main_Circulation();
 }
 

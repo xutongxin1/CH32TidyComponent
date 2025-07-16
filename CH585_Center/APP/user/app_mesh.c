@@ -22,6 +22,7 @@
 
 #include "HAL.h"
 #include "NFC_Work.h"
+#include "TwoDimensionCode.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -1058,6 +1059,11 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
         if (NFC_Start()) {
             tmos_start_task(App_TaskID, APP_NFC_Work, MS1_TO_SYSTEM_TIME(5));
+        }
+        if (isGetCID) {
+            isGetCID=false;
+            SendData(0xC001, 30, GetCID);
+            memset(GetCID, 0, sizeof(GetCID));
         }
         return (events ^ APP_NFC_Start);
     }

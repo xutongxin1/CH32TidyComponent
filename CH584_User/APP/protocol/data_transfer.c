@@ -167,6 +167,30 @@ bool RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE 
             sprintf(tmp, "0xC001 %d %s\r\n", dataType, recvData);
             SendUSBData(tmp, strlen(tmp));
             return true;
+        case 0xC102:
+            sprintf(tmp, "0xC102 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC103:
+            sprintf(tmp, "0xC103 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC104:
+            sprintf(tmp, "0xC104 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC202:
+            sprintf(tmp, "0xC202 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC203:
+            sprintf(tmp, "0xC203 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
+        case 0xC204:
+            sprintf(tmp, "0xC204 %d %s\r\n", dataType, recvData);
+            SendUSBData(tmp, strlen(tmp));
+            return true;
         case 0xC302:
             sprintf(tmp, "0xC302 %d %s\r\n", dataType, recvData);
             SendUSBData(tmp, strlen(tmp));
