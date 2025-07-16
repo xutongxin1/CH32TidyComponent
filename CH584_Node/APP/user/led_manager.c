@@ -54,7 +54,11 @@ void led_manager_update(void) {
                 sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
                         MACAddr[0], MACAddr[1], MACAddr[2],
                         MACAddr[3], MACAddr[4], MACAddr[5], led_array[i].nij);
+#ifdef DEVICE_TYPE_B53
                 SendData(0xC304, USER_DATA_TYPE, tmp);
+#elifdef DEVICE_TYPE_A42
+                SendData(0xC104, USER_DATA_TYPE, tmp);
+#endif
             }
         }
     }

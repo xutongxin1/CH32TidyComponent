@@ -47,7 +47,7 @@ void Scan_A53() {
         A42_IO_History[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
         A42_IO_History[2] = GPIOA_ReadPortPin(GPIO_Pin_15);
         A42_IO_History[3] = GPIOA_ReadPortPin(GPIO_Pin_5);
-        device_initialized[0]=true;
+        device_initialized[0] = true;
         return;
     }
     A42_IO_NOW[0] = GPIOB_ReadPortPin(GPIO_Pin_16);
@@ -59,11 +59,11 @@ void Scan_A53() {
             if (A42_IO_NOW[i]) {
                 // 低电平变高电平
                 PRINT("A42 IO %d 变为高电平\r\n", i);
-                handle_up_A42(i);
+                handle_down_A42(i);
             } else {
                 // 高电平变低电平
                 PRINT("A42 IO %d 变为低电平\r\n", i);
-                handle_down_A42(i);
+                handle_up_A42(i);
             }
             A42_IO_History[i] = A42_IO_NOW[i];
         }
@@ -126,15 +126,15 @@ void Scan_TCA9555(const uint8_t addr) {
 //放回
 //此处仅处理物理意义上的放回
 void handle_up_A42(const uint8 pin) {
-    const int led_index1 = pin*2 + 1;
-    const int led_index2 = pin*2 + 2;
-    PRINT("放回了上数 %d 排的抽屉", pin);
+    const int led_index1 = pin * 2 + 1;
+    const int led_index2 = pin * 2 + 2;
+    PRINT("放回了上数 %d 排的抽屉", pin+1);
     led_manager_turn_off(led_index1);
     led_manager_turn_off(led_index2);
     char tmp[30] = {0};
     sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
-        MACAddr[0], MACAddr[1], MACAddr[2],
-        MACAddr[3], MACAddr[4], MACAddr[5], pin+1);
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
     SendData(0xC103, USER_DATA_TYPE, tmp);
     if (isDebugLED == true) {
         ws2812_set_led_hex(led_index1, 0xAAAAAA, LED_MODE_STATIC);
@@ -162,15 +162,15 @@ void handle_up_B53(const uint8 addr, const uint8 pin) {
 
 //取出
 void handle_down_A42(const uint8 pin) {
-    const int led_index1 = pin*2 + 1;
-    const int led_index2 = pin*2 + 2;
-    PRINT("取出了上数 %d 排的抽屉", pin);
+    const int led_index1 = pin * 2 + 1;
+    const int led_index2 = pin * 2 + 2;
+    PRINT("取出了上数 %d 排的抽屉", pin+1);
     led_manager_turn_off(led_index1);
     led_manager_turn_off(led_index2);
     char tmp[30] = {0};
     sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
-        MACAddr[0], MACAddr[1], MACAddr[2],
-        MACAddr[3], MACAddr[4], MACAddr[5], pin);
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
     SendData(0xC102, USER_DATA_TYPE, tmp);
     if (isDebugLED == true) {
         ws2812_set_led_hex(led_index1, 0x000000, LED_MODE_DISABLE);

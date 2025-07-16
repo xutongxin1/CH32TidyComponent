@@ -522,6 +522,12 @@ void App_Init() {
 
     vendor_model_srv_init (vnd_models);
     blemesh_on_sync();
+    for (int i = 0; i < CONFIG_MESH_MOD_GROUP_COUNT_DEF; i++)
+    {
+        PRINT("G%d: 0x%04x\r\n", i, vnd_models->groups[i] );
+    }
+
+
     // HAL_KeyInit();
     // HalKeyConfig (keyPress);
     tmos_start_task (Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC (1000));
