@@ -17,7 +17,7 @@ void handle_down_A42(uint8 pin);
 void handle_up_A42(uint8 pin);
 void handle_up_B53(uint8 addr, uint8 pin); // 当引脚从低电平变为高电平时调用
 void handle_down_B53(uint8 addr, uint8 pin); // 当引脚从高电平变为低电平时调用
-void Scan_A53();
+void Scan_A42();
 // 支持的最大TCA9555设备数量
 #define MAX_TCA_DEVICES 8
 
@@ -31,8 +31,8 @@ static bool A42_IO_NOW[4] = {false};
 /// 扫描所有TCA9555设备的引脚状态
 void ScanIO() {
 #ifdef DEVICE_TYPE_A42
-    Scan_A53();
-#elifdef DEVICE_TYPE_A53
+    Scan_A42();
+#elifdef DEVICE_TYPE_B53
     for (int i = 0; i < MAX_TCA_DEVICES; i++) {
         if (DeviceExists[i]) {
             Scan_TCA9555(0x20 + i);
@@ -41,7 +41,7 @@ void ScanIO() {
 #endif
 }
 
-void Scan_A53() {
+void Scan_A42() {
     if (!device_initialized[0]) {
         A42_IO_History[0] = GPIOB_ReadPortPin(GPIO_Pin_16);
         A42_IO_History[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
