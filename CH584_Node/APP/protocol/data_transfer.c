@@ -31,7 +31,10 @@ void InitDataTransfer(RecTrueDataCallback recvCb, SendErrorCallback errCb) {
 
 void SendData(const uint16_t addr, const DATATYPE dataType, const char *sendData) {
     PRINT("构建数据包发往 0x%04X, Type=%d, Data=%s\r\n", addr, dataType, sendData);
-    if (dataType < USER_DATA_TYPE || pendingCount >= MAX_PENDING) return;
+    if (dataType < USER_DATA_TYPE || pendingCount >= MAX_PENDING) {
+        printf("发送失败，数据类型错误或待处理包列表已满\r\n");
+        return;
+    }
 
     /* 构造数据包 */
     uint16_t dataLen = strlen(sendData);

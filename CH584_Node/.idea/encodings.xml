@@ -3,6 +3,7 @@
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/APP/driver/WS2812.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/APP/include/WS2812.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/APP/protocol/data_transfer.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/APP/user/app_main.c" charset="GBK" />
     <file url="file://$PROJECT_DIR$/CMakeLists.txt" charset="GBK" />
     <file url="PROJECT" charset="GBK" />

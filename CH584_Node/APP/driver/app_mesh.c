@@ -521,6 +521,7 @@ void App_Init() {
     // HAL_KeyInit();
     HalKeyConfig(keyPress);
     tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, K_MSEC(1000));
+    tmos_start_task(Main_App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
     InitDataTransfer(RecvMessage, ErrorHandler);
 }
 
