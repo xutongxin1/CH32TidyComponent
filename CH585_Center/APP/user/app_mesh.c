@@ -1059,6 +1059,7 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
         if (NFC_Start()) {
             tmos_start_task(App_TaskID, APP_NFC_Work, MS1_TO_SYSTEM_TIME(5));
+            GPIOA_SetBits(GPIO_Pin_0);
         }
         if (isGetCID) {
             isGetCID=false;
@@ -1077,6 +1078,7 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
             } else {
                 SendData(0xC001, 10, data);
             }
+            GPIOA_ResetBits(GPIO_Pin_0);
             tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(1000)); //推迟下一次的执行
         }
         return (events ^ APP_NFC_Work);

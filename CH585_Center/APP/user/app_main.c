@@ -102,6 +102,8 @@ int main(void) {
     UART0_DefInit();
 #endif
 
+    GPIOA_ModeCfg(GPIO_Pin_0, GPIO_ModeOut_PP_20mA);
+
     PRINT("%s\r\n", VER_MESH_LIB);
     CH58x_BLEInit();
     HAL_Init();
