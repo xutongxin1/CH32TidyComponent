@@ -67,20 +67,20 @@ typedef enum
 typedef enum
 {
     /* 下面等级将使用高精度监控，210uA消耗 */
-    HALevel_1V9 = 0, // 1.7-1.9
-    HALevel_2V1,     // 1.9-2.1
-    HALevel_2V3,     // 2.1-2.3
-    HALevel_2V5,     // 2.3-2.5
+    HALevel_1V9 = 0, // 1.7-1.95
+    HALevel_2V1,     // 1.9-2.15
+    HALevel_2V3,     // 2.1-2.35
+    HALevel_2V5,     // 2.3-2.55
 
     /* 下面等级将使用低功耗监控，1uA消耗 */
-    LPLevel_1V8 = 0x80,
+    LPLevel_1V7 = 0x80,
+    LPLevel_1V8,
     LPLevel_1V9,
     LPLevel_2V0,
     LPLevel_2V1,
     LPLevel_2V2,
     LPLevel_2V3,
     LPLevel_2V4,
-    LPLevel_2V5,
 
 } VolM_LevelypeDef;
 
