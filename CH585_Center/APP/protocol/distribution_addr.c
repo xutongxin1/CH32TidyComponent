@@ -10,7 +10,6 @@
 #include "distribution_addr.h"
 
 #include <app_mesh_config.h>
-#include <ISP585.h>
 #include <MESH_LIB.h>
 #include <stdio.h>
 #include <string.h>

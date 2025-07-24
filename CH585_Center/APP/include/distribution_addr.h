@@ -6,7 +6,8 @@
 #ifndef DISTRIBUTION_ADDR_H
 #define DISTRIBUTION_ADDR_H
 #include <stdint.h>
-
+#include <CH58x_common.h>
+#include <core_riscv.h>
 /* 设备类型常量 */
 #define DEVICE_TYPE_USER_NODE  0x02  // 用户节点
 #define DEVICE_TYPE_A43        0x10  // A43设备
