@@ -67,7 +67,7 @@ void led_manager_update(void) {
 /**
  * @brief ¿ªÆôLEDµÆ
  */
-bool led_manager_turn_on(uint8_t nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode,
+bool led_manager_turn_on(int nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode,
                          bool isUseDeep, bool isUseBigLED) {
     if (!manager_initialized) {
         return false;

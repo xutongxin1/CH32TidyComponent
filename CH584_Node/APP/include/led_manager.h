@@ -13,7 +13,7 @@ typedef struct {
     uint32_t remaining_time; // 剩余开启时间（秒）
     uint32_t color; // 灯的颜色
     led_mode_t mode; // 灯的模式
-    uint8_t nij; // 具体位置（用于超时回调）
+    uint32_t nij; // 具体位置（用于超时回调）
     bool isUseDeep;
     bool isUseBigLED;
 } led_info_t;
@@ -43,7 +43,7 @@ void led_manager_update(void);
  *
  * @return true 成功，false 失败
  */
-bool led_manager_turn_on(uint8_t nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode, bool isUseDeep, bool isUseBigLED);
+bool led_manager_turn_on(int nij, uint16_t led_id, uint32_t duration, uint32_t color, led_mode_t mode, bool isUseDeep, bool isUseBigLED);
 
 /**
  * @brief 关闭LED灯

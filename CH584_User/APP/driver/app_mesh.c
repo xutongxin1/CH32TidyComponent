@@ -526,6 +526,7 @@ void App_Init() {
     {
         PRINT("G%d: 0x%04x\r\n", i, vnd_models->groups[i] );
     }
+    PRINT("APP_KEY:0x%04x\r\n", vnd_models->keys[0] );
 
 
     // HAL_KeyInit();

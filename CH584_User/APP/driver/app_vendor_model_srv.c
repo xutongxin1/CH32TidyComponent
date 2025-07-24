@@ -478,6 +478,7 @@ int vendor_message_srv_send_trans(struct send_param *param, uint8_t *pData,
         // 直接发送
         adv_srv_trans_send();
     }
+    printf("vendor_message_srv_send_trans层发送执行\r\n");
     return 0;
 }
 

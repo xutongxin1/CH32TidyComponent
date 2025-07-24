@@ -147,6 +147,11 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         return (events ^ APP_WS2812);
     }
 
+    if (events & APP_WS2812_STATUS) {
+        ws2812_set_led_hex(0,0,LED_MODE_STATIC); // ¹Ø±Õ×´Ì¬µÆ
+        return (events ^ APP_WS2812_STATUS);
+    }
+
     if (events & APP_CHECK_PENDING_PACKETS) {
         CheckPendingPackets();
         tmos_start_task(Main_App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));

@@ -25,6 +25,7 @@ extern "C" {
 #define APP_CHECK_PENDING_PACKETS       (1 << 3)
 #define APP_TEST_EVT       (1 << 4)
 #define APP_WS2812       (1 << 5)
+#define APP_WS2812_STATUS       (1 << 6)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82
@@ -33,11 +34,11 @@ extern "C" {
 #define PERIPHERAL_CMD_LEN             1
 #define ADDRESS_LEN                    2
 
-// É¾³ý½ÚµãÃüÁî£¬°üº¬ 1×Ö½ÚÃüÁîÂë+2×Ö½ÚÐèÒªÉ¾³ýµÄ½ÚµãµØÖ·
+// É¾ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ 1ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+2ï¿½Ö½ï¿½ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½Ä½Úµï¿½ï¿½Ö·
 #define DELETE_NODE_DATA_LEN           (PERIPHERAL_CMD_LEN + ADDRESS_LEN)
-// É¾³ý½ÚµãÃüÁîÓ¦´ð£¬°üº¬ 1×Ö½ÚÃüÁîÂë
+// É¾ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ð£¬°ï¿½ï¿½ï¿½ 1ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define DELETE_NODE_ACK_DATA_LEN       (PERIPHERAL_CMD_LEN)
-// É¾³ý´æ´¢µÄ½ÚµãÐÅÏ¢ÃüÁî£¬°üº¬ 1×Ö½ÚÃüÁîÂë
+// É¾ï¿½ï¿½ï¿½æ´¢ï¿½Ä½Úµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ 1ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define DELETE_NODE_INFO_DATA_LEN      (PERIPHERAL_CMD_LEN)
 
 #if(defined(BLE_MAC)) && (BLE_MAC == TRUE)
@@ -48,22 +49,22 @@ extern "C" {
 
 typedef union {
     struct {
-        uint8_t cmd; /* ÃüÁîÂë CMD_DELETE_NODE */
-        uint8_t addr[ADDRESS_LEN]; /* ²Á³ýµØÖ· */
-    } delete_node; /* É¾³ý½ÚµãÃüÁî */
+        uint8_t cmd; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CMD_DELETE_NODE */
+        uint8_t addr[ADDRESS_LEN]; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö· */
+    } delete_node; /* É¾ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ */
     struct {
-        uint8_t cmd; /* ÃüÁîÂë CMD_DELETE_NODE_ACK */
-    } delete_node_ack; /* É¾³ý½ÚµãÃüÁîÓ¦´ð */
+        uint8_t cmd; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CMD_DELETE_NODE_ACK */
+    } delete_node_ack; /* É¾ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ */
     struct {
-        uint8_t cmd; /* ÃüÁîÂë CMD_DELETE_NODE_INFO */
-    } delete_node_info; /* É¾³ý´æ´¢µÄ½ÚµãÐÅÏ¢ÃüÁî */
+        uint8_t cmd; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CMD_DELETE_NODE_INFO */
+    } delete_node_info; /* É¾ï¿½ï¿½ï¿½æ´¢ï¿½Ä½Úµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ */
     struct {
-        uint8_t buf[20]; /* ½ÓÊÕÊý¾Ý°ü*/
+        uint8_t buf[20]; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½*/
     } data;
 } app_mesh_manage_t;
 
 /**
- * @brief   Ó¦ÓÃ²ã³õÊ¼»¯
+ * @brief   Ó¦ï¿½Ã²ï¿½ï¿½Ê¼ï¿½ï¿½
  */
 void App_Init(void);
 

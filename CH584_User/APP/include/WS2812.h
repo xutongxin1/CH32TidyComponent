@@ -32,13 +32,13 @@ extern __attribute__ ((aligned (4))) uint32_t color_buf[COLOR_BUFFER_LEN];
 // 时间参数定义（单位：周期数）
 #define FLASH_FAST_ON_TIME      3   // 快闪亮时间
 #define FLASH_FAST_OFF_TIME     3   // 快闪灭时间
-#define FLASH_FAST_INTERVAL     20   // 快闪间隔时间
+#define FLASH_FAST_INTERVAL     15   // 快闪间隔时间
 
-#define FLASH_SLOW_ON_TIME      50   // 慢闪亮时间
-#define FLASH_SLOW_OFF_TIME     50   // 慢闪灭时间
+#define FLASH_SLOW_ON_TIME      30   // 慢闪亮时间
+#define FLASH_SLOW_OFF_TIME     30   // 慢闪灭时间
 
-#define BREATHE_FAST_STEP       10    // 快速呼吸步进
-#define BREATHE_SLOW_STEP       5    // 慢速呼吸步进
+#define BREATHE_FAST_STEP       16    // 快速呼吸步进
+#define BREATHE_SLOW_STEP       8    // 慢速呼吸步进
 
 // LED模式定义
 typedef enum {
