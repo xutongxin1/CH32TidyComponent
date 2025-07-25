@@ -34,11 +34,11 @@ extern "C" {
 #define PERIPHERAL_CMD_LEN             1
 #define ADDRESS_LEN                    2
 
-// ɾ���ڵ�������� 1�ֽ�������+2�ֽ���Ҫɾ���Ľڵ��ַ
+// 删除节点命令，包含 1字节命令码+2字节需要删除的节点地址
 #define DELETE_NODE_DATA_LEN           (PERIPHERAL_CMD_LEN + ADDRESS_LEN)
-// ɾ���ڵ�����Ӧ�𣬰��� 1�ֽ�������
+// 删除节点命令应答，包含 1字节命令码
 #define DELETE_NODE_ACK_DATA_LEN       (PERIPHERAL_CMD_LEN)
-// ɾ���洢�Ľڵ���Ϣ������� 1�ֽ�������
+// 删除存储的节点信息命令，包含 1字节命令码
 #define DELETE_NODE_INFO_DATA_LEN      (PERIPHERAL_CMD_LEN)
 
 #if(defined(BLE_MAC)) && (BLE_MAC == TRUE)
@@ -49,27 +49,29 @@ extern "C" {
 
 typedef union {
     struct {
-        uint8_t cmd; /* ������ CMD_DELETE_NODE */
-        uint8_t addr[ADDRESS_LEN]; /* ������ַ */
-    } delete_node; /* ɾ���ڵ����� */
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE */
+        uint8_t addr[ADDRESS_LEN]; /* 擦除地址 */
+    } delete_node; /* 删除节点命令 */
     struct {
-        uint8_t cmd; /* ������ CMD_DELETE_NODE_ACK */
-    } delete_node_ack; /* ɾ���ڵ�����Ӧ�� */
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE_ACK */
+    } delete_node_ack; /* 删除节点命令应答 */
     struct {
-        uint8_t cmd; /* ������ CMD_DELETE_NODE_INFO */
-    } delete_node_info; /* ɾ���洢�Ľڵ���Ϣ���� */
+        uint8_t cmd; /* 命令码 CMD_DELETE_NODE_INFO */
+    } delete_node_info; /* 删除存储的节点信息命令 */
     struct {
-        uint8_t buf[20]; /* �������ݰ�*/
+        uint8_t buf[20]; /* 接收数据包*/
     } data;
 } app_mesh_manage_t;
 
 /**
- * @brief   Ӧ�ò��ʼ��
+ * @brief   应用层初始化
  */
 void App_Init(void);
 
 uint8_t bt_mesh_lib_init(void);
 extern uint8_t MACAddr[6];
+void WS2812_status_success();
+void WS2812_status_error();
 /******************************************************************************/
 
 /******************************************************************************/

@@ -25,6 +25,8 @@ extern "C" {
 #define APP_CHECK_PENDING_PACKETS       (1 << 3)
 #define APP_NFC_Start       (1 << 4)
 #define APP_NFC_Work       (1 << 5)
+#define APP_WS2812       (1 << 6)
+#define APP_WS2812_STATUS       (1 << 7)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82
@@ -119,6 +121,8 @@ extern const uint16_t self_prov_addr;
  * @brief   应用层初始化
  */
 void App_Init(void);
+void WS2812_status_success();
+void WS2812_status_error();
 /******************************************************************************/
 
 /******************************************************************************/

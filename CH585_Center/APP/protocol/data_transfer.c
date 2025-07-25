@@ -7,6 +7,7 @@
 #include <MESH_LIB.h>
 #include <stdio.h>
 
+#include "app_mesh.h"
 #include "NFC_Work.h"
 
 static PendingPacket pendingList[MAX_PENDING];
@@ -60,6 +61,7 @@ void SendData(const uint16_t addr, const DATATYPE dataType, const char *sendData
     p->sendTimeCounter = timeCounter;
     p->retries = 0;
     memcpy(p->data, sendData, dataLen);
+    WS2812_status_success();
 }
 
 void HandleReceivedData(const uint16_t addr, const uint16_t group_addr, const uint8_t *pdata, uint16_t len) {
@@ -159,6 +161,7 @@ void RecvHandler(const uint16_t addr, const uint16_t group_addr, const DATATYPE 
     // dataType：原始用户数据类型（>=10）
     // recvData：保证以'\0'结尾的字符串
     APP_DBG("Received from 0x%04X, group 0x%04X: Type=%d, Data=%s", addr, group_addr, dataType, recvData);
+    WS2812_status_success();
     switch (group_addr)
     {
         case 0xC002:
@@ -176,6 +179,7 @@ void ErrorHandler(const uint16_t addr, const DATATYPE dataType, char *sendData) 
     // dataType：原始用户数据类型
     // sendData：原始发送数据内容
     APP_DBG("Failed to send to 0x%04X: Type=%d, Data=%s", addr, dataType, sendData);
+    WS2812_status_error();
 }
 
 //提供订阅地址绑定

@@ -22,6 +22,7 @@
 #include "wch_nfca_pcd_bsp.h"
 #include "NFC_Work.h"
 #include "TwoDimensionCode.h"
+#include "WS2812.h"
 /*********************************************************************
  * GLOBAL TYPEDEFS
  */
@@ -103,6 +104,7 @@ int main(void) {
 #endif
 
     GPIOA_ModeCfg(GPIO_Pin_0, GPIO_ModeOut_PP_20mA);
+    WS2812Init(); // PB22
 
     PRINT("%s\r\n", VER_MESH_LIB);
     CH58x_BLEInit();

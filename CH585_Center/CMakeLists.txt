@@ -44,7 +44,7 @@ add_compile_options(
         -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -Os
         -fmessage-length=0 -fsigned-char -ffunction-sections
         -fdata-sections -fno-common --param=highcode-gen-section-name=1
-        -g -DDEBUG=0 -DBLE_MEMHEAP_SIZE=4096 -DHAL_KEY=1
+        -g -DDEBUG=0 -DBLE_MEMHEAP_SIZE=4096
         -std=gnu99 -MMD -MP
 )
 

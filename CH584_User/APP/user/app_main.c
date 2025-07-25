@@ -148,7 +148,7 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
     }
 
     if (events & APP_WS2812_STATUS) {
-        ws2812_set_led_hex(0,0,LED_MODE_STATIC); // 关闭状态灯
+        ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
         return (events ^ APP_WS2812_STATUS);
     }
 

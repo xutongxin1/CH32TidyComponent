@@ -23,6 +23,7 @@
 #include "HAL.h"
 #include "NFC_Work.h"
 #include "TwoDimensionCode.h"
+#include "WS2812.h"
 
 /*********************************************************************
  * GLOBAL TYPEDEFS
@@ -1018,15 +1019,16 @@ void App_Init(void) {
     vendor_model_cli_init(vnd_models);
     blemesh_on_sync();
 
-    HAL_KeyInit();
-    HalKeyConfig(keyPress);
+    // HAL_KeyInit();
+    // HalKeyConfig(keyPress);
 
     // 添加一个测试任务，定时向第一个配网的设备发送透传数据
-    tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
+    // tmos_start_task(App_TaskID, APP_NODE_TEST_EVT, K_SECONDS(2));
 
     InitDataTransfer(RecvHandler, ErrorHandler);
     tmos_start_task(App_TaskID, APP_CHECK_PENDING_PACKETS, K_MSEC(100));
     tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
+    tmos_start_task(App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(200));
 }
 
 /*********************************************************************
@@ -1047,6 +1049,15 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
             return (events);
         else
             return (events ^ APP_NODE_EVT);
+    }
+    if (events & APP_WS2812) {
+        ws2812_update();
+        tmos_start_task(App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
+        return (events ^ APP_WS2812);
+    }
+    if (events & APP_WS2812_STATUS) {
+        ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
+        return (events ^ APP_WS2812_STATUS);
     }
 
     if (events & APP_CHECK_PENDING_PACKETS) {
@@ -1117,5 +1128,13 @@ void bt_node_del(const uint16_t addr) {
         node->fixed = FALSE;
         APP_DBG("删除旧的0x%04X的地址节点数据", addr);
     }
+}
+void WS2812_status_success() {
+    ws2812_set_led_hex(0,0x006600,LED_MODE_FLASH_FAST_2);
+    tmos_start_task(App_TaskID, APP_WS2812_STATUS, MS1_TO_SYSTEM_TIME(800));
+}
+void WS2812_status_error() {
+    ws2812_set_led_hex(0,0x660000,LED_MODE_FLASH_FAST_2);
+    tmos_start_task(App_TaskID, APP_WS2812_STATUS, MS1_TO_SYSTEM_TIME(800));
 }
 /******************************** endfile @ main ******************************/

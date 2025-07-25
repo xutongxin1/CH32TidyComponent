@@ -572,5 +572,12 @@ uint8_t bt_mesh_lib_init(void) {
 #endif
     return ret;
 }
-
+void WS2812_status_success() {
+    ws2812_set_led_hex(0,0x006600,LED_MODE_FLASH_FAST_2);
+    tmos_start_task(Main_App_TaskID, APP_WS2812_STATUS, MS1_TO_SYSTEM_TIME(800));
+}
+void WS2812_status_error() {
+    ws2812_set_led_hex(0,0x660000,LED_MODE_FLASH_FAST_2);
+    tmos_start_task(Main_App_TaskID, APP_WS2812_STATUS, MS1_TO_SYSTEM_TIME(800));
+}
 /******************************** endfile @ main ******************************/
