@@ -1055,9 +1055,14 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         tmos_start_task(App_TaskID, APP_WS2812, MS1_TO_SYSTEM_TIME(50));
         return (events ^ APP_WS2812);
     }
+
     if (events & APP_WS2812_STATUS) {
         ws2812_set_led(0, 0, 0, 60, LED_MODE_BREATHE_SLOW); // 蓝牙连接成功，设置LED
         return (events ^ APP_WS2812_STATUS);
+    }
+    if (events & APP_BEEP_WORK) {
+        GPIOA_ResetBits(GPIO_Pin_0);
+        return (events ^ APP_BEEP_WORK);
     }
 
     if (events & APP_CHECK_PENDING_PACKETS) {
@@ -1070,7 +1075,6 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
         tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(100));
         if (NFC_Start()) {
             tmos_start_task(App_TaskID, APP_NFC_Work, MS1_TO_SYSTEM_TIME(5));
-            GPIOA_SetBits(GPIO_Pin_0);
         }
         if (isGetCID) {
             isGetCID=false;
@@ -1089,9 +1093,11 @@ static uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
             } else {
                 SendData(0xC001, 10, data);
             }
-            GPIOA_ResetBits(GPIO_Pin_0);
             tmos_start_task(App_TaskID, APP_NFC_Start, MS1_TO_SYSTEM_TIME(1000)); //推迟下一次的执行
+            tmos_start_task(App_TaskID, APP_BEEP_WORK, MS1_TO_SYSTEM_TIME(100)); //蜂鸣器启停
+            GPIOA_SetBits(GPIO_Pin_0);
         }
+
         return (events ^ APP_NFC_Work);
     }
 

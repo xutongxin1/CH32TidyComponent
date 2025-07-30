@@ -27,6 +27,7 @@ extern "C" {
 #define APP_NFC_Work       (1 << 5)
 #define APP_WS2812       (1 << 6)
 #define APP_WS2812_STATUS       (1 << 7)
+#define APP_BEEP_WORK       (1 << 8)
 
 #define CMD_DELETE_NODE                0xA2
 #define CMD_DELETE_NODE_ACK            0x82
