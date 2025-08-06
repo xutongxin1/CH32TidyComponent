@@ -45,7 +45,7 @@ add_compile_options(
         -fmessage-length=0 -fsigned-char -ffunction-sections
         -fdata-sections -fno-common --param=highcode-gen-section-name=1
         -g -DDEBUG=0 -DBLE_MEMHEAP_SIZE=4096
-        -std=gnu99 -MMD -MP
+        -std=gnu99 -MMD -MP -DCLK_OSC32K=0
 )
 
 # 处理ASM文件

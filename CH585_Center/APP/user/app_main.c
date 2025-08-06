@@ -93,6 +93,7 @@ uint8_t bt_mesh_lib_init(void) {
  */
 int main(void) {
     HSECFG_Capacitance(HSECap_18p);
+    LSECFG_Capacitance(LSECap_12p);
     SetSysClock(CLK_SOURCE_HSE_PLL_78MHz);
 
 #ifdef DEBUG
