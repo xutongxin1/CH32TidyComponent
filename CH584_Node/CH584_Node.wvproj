@@ -10,7 +10,8 @@
 			"mcu": "CH584F",
 			"description": "=======",
 			"link": "WCH-Link",
-			"peripheral_version": "=======1.0"
+			"peripheral_version": "=======1.0",
+			"calibrateSupport": false
 		},
 		"linkedFolders": [
 			{
@@ -73,24 +74,6 @@
 					"${project}/cmake-build-b55",
 					"${project}/cmake-build-b53"
 				],
-				"riscvTargetProcessor": {
-					"architecture": "rv32i",
-					"multiply_extension": true,
-					"atomic_extension": false,
-					"floating_point": "none",
-					"compressed_extension": true,
-					"extra_compressed_extension": true,
-					"bit_extension": true,
-					"multiplication_subset_of_the_M_extension": false,
-					"integer_ABI": "ilp32",
-					"floating_point_ABI": "none",
-					"tuning": "default",
-					"code_model": "any",
-					"small_data_limit": 8,
-					"align": "default",
-					"save_restore": false,
-					"other_target_flags": ""
-				},
 				"optimization": {
 					"level": "size",
 					"message_length": true,
@@ -168,7 +151,7 @@
 							"DEBUG=0",
 							"BLE_MEMHEAP_SIZE=4096",
 							"HAL_KEY=1",
-							"DEVICE_TYPE_B55",
+							"DEVICE_TYPE_A42",
 							"ENABLE_MESH_UART_TEST",
 							"ENABLE_MESH_UART_DEBUG"
 						],
@@ -367,24 +350,6 @@
 					"show_totals": false,
 					"other_flags": ""
 				},
-				"component_toolchain": "${WCH:Toolchain:GCC12}",
-				"name": "obj",
-				"configVariables": []
-			},
-			{
-				"buildArtifact": {
-					"artifact_name": "${ProjName}",
-					"artifact_extension": "elf",
-					"output_prefix": "",
-					"artifact_type": "Executable"
-				},
-				"parallelizationNumber": "optimal",
-				"stop_on_first_build_error": true,
-				"pre_script": "",
-				"pre_script_description": "",
-				"post_script": "",
-				"post_script_description": "",
-				"excludeResources": [],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
 					"multiply_extension": true,
@@ -403,6 +368,24 @@
 					"save_restore": false,
 					"other_target_flags": ""
 				},
+				"component_toolchain": "${WCH:Toolchain:GCC12}",
+				"name": "obj",
+				"configVariables": []
+			},
+			{
+				"buildArtifact": {
+					"artifact_name": "${ProjName}",
+					"artifact_extension": "elf",
+					"output_prefix": "",
+					"artifact_type": "Executable"
+				},
+				"parallelizationNumber": "optimal",
+				"stop_on_first_build_error": true,
+				"pre_script": "",
+				"pre_script_description": "",
+				"post_script": "",
+				"post_script_description": "",
+				"excludeResources": [],
 				"optimization": {
 					"level": "size",
 					"message_length": true,
@@ -675,6 +658,24 @@
 					"hex": false,
 					"show_totals": false,
 					"other_flags": ""
+				},
+				"riscvTargetProcessor": {
+					"architecture": "rv32i",
+					"multiply_extension": true,
+					"atomic_extension": false,
+					"floating_point": "none",
+					"compressed_extension": true,
+					"extra_compressed_extension": true,
+					"bit_extension": true,
+					"multiplication_subset_of_the_M_extension": false,
+					"integer_ABI": "ilp32",
+					"floating_point_ABI": "none",
+					"tuning": "default",
+					"code_model": "any",
+					"small_data_limit": 8,
+					"align": "default",
+					"save_restore": false,
+					"other_target_flags": ""
 				},
 				"component_toolchain": "${WCH:Toolchain:GCC12}",
 				"name": "dbg",

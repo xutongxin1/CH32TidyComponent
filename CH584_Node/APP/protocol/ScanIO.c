@@ -43,17 +43,17 @@ void ScanIO() {
 
 void Scan_A42() {
     if (!device_initialized[0]) {
-        A42_IO_History[0] = GPIOB_ReadPortPin(GPIO_Pin_16);
-        A42_IO_History[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
-        A42_IO_History[2] = GPIOA_ReadPortPin(GPIO_Pin_15);
-        A42_IO_History[3] = GPIOA_ReadPortPin(GPIO_Pin_5);
+        A42_IO_History[0] = GPIOA_ReadPortPin(GPIO_Pin_5);
+        A42_IO_History[1] = GPIOA_ReadPortPin(GPIO_Pin_15);
+        A42_IO_History[2] = GPIOB_ReadPortPin(GPIO_Pin_17);
+        A42_IO_History[3] = GPIOB_ReadPortPin(GPIO_Pin_16);
         device_initialized[0] = true;
         return;
     }
-    A42_IO_NOW[0] = GPIOB_ReadPortPin(GPIO_Pin_16);
-    A42_IO_NOW[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
-    A42_IO_NOW[2] = GPIOA_ReadPortPin(GPIO_Pin_15);
-    A42_IO_NOW[3] = GPIOA_ReadPortPin(GPIO_Pin_5);
+    A42_IO_NOW[0] = GPIOA_ReadPortPin(GPIO_Pin_5);
+    A42_IO_NOW[1] = GPIOA_ReadPortPin(GPIO_Pin_15);
+    A42_IO_NOW[2] = GPIOB_ReadPortPin(GPIO_Pin_17);
+    A42_IO_NOW[3] = GPIOB_ReadPortPin(GPIO_Pin_16);
     for (int i = 0; i < 4; i++) {
         if (A42_IO_NOW[i] != A42_IO_History[i]) {
             if (A42_IO_NOW[i]) {
@@ -126,9 +126,9 @@ void Scan_TCA9555(const uint8_t addr) {
 //放回
 //此处仅处理物理意义上的放回
 void handle_up_A42(const uint8 pin) {
-    const int led_index1 = pin * 2 + 1;
-    const int led_index2 = pin * 2 + 2;
-    PRINT("放回了上数 %d 排的抽屉", pin+1);
+    const int led_index1 = pin * 2 + 2;
+    const int led_index2 = pin * 2 + 3;
+    PRINT("放回了 %d 排的抽屉", pin+1);
     led_manager_turn_off(led_index1);
     led_manager_turn_off(led_index2);
     char tmp[30] = {0};
@@ -162,9 +162,9 @@ void handle_up_B53(const uint8 addr, const uint8 pin) {
 
 //取出
 void handle_down_A42(const uint8 pin) {
-    const int led_index1 = pin * 2 + 1;
-    const int led_index2 = pin * 2 + 2;
-    PRINT("取出了上数 %d 排的抽屉", pin+1);
+    const int led_index1 = pin * 2 + 2;
+    const int led_index2 = pin * 2 + 3;
+    PRINT("取出了 %d 排的抽屉", pin+1);
     led_manager_turn_off(led_index1);
     led_manager_turn_off(led_index2);
     char tmp[30] = {0};

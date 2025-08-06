@@ -190,10 +190,10 @@ bool Message_C101(const uint16_t group_addr, const DATATYPE dataType, char *recv
            color & 0xFF); // B
     printf("亮灯形式: %d\r\n", lightMode);
 
-    int row = n / 10;  // 十位数字 (1,2,3,4)
-    int col = n % 10;  // 个位数字 (1,2)
+    int row = n / 10; // 十位数字 (1,2,3,4)
+    int col = n % 10; // 个位数字 (1,2)
 
-    const int led_index = (row - 1) * 2 + col;
+    const int led_index = (row - 1) * 2 + col + 1;
     printf("led_index: %d\r\n", led_index);
     printf("dataType: %d\r\n", dataType);
     switch (dataType) {

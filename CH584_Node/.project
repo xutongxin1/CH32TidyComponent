@@ -24,37 +24,37 @@
     <link>
       <name>HAL</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/HAL</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/HAL</location>
     </link>
     <link>
       <name>LIB</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/LIB</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/LIB</location>
     </link>
     <link>
       <name>Ld</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/Ld</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/Ld</location>
     </link>
     <link>
       <name>MESH_LIB</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/MESH_LIB</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/MESH_LIB</location>
     </link>
     <link>
       <name>RVMSIS</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/RVMSIS</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/RVMSIS</location>
     </link>
     <link>
       <name>Startup</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/Startup</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/Startup</location>
     </link>
     <link>
       <name>StdPeriphDriver</name>
       <type>2</type>
-      <locationURI>PARENT-1-PROJECT_LOC/CH585Lib/StdPeriphDriver</locationURI>
+      <location>PARENT-1-PROJECT_LOC/CH585Lib/StdPeriphDriver</location>
     </link>
   </linkedResources>
   <filteredResources>
