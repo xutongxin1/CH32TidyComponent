@@ -5,5 +5,6 @@
 #ifndef A42_DRIVER_H
 #define A42_DRIVER_H
 void A42_Init();
-void CheckA42Beep();
+void A21_Init();
+void CheckAxxBeep();
 #endif //A42_DRIVER_H

@@ -190,6 +190,56 @@ add_custom_target(Flash_A42_Node
         USES_TERMINAL
 )
 
+add_executable(A21_Node ${SOURCES} ${LINKER_SCRIPT})
+target_compile_definitions(A21_Node PUBLIC DEVICE_TYPE_A21)
+target_compile_definitions(A21_Node PUBLIC ENABLE_MESH_UART_TEST)
+target_compile_definitions(A21_Node PUBLIC ENABLE_MESH_UART_DEBUG)
+
+target_link_directories(A21_Node PRIVATE
+        ../
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/MESH_LIB
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/LIB
+        ${CMAKE_SOURCE_DIR}/../CH585Lib/StdPeriphDriver
+)
+target_link_libraries(A21_Node
+        ISP585
+        MESH
+        CH58xBLE
+)
+
+set(HEX_FILE ${PROJECT_BINARY_DIR}/A21_Node.hex)
+set(BIN_FILE ${PROJECT_BINARY_DIR}/A21_Node.bin)
+set(LIST_FILE ${PROJECT_BINARY_DIR}/A21_Node.list)
+
+#生成hex设置
+add_custom_command(TARGET A21_Node POST_BUILD
+        COMMAND ${SIZE} --format=berkeley $<TARGET_FILE:A21_Node>
+        COMMAND ${CMAKE_OBJDUMP} --source --all-headers --demangle --line-numbers --wide -M xw $<TARGET_FILE:A21_Node> > ${LIST_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:A21_Node> ${HEX_FILE}
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:A21_Node> ${BIN_FILE}
+        COMMENT "Building ${HEX_FILE}
+Building ${BIN_FILE}")
+
+# 添加自定义目标 "flash"
+add_custom_target(Erase_Flash_A21_Node
+        COMMAND ../wlink.exe erase
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/A21_Node.hex
+        DEPENDS A21_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
+        COMMENT "执行擦除和烧录操作"
+        VERBATIM
+        USES_TERMINAL
+)
+
+add_custom_target(Flash_A21_Node
+        COMMAND ../wlink.exe flash ${CMAKE_BINARY_DIR}/A21_Node.hex
+        DEPENDS A21_Node
+        WORKING_DIRECTORY "C:/GitProject/CH32TidyComponent/CH584_Node"
+        COMMENT "执行擦除和烧录操作"
+        VERBATIM
+        USES_TERMINAL
+)
+
 
 add_custom_target(Reset
         COMMAND ../wlink.exe reset

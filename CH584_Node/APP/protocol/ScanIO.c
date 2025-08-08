@@ -15,9 +15,12 @@
 // 用于处理引脚状态变化的处理函数
 void handle_down_A42(uint8 pin);
 void handle_up_A42(uint8 pin);
+void handle_down_A21(uint8 pin);
+void handle_up_A21(uint8 pin);
 void handle_up_B53(uint8 addr, uint8 pin); // 当引脚从低电平变为高电平时调用
 void handle_down_B53(uint8 addr, uint8 pin); // 当引脚从高电平变为低电平时调用
 void Scan_A42();
+void Scan_A21();
 // 支持的最大TCA9555设备数量
 #define MAX_TCA_DEVICES 8
 
@@ -28,10 +31,15 @@ static bool device_initialized[MAX_TCA_DEVICES] = {0};
 
 static bool A42_IO_History[4] = {false};
 static bool A42_IO_NOW[4] = {false};
+
+static bool A21_IO_History[2] = {false};
+static bool A21_IO_NOW[2] = {false};
 /// 扫描所有TCA9555设备的引脚状态
 void ScanIO() {
 #ifdef DEVICE_TYPE_A42
     Scan_A42();
+#elifdef DEVICE_TYPE_A21
+    Scan_A21();
 #elifdef DEVICE_TYPE_B53
     for (int i = 0; i < MAX_TCA_DEVICES; i++) {
         if (DeviceExists[i]) {
@@ -69,6 +77,32 @@ void Scan_A42() {
         }
     }
 }
+
+void Scan_A21() {
+    if (!device_initialized[0]) {
+        A21_IO_History[0] = GPIOA_ReadPortPin(GPIO_Pin_5);
+        A21_IO_History[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
+        device_initialized[0] = true;
+        return;
+    }
+    A21_IO_NOW[0] = GPIOA_ReadPortPin(GPIO_Pin_5);
+    A21_IO_NOW[1] = GPIOB_ReadPortPin(GPIO_Pin_17);
+    for (int i = 0; i < 2; i++) {
+        if (A21_IO_NOW[i] != A21_IO_History[i]) {
+            if (A21_IO_NOW[i]) {
+                // 低电平变高电平
+                PRINT("A21 IO %d 变为高电平\r\n", i);
+                handle_down_A21(i);
+            } else {
+                // 高电平变低电平
+                PRINT("A21 IO %d 变为低电平\r\n", i);
+                handle_up_A21(i);
+            }
+            A21_IO_History[i] = A21_IO_NOW[i];
+        }
+    }
+}
+
 /**
  * 扫描TCA9555设备的所有引脚并处理状态变化
  * @param addr TCA9555设备地址
@@ -137,10 +171,25 @@ void handle_up_A42(const uint8 pin) {
             MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
     SendData(0xC103, USER_DATA_TYPE, tmp);
     if (isDebugLED == true) {
-        ws2812_set_led_hex(led_index1, 0xAAAAAA, LED_MODE_STATIC);
-        ws2812_set_led_hex(led_index2, 0xAAAAAA, LED_MODE_STATIC);
+        ws2812_set_led_hex(led_index1, 0x000000, LED_MODE_DISABLE);
+        ws2812_set_led_hex(led_index2, 0x000000, LED_MODE_DISABLE);
     }
 }
+
+void handle_up_A21(const uint8 pin) {
+    const int led_index = pin + 2;
+    PRINT("放回了 %d 排的抽屉", pin+1);
+    led_manager_turn_off(led_index);
+    char tmp[30] = {0};
+    sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
+    SendData(0xC203, USER_DATA_TYPE, tmp);
+    if (isDebugLED == true) {
+        ws2812_set_led_hex(led_index, 0x000000, LED_MODE_DISABLE);
+    }
+}
+
 void handle_up_B53(const uint8 addr, const uint8 pin) {
     const uint8 n = addr - 0x20 + 1;
     const uint8 i = pin / 5 + 1;
@@ -173,10 +222,24 @@ void handle_down_A42(const uint8 pin) {
             MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
     SendData(0xC102, USER_DATA_TYPE, tmp);
     if (isDebugLED == true) {
-        ws2812_set_led_hex(led_index1, 0x000000, LED_MODE_DISABLE);
-        ws2812_set_led_hex(led_index2, 0x000000, LED_MODE_DISABLE);
+        ws2812_set_led_hex(led_index1, 0xAAAAAA, LED_MODE_STATIC);
+        ws2812_set_led_hex(led_index2, 0xAAAAAA, LED_MODE_STATIC);
     }
 }
+void handle_down_A21(const uint8 pin) {
+    const int led_index = pin + 2;
+    PRINT("取出了 %d 排的抽屉", pin+1);
+    led_manager_turn_off(led_index);
+    char tmp[30] = {0};
+    sprintf(tmp, "%02X:%02X:%02X:%02X:%02X:%02X %d",
+            MACAddr[0], MACAddr[1], MACAddr[2],
+            MACAddr[3], MACAddr[4], MACAddr[5], pin + 1);
+    SendData(0xC202, USER_DATA_TYPE, tmp);
+    if (isDebugLED == true) {
+        ws2812_set_led_hex(led_index, 0xAAAAAA, LED_MODE_STATIC);
+    }
+}
+
 void handle_down_B53(const uint8 addr, const uint8 pin) {
     const uint8 n = addr - 0x20 + 1;
     const uint8 i = pin / 5 + 1;

@@ -12,7 +12,14 @@ void A42_Init() {
     GPIOA_ModeCfg(GPIO_Pin_4, GPIO_ModeOut_PP_20mA);
 }
 
-void CheckA42Beep() {
+void A21_Init() {
+    GPIOB_ModeCfg(GPIO_Pin_17, GPIO_ModeIN_PU);
+    GPIOA_ModeCfg(GPIO_Pin_5, GPIO_ModeIN_PU);
+    GPIOA_ResetBits(GPIO_Pin_4);
+    GPIOA_ModeCfg(GPIO_Pin_4, GPIO_ModeOut_PP_20mA);
+}
+
+void CheckAxxBeep() {
     GPIOA_SetBits(GPIO_Pin_4);
     mDelaymS(100);
     GPIOA_ResetBits(GPIO_Pin_4);

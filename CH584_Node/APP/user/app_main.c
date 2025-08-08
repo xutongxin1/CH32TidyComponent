@@ -58,8 +58,8 @@ __attribute__ ((noinline)) void Main_Circulation() {
 }
 
 void SelfCheck(void) {
-    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);//MODE按键
-    GPIOB_ModeCfg(GPIO_Pin_9, GPIO_ModeIN_PU);//MESH按键
+    GPIOB_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU); //MODE按键
+    GPIOB_ModeCfg(GPIO_Pin_9, GPIO_ModeIN_PU); //MESH按键
     if (GPIOB_ReadPortPin(GPIO_Pin_9) == 0) // 配网重置按键
     {
         bt_mesh_reset();
@@ -68,12 +68,10 @@ void SelfCheck(void) {
 
     wheelLed();
 
-#ifdef DEVICE_TYPE_A42
-    CheckA42Beep();
+#if defined(DEVICE_TYPE_A42)||defined(DEVICE_TYPE_A21)
+    CheckAxxBeep();
 #elifdef DEVICE_TYPE_B53
     CheckB53Beep();
-#elifdef DEVICE_TYPE_A21
-
 #endif
 
     if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) // 测试模式按键
@@ -122,6 +120,8 @@ int main(void) {
     CheckB53_();
 #elifdef DEVICE_TYPE_A42
     A42_Init();
+#elifdef DEVICE_TYPE_A21
+    A21_Init();
 #endif
 
     // 初始化WS2812
@@ -176,23 +176,20 @@ uint16_t App_ProcessEvent(uint8_t task_id, uint16_t events) {
                         TCA_WritePin(0x20 + i, P17, 1);
                     }
                 }
-            }
-            else {
+            } else {
                 for (int i = 0; i < 8; i++) {
                     if (DeviceExists[i]) {
                         TCA_WritePin(0x20 + i, P17, 0);
                     }
                 }
             }
-#elifdef DEVICE_TYPE_A42
+#elif  defined(DEVICE_TYPE_A42)||defined(DEVICE_TYPE_A21)
             if (GPIOB_ReadPortPin(GPIO_Pin_8) == 0) {
                 GPIOA_SetBits(GPIO_Pin_4);
-            }
-            else {
+            } else {
                 GPIOA_ResetBits(GPIO_Pin_4);
             }
 #endif
-
         } else {
             tmos_start_task(Main_App_TaskID, APP_NODE_TEST_EVT, MS1_TO_SYSTEM_TIME(1000));
         }

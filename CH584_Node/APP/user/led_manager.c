@@ -58,6 +58,8 @@ void led_manager_update(void) {
                 SendData(0xC304, USER_DATA_TYPE, tmp);
 #elifdef DEVICE_TYPE_A42
                 SendData(0xC104, USER_DATA_TYPE, tmp);
+#elifdef DEVICE_TYPE_A21
+                SendData(0xC204, USER_DATA_TYPE, tmp);
 #endif
             }
         }
@@ -96,7 +98,7 @@ bool led_manager_turn_on(int nij, uint16_t led_id, uint32_t duration, uint32_t c
         const uint8_t tmp = led_id / 17;
         TCA_WritePin(0x20 + tmp, P17, 1);
     }
-#elifdef DEVICE_TYPE_A42
+#elif defined(DEVICE_TYPE_A42)||defined(DEVICE_TYPE_A21)
     if (isUseBigLED) {
         ws2812_set_led_hex(1, color, mode);
     }
@@ -180,7 +182,7 @@ static void turn_off_led_internal(uint16_t led_id) {
             const uint8_t tmp = led_id / 17;
             TCA_WritePin(0x20 + tmp, P17, 0);
         }
-#elifdef DEVICE_TYPE_A42
+#elif defined(DEVICE_TYPE_A42)||defined(DEVICE_TYPE_A21)
         if (led_array[led_id].isUseBigLED) {
             ws2812_set_led_hex(1, 0, led_array[led_id].mode);
         }
