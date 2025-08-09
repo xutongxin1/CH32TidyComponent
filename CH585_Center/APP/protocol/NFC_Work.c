@@ -444,7 +444,7 @@ int nfc_write_ndef_url(const char *url_data) {
         PRINT("ERR: Sector 0 authentication failed: 0x%x\r\n", res);
         return res;
     }
-
+    mDelaymS(5);
     uint8_t block1[16] = { 0x14,0x01,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1 };
     res = PcdWrite(1, block1);
     if (res != PCD_NO_ERROR) {
@@ -452,6 +452,7 @@ int nfc_write_ndef_url(const char *url_data) {
         return res;
     }
 
+    mDelaymS(5);
     uint8_t block2[16] = { 0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1,0x03,0xE1 };
     res = PcdWrite(2, block2);
     if (res != PCD_NO_ERROR) {
@@ -459,6 +460,7 @@ int nfc_write_ndef_url(const char *url_data) {
         return res;
     }
 
+    mDelaymS(5);
     uint8_t block3[16] = { 0xA0,0xA1,0xA2,0xA3,0xA4,0xA5,0xFF,0x07,0x80,0x69,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF };
     res = PcdWrite(3, block3);
     if (res != PCD_NO_ERROR) {
@@ -466,6 +468,7 @@ int nfc_write_ndef_url(const char *url_data) {
         return res;
     }
 
+    mDelaymS(5);
     // 第1扇区鉴权 (使用KeyB方式)
     res = PcdAuthState(PICC_AUTHENT1B, 4, b_key, picc_uid);
     if (res != PCD_NO_ERROR) {
@@ -491,6 +494,7 @@ int nfc_write_ndef_url(const char *url_data) {
             return res;
         }
         PRINT("Block %d written successfully\r\n", block_addresses_s1[i]);
+        mDelaymS(5);
     }
 
     // 写入扇区1的尾块
@@ -502,6 +506,7 @@ int nfc_write_ndef_url(const char *url_data) {
     }
     PRINT("Block %d written successfully\r\n", 7);
 
+    mDelaymS(5);
     // 如果NDEF数据超过48字节，需要写入第2扇区
     if (ndef_len > 48) {
         // 第2扇区鉴权 (使用KeyB方式)
@@ -530,6 +535,7 @@ int nfc_write_ndef_url(const char *url_data) {
                 return res;
             }
             PRINT("Block %d written successfully\r\n", block_addresses_s2[i]);
+            mDelaymS(5);
         }
 
         // 写入扇区2的尾块
