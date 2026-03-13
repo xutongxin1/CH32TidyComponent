@@ -162,6 +162,7 @@ uint16_t ADC_ExcutSingleConver(void)
 {
     R8_ADC_CONVERT |= RB_ADC_START;
     while(R8_ADC_CONVERT & RB_ADC_START);
+    while(R8_ADC_CONVERT & RB_ADC_EOC_X);
 
     return (R16_ADC_DATA & RB_ADC_DATA);
 }

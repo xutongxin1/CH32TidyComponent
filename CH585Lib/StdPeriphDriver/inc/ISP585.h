@@ -19,6 +19,8 @@
      256 bytes/page for writing, EEPROM_WRITE support one byte or more byte writing, but multiple of 256 is the best,
      0.25KB/4KB (256/4096 bytes) bytes/block for erasing, so multiple of 256 or 4096 is the best */
 
+#ifndef __ISP58x_H__
+#define __ISP58x_H__
 
 #ifndef EEPROM_PAGE_SIZE
 #define EEPROM_PAGE_SIZE    256                       // Flash-ROM & Data-Flash page size for writing
@@ -27,6 +29,7 @@
 //#define EEPROM_MIN_ER_SIZE  EEPROM_BLOCK_SIZE         // Flash-ROM  minimal size for erasing
 #define EEPROM_MIN_WR_SIZE  1                         // Data-Flash minimal size for writing
 #define EEPROM_MAX_SIZE     0x8000                    // Data-Flash maximum size, 32KB
+//#define EEPROM_MAX_SIZE     0x80000                   // Data-Flash maximum size for 584X, 512KB
 #endif
 #ifndef FLASH_MIN_WR_SIZE
 #define FLASH_MIN_WR_SIZE   4                         // Flash-ROM minimal size for writing
@@ -188,3 +191,4 @@ __attribute__((always_inline)) RV_STATIC_INLINE uint32_t EEPROM_ERASE(uint32_t S
  */
 #define FLASH_ROM_VERIFY(StartAddr,Buffer,Length)   FLASH_EEPROM_CMD( CMD_FLASH_ROM_VERIFY, StartAddr, Buffer, Length )
 
+#endif

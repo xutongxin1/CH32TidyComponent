@@ -81,7 +81,7 @@ void Lib_Write_Flash_584X(uint32_t addr, uint32_t num, uint32_t *pBuf)
  */
 uint32_t Lib_Write_Flash(uint32_t addr, uint32_t num, uint32_t *pBuf)
 {
-    if(((*(uint32_t*)ROM_CFG_CHIP_ID)&0x0F) == DEF_CHIP_ID_CH584X)
+    if((chip_info&0x0F) == DEF_CHIP_ID_CH584X)
     {
         Lib_Write_Flash_584X(addr, num, pBuf);
     }
@@ -113,7 +113,7 @@ void CH58x_BLEInit(void)
         while(1);
     }
 
-    SysTick_Config(SysTick_LOAD_RELOAD_Msk);// 配置SysTick并打开中断
+    __SysTick_Config(SysTick_LOAD_RELOAD_Msk);// 配置SysTick并打开中断
     PFIC_DisableIRQ(SysTick_IRQn);
 
     g_LLE_IRQLibHandlerLocation = (uint32_t)LLE_IRQLibHandler;

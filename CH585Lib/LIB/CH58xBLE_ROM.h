@@ -1,7 +1,7 @@
 /********************************** (C) COPYRIGHT ******************************
  * File Name         : CH58xBLE_ROM.H
  * Author            : WCH
- * Version           : v1.30
+ * Version           : v1.40
  * Date              : 2025/02/07
  * Description       : head file(ch585/ch584)
  *                    Address Space
@@ -99,7 +99,7 @@ typedef struct tag_ble_config
                                     // ATT_MTU = BufMaxLen-4,Range[23,ATT_MAX_MTU_SIZE]
     uint8_t TxNumEvent;             // Maximum number of TX data in a connection event ( default 1 )
     uint8_t RxNumEvent;             // Maximum number of RX data in a connection event ( default equal to BufNumber )
-    uint8_t TxPower;                // Transmit power level( default LL_TX_POWEER_0_DBM(0dBm) )
+    uint8_t TxPower;                // Transmit power level( default LL_TX_PWR_0_DBM(0dBm) )
     uint8_t ConnectNumber;          // Connect number,lower two bits are peripheral number,followed by central number
     uint8_t PeripheralNumber;       // peripheral number
     uint8_t CentralNumber;          // central number
@@ -124,7 +124,9 @@ typedef struct tag_ble_clock_config
     uint16_t ClockFrequency;        // The timing clock frequency(Hz)
     uint16_t ClockAccuracy;         // The timing clock accuracy(ppm)
     uint8_t  irqEnable;             // resv
-    uint32_t Clock1Frequency;
+
+    // RF-8K config
+    uint32_t Clock1Frequency;   // RF-8K timing clock frequency(Hz)
     pfnGetSysClock getClock1Value;
     pfnSetSysClockIRQ SetClock1PendingIRQ;
     pfnSetSysClockTign SetTign;
@@ -155,7 +157,7 @@ typedef struct
 /*********************************************************************
  * GLOBAL MACROS
  */
-#define VER_FILE  "CH585_BLE_LIB_V1.3"
+#define VER_FILE  "CH585_BLE_LIB_V1.4"
 extern const uint8_t VER_LIB[];  // LIB version
 #define SYSTEM_TIME_MICROSEN            625   // unit of process event timer is 625us
 #define MS1_TO_SYSTEM_TIME(x)  ((x)*1000/SYSTEM_TIME_MICROSEN)   // transform unit in ms to unit in 625us ( attentional bias )
@@ -198,18 +200,18 @@ extern const uint8_t VER_LIB[];  // LIB version
 #endif
 
 /* TxPower define(Accuracy:¡À2dBm) */
-#define LL_TX_POWEER_MINUS_20_DBM       0x01
-#define LL_TX_POWEER_MINUS_15_DBM       0x03
-#define LL_TX_POWEER_MINUS_10_DBM       0x05
-#define LL_TX_POWEER_MINUS_8_DBM        0x07
-#define LL_TX_POWEER_MINUS_5_DBM        0x0B
-#define LL_TX_POWEER_MINUS_3_DBM        0x0F
-#define LL_TX_POWEER_MINUS_1_DBM        0x13
-#define LL_TX_POWEER_0_DBM              0x15
-#define LL_TX_POWEER_1_DBM              0x1B
-#define LL_TX_POWEER_2_DBM              0x23
-#define LL_TX_POWEER_3_DBM              0x2B
-#define LL_TX_POWEER_4_DBM              0x3B
+#define LL_TX_PWR_MINUS_20_DBM          0x01
+#define LL_TX_PWR_MINUS_15_DBM          0x03
+#define LL_TX_PWR_MINUS_10_DBM          0x05
+#define LL_TX_PWR_MINUS_8_DBM           0x07
+#define LL_TX_PWR_MINUS_5_DBM           0x0B
+#define LL_TX_PWR_MINUS_3_DBM           0x0F
+#define LL_TX_PWR_MINUS_1_DBM           0x13
+#define LL_TX_PWR_0_DBM                 0x15
+#define LL_TX_PWR_1_DBM                 0x1B
+#define LL_TX_PWR_2_DBM                 0x23
+#define LL_TX_PWR_3_DBM                 0x2B
+#define LL_TX_PWR_4_DBM                 0x3B
 
 /* ERR_LIB_INIT define */
 #define ERR_LLE_IRQ_HANDLE              0x01
@@ -675,7 +677,7 @@ extern const uint8_t VER_LIB[];  // LIB version
 #define GATT_SERVICE_ENCY_DATA_KEY     (1<<7) //!< Encrypted Data Key Material
 #define GATT_SERVICE_LE_GATT_SECU      (1<<8) //!< LE GATT Security Levels
 
-#define GATT_SERVICES_DEFS (GATT_SERVICE_DEVICE_NAME|GATT_SERVICE_APPEARANCE|GATT_SERVICE_PERI_CONN_PARAM|GATT_SERVICE_CENTRAL_ADDR_RL)
+#define GATT_SERVICES_DEFS (GATT_SERVICE_DEVICE_NAME|GATT_SERVICE_APPEARANCE|GATT_SERVICE_PERI_CONN_PARAM)
 #define GATT_ALL_SERVICES              GATT_SERVICES_DEFS
 
 // The number of attribute records in a given attribute table
@@ -2624,8 +2626,21 @@ typedef struct
     pfnHciDataLenChangeEvCB_t ChangCB;  //!< Length Change Event Callback .
 } gapCentralRoleCB_t; // gapCentralRoleCB_t
 
-/* RF-PHY define */
+/* TxPower define(Accuracy:¡À2dBm) */
+#define LL_TX_POWEER_MINUS_20_DBM       0x01
+#define LL_TX_POWEER_MINUS_15_DBM       0x03
+#define LL_TX_POWEER_MINUS_10_DBM       0x05
+#define LL_TX_POWEER_MINUS_8_DBM        0x07
+#define LL_TX_POWEER_MINUS_5_DBM        0x0B
+#define LL_TX_POWEER_MINUS_3_DBM        0x0F
+#define LL_TX_POWEER_MINUS_1_DBM        0x13
+#define LL_TX_POWEER_0_DBM              0x15
+#define LL_TX_POWEER_1_DBM              0x1B
+#define LL_TX_POWEER_2_DBM              0x23
+#define LL_TX_POWEER_3_DBM              0x2B
+#define LL_TX_POWEER_4_DBM              0x3B
 
+/* RF-PHY define */
 /*
  * RF_ROLE_STATUS_TYPE pfnRFStatusCB_t state defined
  */

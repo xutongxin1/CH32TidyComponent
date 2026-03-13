@@ -16,6 +16,7 @@ volatile MachineMode_Call_func gs_machine_mode_func;
 
 extern uint32_t _vector_base[];
 
+uint32_t chip_info;
 /*********************************************************************
  * @fn      SetSysClock
  *
@@ -31,6 +32,7 @@ void SetSysClock(SYS_CLKTypeDef sc)
     uint16_t clk_sys_cfg;
     uint8_t i;
     uint8_t x32M_c;
+    chip_info = ((*(uint32_t*)ROM_CFG_CHIP_ID));
     R32_SAFE_MODE_CTRL |= RB_XROM_312M_SEL;
     R8_SAFE_MODE_CTRL &= ~RB_SAFE_AUTO_EN;
     sys_safe_access_enable();
